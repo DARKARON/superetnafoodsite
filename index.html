@@ -9,8 +9,8 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="_ds/broadsheet-df622a89-8321-4fb9-940b-ea77d59c800c/styles.css">
-<script src="_ds/broadsheet-df622a89-8321-4fb9-940b-ea77d59c800c/_ds_bundle.js"></script>
+<link rel="stylesheet" href="ds/styles.css">
+<script src="ds/ds-bundle.js"></script>
 <script src="image-slot.js"></script>
 <script>
 (function () {
@@ -86,7 +86,7 @@
         </div>
       </div>
       <div style="position: relative; min-width: 0; width: 100%; align-self: stretch; min-height: clamp(240px, 40vw, 520px); overflow: hidden; border-radius: 18px">
-        <image-slot id="home-hero" shape="rect" fit="cover" src="assets/limoneto-etna.jpg" role="img" aria-label="Il limoneto di Acireale con l'Etna sullo sfondo" placeholder="Foto larga del campo" style="position: absolute; inset: 0; width: 100%; height: 100%"></image-slot>
+        <image-slot id="home-hero" shape="rect" fit="cover" src="assets/slot-home-hero.jpg" role="img" aria-label="Il limoneto di Acireale con l'Etna sullo sfondo" placeholder="Foto larga del campo" style="position: absolute; inset: 0; width: 100%; height: 100%"></image-slot>
       </div>
     </div>
 
@@ -123,7 +123,7 @@
       </div>
       <div style="color: #ffffff">
         <div style="aspect-ratio: 4 / 3"><image-slot id="home-fondo-thumb" shape="rect" fit="cover" src="assets/potatura.jpg" role="img" aria-label="Un limone appena potato nel fondo di famiglia" placeholder="Foto del fondo" style="display: block; width: 100%; height: 100%"></image-slot></div>
-        <a class="btn" style="display: flex; justify-content: center; margin-top: 16px; width: 100%; box-sizing: border-box; background: #6B4226; color: #ffffff; border-color: #6B4226; font-weight: 700; font-size: 19px; border-radius: 999px" href="chi-siamo.html">Scopri il fondo</a>
+        <a class="btn" style="display: flex; justify-content: center; margin-top: 16px; width: 100%; box-sizing: border-box; background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 19px; border-radius: 999px" href="chi-siamo.html">Scopri il fondo</a>
         <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 80%, transparent)">Gli stessi filari di famiglia, ripresi in mano da me.</p>
       </div>
     </div>
@@ -213,7 +213,7 @@
   <sc-if value="{{ mostraStoria }}" hint-placeholder-val="{{ true }}">
     <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(24px, 4vw, 64px); align-items: center; padding: clamp(44px, 7vw, 80px) 0 0">
       <figure style="margin: 0; min-width: 0">
-        <div style="aspect-ratio: 5 / 4"><image-slot id="home-fondo" shape="rect" fit="cover" src="assets/potatura.jpg" role="img" aria-label="Un limone appena potato nel fondo di famiglia ad Acireale" placeholder="Il fondo, o tu al lavoro" style="display: block; width: 100%; height: 100%"></image-slot></div>
+        <div style="aspect-ratio: 5 / 4"><image-slot id="home-fondo" shape="rect" fit="cover" src="assets/slot-home-fondo.jpg" role="img" aria-label="Un limone appena potato nel fondo di famiglia ad Acireale" placeholder="Il fondo, o tu al lavoro" style="display: block; width: 100%; height: 100%"></image-slot></div>
       </figure>
       <div style="min-width: 0">
         <span style="display: block; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin-bottom: 14px">Il fondo</span>

@@ -9,8 +9,8 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="stylesheet" href="_ds/broadsheet-df622a89-8321-4fb9-940b-ea77d59c800c/styles.css">
-<script src="_ds/broadsheet-df622a89-8321-4fb9-940b-ea77d59c800c/_ds_bundle.js"></script>
+<link rel="stylesheet" href="ds/styles.css">
+<script src="ds/ds-bundle.js"></script>
 <script src="image-slot.js"></script>
 <script>
 (function () {
@@ -82,7 +82,7 @@
   .nav { padding-left: max(clamp(16px, 5vw, 72px), calc((100% - 1280px) / 2 + clamp(16px, 5vw, 72px))) !important; padding-right: max(clamp(16px, 5vw, 72px), calc((100% - 1280px) / 2 + clamp(16px, 5vw, 72px))) !important; }
   @media (max-width: 1180px) {
     .nav { padding: 10px clamp(16px, 5vw, 72px) !important; align-items: center; }
-    .nav-brand img { height: 56px !important; }
+    .nav-brand img { height: 46px !important; }
     .nav-burger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 46px; height: 46px; padding: 10px; box-sizing: border-box; cursor: pointer; border-radius: 10px; background: color-mix(in srgb, #3A1B08 16%, transparent); }
     .nav-burger span { display: block; height: 2px; background: #3A1B08; border-radius: 2px; }
     .nav-links { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 2px; padding: 6px 0 8px; flex: 0 0 auto; }
@@ -93,15 +93,15 @@
 </style>
 </helmet>
 
-<nav class="nav" style="padding: 12px clamp(16px, 5vw, 72px); flex-wrap: wrap; gap: 10px 20px; background-color: #B98868; background-image: url('assets/barra-rame.jpg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; border: 0">
-  <a class="nav-brand" href="index.html" aria-label="Super Etna Food — torna alla home" style="display: inline-block; margin-right: 22px; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/barra-rame.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none"><img src="assets/logo-menu.png" alt="Azienda Agricola Etnea SuperEtnaFood — Prodotto in Sicilia" style="display: block; height: clamp(54px, 7.2vw, 84px); width: auto"></a>
+<nav class="nav" style="padding: 12px clamp(16px, 5vw, 72px); flex-wrap: wrap; gap: 10px 20px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; border: 0">
+  <a class="nav-brand" href="index.html" aria-label="Super Etna Food — torna alla home" style="display: inline-block; margin-right: 22px; text-decoration: none"><img src="assets/marchio-targa.png" alt="Azienda Agricola Etnea SuperEtnaFood — Prodotto in Sicilia" style="display: block; height: clamp(46px, 5vw, 62px); width: auto"></a>
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
   <label for="nav-toggle" class="nav-burger" aria-label="Apri il menù"><span></span><span></span><span></span></label>
   <div class="nav-links">
-  <a href="limoni.html" style="color: #FFD84D; text-shadow: 0 1px 2px rgba(36,16,4,0.75); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/barra-rame.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Limoni</a>
-  <a href="microgreen.html" style="color: #E24A78; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/barra-rame.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Microgreen</a>
-  <a href="zafferano.html" aria-current="page" style="color: #241004; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/barra-rame.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none; text-decoration: underline; text-underline-offset: 5px">Zafferano</a>
-  <a href="chi-siamo.html" style="color: #1E8A16; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/barra-rame.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Il Fondo &amp; Contatti</a>
+  <a href="limoni.html" style="color: #FFD84D; text-shadow: 0 1px 2px rgba(36,16,4,0.75); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Limoni</a>
+  <a href="microgreen.html" style="color: #E24A78; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Microgreen</a>
+  <a href="zafferano.html" aria-current="page" style="color: #241004; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none; text-decoration: underline; text-underline-offset: 5px">Zafferano</a>
+  <a href="chi-siamo.html" style="color: #1E8A16; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Il Fondo &amp; Contatti</a>
   <a class="btn" style="background: #25D366; color: #0B2E10; border-color: #25D366; font-weight: 600; font-size: 18px; border-radius: 999px; white-space: nowrap" href="https://chatwith.io/s/superetnafood" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
   </div>
 </nav>
