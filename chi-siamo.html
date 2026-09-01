@@ -69,32 +69,76 @@
   @media (pointer: coarse) { image-slot { pointer-events: none !important; } }
   .nav-toggle { display: none; }
   .nav-burger { display: none; }
-  .nav-links { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 24px; flex: 1 1 auto; }
-  .nav-links > a.btn { margin-left: auto; }
+  .nav-links { display: flex; align-items: center; flex-wrap: nowrap; gap: clamp(5px, 0.8vw, 10px); flex: 1 1 auto; min-width: 0; }
+  .nav-links > a.nav-plate:first-child { margin-left: auto; }
+  .nav-links > a.nav-plate[href^="zafferano"] { padding-left: clamp(6px, 1.05vw, 17px); padding-right: clamp(6px, 1.05vw, 17px); }
+  .nav-links > a.nav-plate[href^="limoni"] { padding-left: clamp(14px, 2.3vw, 40px); padding-right: clamp(14px, 2.3vw, 40px); }
+  .nav-links > a.nav-plate[href^="chi-siamo"] { padding-left: clamp(14px, 2.3vw, 40px); padding-right: clamp(14px, 2.3vw, 40px); }
+  .nav-links > a.btn { margin-left: auto; flex: 0 1 auto; height: 76px; padding-left: clamp(14px, 1.8vw, 28px); padding-right: clamp(14px, 1.8vw, 28px); white-space: nowrap; box-sizing: border-box; align-items: center; }
   .nav { padding-left: max(clamp(16px, 5vw, 72px), calc((100% - 1280px) / 2 + clamp(16px, 5vw, 72px))) !important; padding-right: max(clamp(16px, 5vw, 72px), calc((100% - 1280px) / 2 + clamp(16px, 5vw, 72px))) !important; }
   @media (max-width: 1180px) {
     .nav { padding: 10px clamp(16px, 5vw, 72px) !important; align-items: center; }
     .nav-brand img { height: 46px !important; }
-    .nav-burger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 46px; height: 46px; padding: 10px; box-sizing: border-box; cursor: pointer; border-radius: 10px; background: color-mix(in srgb, #3A1B08 16%, transparent); }
+    .nav-burger { margin-left: auto; display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 46px; height: 46px; padding: 10px; box-sizing: border-box; cursor: pointer; border-radius: 10px; background: color-mix(in srgb, #3A1B08 16%, transparent); }
     .nav-burger span { display: block; height: 2px; background: #3A1B08; border-radius: 2px; }
     .nav-links { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 2px; padding: 6px 0 8px; flex: 0 0 auto; }
     .nav-toggle:checked ~ .nav-links { display: flex; }
     .nav-links > a { padding: 12px 0; min-height: 44px; display: flex; align-items: center; font-size: 21px !important; }
     .nav-links > a.btn { margin: 10px 0 0 0 !important; width: 100%; min-height: 50px; justify-content: center; box-sizing: border-box; }
   }
+  a.nav-plate { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; height: 76px; min-width: 0; flex: 0 1 auto; padding: 0 clamp(10px, 1.6vw, 26px); box-sizing: border-box; border-radius: 5px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: none; box-shadow: none; -webkit-mask-image: radial-gradient(115% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%); mask-image: radial-gradient(115% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%); color: #F7E9CF; text-shadow: 0 1px 2px rgba(36,16,4,0.7); font-weight: 700; font-size: clamp(17px, 1.5vw, 22px); white-space: nowrap; text-decoration: none; }
+  .nav-links > a.nav-plate { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 clamp(10px, 1.6vw, 26px); }
+  a.nav-plate:hover { background-color: #C99A7B; color: #FFF3DC; }
+  a.nav-plate[aria-current="page"] { color: #FFF3DC; background-color: #8E5F3E; }
+  .nav-glyph { display: block; position: relative; flex: 0 0 auto; }
+  .nav-glyph i { position: absolute; display: block; }
+  .nav-glyph-lemon { width: 28px; height: 19px; background: linear-gradient(160deg, #FFE58A 0%, #FFD84D 45%, #F2B90E 100%); clip-path: path('M 0,9.5 C 1,3.5 6,0 14,0 C 22,0 27,3.5 28,9.5 C 27,15.5 22,19 14,19 C 6,19 1,15.5 0,9.5 Z'); }
+  .nav-glyph-sprout { width: 34px; height: 22px; }
+  .nav-glyph-sprout .st1 { left: 6px; bottom: 6px; width: 2px; height: 8px; background: #E86A93; }
+  .nav-glyph-sprout .st2 { left: 12px; bottom: 6px; width: 2px; height: 8px; background: #F2A0BC; }
+  .nav-glyph-sprout .st3 { left: 18px; bottom: 6px; width: 2px; height: 8px; background: #E86A93; }
+  .nav-glyph-sprout .st4 { left: 24px; bottom: 6px; width: 2px; height: 8px; background: #F2A0BC; }
+  .nav-glyph-sprout .mass { left: 1px; top: 0; width: 32px; height: 11px; border-radius: 50% 50% 40% 40% / 70% 70% 30% 30%; background: linear-gradient(#8FCC63, #4E8B3A); }
+  .nav-glyph-sprout .tuft-l { left: 5px; top: -2px; width: 9px; height: 7px; border-radius: 50%; background: #9AD46E; }
+  .nav-glyph-sprout .tuft-r { left: 19px; top: -1px; width: 8px; height: 6px; border-radius: 50%; background: #7FBF5A; }
+  .nav-glyph-sprout .tray { left: 2px; bottom: 0; width: 30px; height: 6px; border-radius: 1px 1px 3px 3px; background: linear-gradient(#8E5F3E, #5C3A22); }
+  .nav-glyph-crocus { width: 26px; height: 17px; }
+  .nav-glyph-crocus .pt { bottom: 0; width: 9px; height: 14px; border-radius: 50% 50% 42% 42%; background: #B983D8; }
+  .nav-glyph-crocus .pt-l { left: 0; transform: rotate(-24deg); }
+  .nav-glyph-crocus .pt-c { left: 8.5px; }
+  .nav-glyph-crocus .pt-r { right: 0; transform: rotate(24deg); }
+  .nav-glyph-crocus .st { top: 0; width: 2px; height: 7px; border-radius: 1px; background: #E2622A; }
+  .nav-glyph-crocus .st-l { left: 9px; transform: rotate(-26deg); }
+  .nav-glyph-crocus .st-c { left: 12.5px; }
+  .nav-glyph-crocus .st-r { left: 16px; transform: rotate(26deg); }
+  .nav-glyph-leaf { width: 28px; height: 14px; }
+  .nav-glyph-leaf .lf { top: 0; width: 15px; height: 10px; border-radius: 100% 0 100% 0; background: #7FBF5A; }
+  .nav-glyph-leaf .lf-l { left: 0; transform: rotate(-8deg); }
+  .nav-glyph-leaf .lf-r { right: 0; transform: rotate(172deg); background: #5F9E3E; }
+  a.nav-plate-home { flex-direction: row; justify-content: flex-start; gap: 13px; min-width: 0; margin-right: 16px; padding: 0 16px 0 0; height: auto; background: none; -webkit-mask-image: none; mask-image: none; }
+  a.nav-plate-home img { height: clamp(68px, 7.2vw, 108px); width: clamp(68px, 7.2vw, 108px); border-radius: 50%; display: block; flex: 0 0 auto; }
+  .nav-plate-bar { display: block; width: 26px; height: 3px; border-radius: 2px; }
+  @media (max-width: 1180px) {
+    .nav-links { gap: 8px !important; }
+    .nav-links > a.nav-plate:first-child { margin-left: 0; }
+    .nav-links > a.nav-plate { flex-direction: row; justify-content: flex-start; gap: 12px; width: 100%; min-height: 52px; height: auto; flex: 0 0 auto; padding: 12px 16px !important; font-size: 21px !important; }
+    .nav-links > a.nav-plate .nav-plate-bar { width: 5px; height: 22px; margin-left: auto; }
+    .nav-links > a.nav-plate .nav-glyph { margin-left: auto; transform: scale(1.25); transform-origin: right center; }
+    a.nav-plate-home { margin-right: 0; }
+  }
 
 </style>
 </helmet>
 
 <nav class="nav" style="padding: 12px clamp(16px, 5vw, 72px); flex-wrap: wrap; gap: 10px 20px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; border: 0">
-  <a class="nav-brand" href="index.html" aria-label="Super Etna Food — torna alla home" style="display: inline-block; margin-right: 22px; text-decoration: none"><img src="assets/marchio-targa.png" alt="Azienda Agricola Etnea SuperEtnaFood — Prodotto in Sicilia" style="display: block; height: clamp(46px, 5vw, 62px); width: auto"></a>
+  <a class="nav-plate nav-plate-home" href="index.html" aria-label="Super Etna Food — torna alla home"><img src="assets/logo-round.png" alt="">Home</a>
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
   <label for="nav-toggle" class="nav-burger" aria-label="Apri il menù"><span></span><span></span><span></span></label>
   <div class="nav-links">
-  <a href="limoni.html" style="color: #FFD84D; text-shadow: 0 1px 2px rgba(36,16,4,0.75); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Limoni</a>
-  <a href="microgreen.html" style="color: #E24A78; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Microgreen</a>
-  <a href="zafferano.html" style="color: #8A4FB0; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none">Zafferano</a>
-  <a href="chi-siamo.html" aria-current="page" style="color: #241004; text-shadow: 0 1px 0 rgba(255,255,255,0.35); font-weight: 700; font-size: clamp(16px, 1.4vw, 22px); -webkit-text-stroke: 0.5px currentColor; white-space: nowrap; display: inline-block; padding: 6px 13px; border-radius: 4px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: 1.5px solid rgba(36,16,4,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 1px 3px rgba(36,16,4,0.28); text-decoration: none; text-decoration: underline; text-underline-offset: 5px">Il Fondo &amp; Contatti</a>
+  <a class="nav-plate" href="limoni.html"><span>Limoni</span><span class="nav-glyph nav-glyph-lemon"></span></a>
+  <a class="nav-plate" href="microgreen.html"><span>Microgreen</span><span class="nav-glyph nav-glyph-sprout"><i class="st1"></i><i class="st2"></i><i class="st3"></i><i class="st4"></i><i class="mass"></i><i class="tuft-l"></i><i class="tuft-r"></i><i class="tray"></i></span></a>
+  <a class="nav-plate" href="zafferano.html"><span>Zafferano</span><span class="nav-glyph nav-glyph-crocus"><i class="pt pt-l"></i><i class="pt pt-c"></i><i class="pt pt-r"></i><i class="st st-l"></i><i class="st st-c"></i><i class="st st-r"></i></span></a>
+  <a class="nav-plate" href="chi-siamo.html" aria-current="page"><span>Il Fondo</span><span class="nav-glyph nav-glyph-leaf"><i class="lf lf-l"></i><i class="lf lf-r"></i></span></a>
   <a class="btn" style="background: #25D366; color: #0B2E10; border-color: #25D366; font-weight: 600; font-size: 18px; border-radius: 999px; white-space: nowrap" href="https://chatwith.io/s/superetnafood" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
   </div>
 </nav>
