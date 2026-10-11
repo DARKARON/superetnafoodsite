@@ -14,6 +14,7 @@
 <script src="image-slot.js"></script>
 <script src="sef-api.js"></script>
 <script src="albero-3d.js"></script>
+<script src="fondo-dati.js"></script>
 <script>
 (function () {
   var KEY = 'sef-consenso-analytics';
@@ -174,10 +175,10 @@
     <div style="min-width: 0">
       <span style="display: block; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 78%, transparent); margin-bottom: 16px">Area riservata · Adotta un limone</span>
       <h1 style="font-weight: 500; font-size: clamp(34px, 5.4vw, 58px); line-height: 1.06; letter-spacing: -0.02em; margin: 0; color: #ffffff">Il tuo albero, da vicino</h1>
-      <p style="font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 42ch; color: color-mix(in srgb, #ffffff 86%, transparent)">Inserisci il numero dell'albero e la password che hai ricevuto con la conferma dell'adozione. Qui scegli il nome e il detto della targhetta e segui la pianta durante l'anno.</p>
+      <p style="font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 42ch; color: color-mix(in srgb, #ffffff 86%, transparent)">Inserisci il nome utente e la password che hai ricevuto via mail dopo il pagamento. Qui scegli il tuo albero, il nome e il detto della targhetta, e segui la pianta durante l'anno.</p>
     </div>
     <form onSubmit="{{ accedi }}" style="min-width: 0; background: var(--color-bg); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px); display: grid; gap: 18px">
-      <label style="display: grid; gap: 8px; font-size: 16px; font-weight: 600">Numero dell'albero<input name="numero" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="es. 001" required="required" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+      <label style="display: grid; gap: 8px; font-size: 16px; font-weight: 600">Nome utente<input name="numero" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="lo trovi nella mail che hai ricevuto" required="required" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
       <label style="display: grid; gap: 8px; font-size: 16px; font-weight: 600">Password<input name="password" type="password" autocomplete="current-password" required="required" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
       <sc-if value="{{ errore }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 16px; line-height: 1.5; color: #B3261E">{{ errore }}</p></sc-if>
       <button type="submit" class="btn" style="background: #0D6E08; color: #ffffff; border-color: #0D6E08; font-weight: 600; font-size: 18px; border-radius: 999px; min-height: 50px; cursor: pointer; justify-content: center">{{ testoEntra }}</button>
@@ -187,6 +188,48 @@
 </section>
 <div style="max-width: 1200px; margin: 0 auto; padding: clamp(44px, 7vw, 80px) clamp(16px, 5vw, 72px) 0">
   <p style="margin: 0; font-size: 18px; line-height: 1.7; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 78%, transparent)">Non hai ancora un albero? <a href="adotta.html" style="font-weight: 600">Scopri come adottarne uno →</a></p>
+</div>
+</sc-if>
+
+<sc-if value="{{ scegliendo }}" hint-placeholder-val="{{ false }}">
+<section style="background: #0D6E08">
+  <div style="max-width: 1200px; margin: 0 auto; padding: clamp(36px, 6vw, 72px) clamp(16px, 5vw, 72px) clamp(32px, 5vw, 56px)">
+    <span style="display: block; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 78%, transparent); margin-bottom: 16px">Area riservata · {{ sc.formula }}</span>
+    <h1 style="font-weight: 500; font-size: clamp(34px, 5.4vw, 58px); line-height: 1.06; letter-spacing: -0.02em; margin: 0; color: #ffffff">Scegli il tuo albero</h1>
+    <p style="font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 86%, transparent)">{{ sc.saluto }} per aver adottato un limone sull'Etna. Questi sono gli alberi ancora liberi: scegline uno, sarà il tuo per un anno.</p>
+  </div>
+</section>
+<div style="max-width: 1200px; margin: 0 auto; padding: clamp(32px, 5vw, 56px) clamp(16px, 5vw, 72px) 0">
+  <form onSubmit="{{ conferma }}" style="display: grid; gap: clamp(32px, 5vw, 48px)">
+    <div style="min-width: 0">
+      <h2 style="font-weight: 500; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; margin: 0">1. L'albero</h2>
+      <p style="margin: 10px 0 0; font-size: 17px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 78%, transparent)">{{ sc.nLiberi }} alberi liberi. Tocca quello che vuoi.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; max-height: 460px; overflow-y: auto; padding: 4px; margin-top: 18px">
+        <sc-for list="{{ liberi }}" as="l" hint-placeholder-count="6">
+          <button type="button" onClick="{{ l.scegli }}" aria-pressed="{{ l.sel }}" style="text-align: left; padding: 14px 16px; min-height: 96px; border-radius: 14px; border: 2px solid {{ l.bordo }}; background: {{ l.bg }}; cursor: pointer; display: grid; gap: 4px; align-content: start; font-family: var(--font-body); color: var(--color-text)">
+            <span style="font-family: var(--font-heading); font-size: 26px; line-height: 1">n. {{ l.numero }}</span>
+            <span style="font-size: 15px; font-weight: 600">{{ l.varieta }}</span>
+            <span style="font-size: 14px; line-height: 1.4; color: color-mix(in srgb, var(--color-text) 75%, transparent)">{{ l.info }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="min-width: 0">
+      <h2 style="font-weight: 500; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; margin: 0">2. I tuoi dati</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px 24px; margin-top: 18px">
+        <label style="display: grid; gap: 8px; font-size: 16px; font-weight: 600; min-width: 0">Nome e cognome<input name="adottante" defaultValue="{{ sc.adottante }}" autocomplete="name" required="required" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+        <label style="display: grid; gap: 8px; font-size: 16px; font-weight: 600; min-width: 0">Telefono<input name="telefono" type="tel" autocomplete="tel" required="required" placeholder="es. 351 000 0000" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+        <label style="display: grid; gap: 8px; font-size: 16px; font-weight: 600; min-width: 0">Consegna dei limoni<select name="tipo" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"><option>Spedizione a casa, in tutta Italia</option><option>Consegna a mano a Catania</option><option>Consegna a mano ad Acireale</option></select></label>
+        <label style="display: grid; gap: 8px; font-size: 16px; font-weight: 600; min-width: 0">Indirizzo o note per la consegna<input name="note" autocomplete="street-address" placeholder="Via, numero, CAP, città" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+      </div>
+    </div>
+    <div style="display: grid; gap: 14px; justify-items: start">
+      <sc-if value="{{ erroreScelta }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 16px; line-height: 1.5; color: #B3261E">{{ erroreScelta }}</p></sc-if>
+      <button type="submit" class="btn" style="background: #0D6E08; color: #ffffff; border-color: #0D6E08; font-weight: 600; font-size: 18px; border-radius: 999px; min-height: 52px; padding: 0 28px; cursor: pointer">{{ testoConferma }}</button>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 78%, transparent)">Il nome da mettere sulla targhetta lo scegli subito dopo, nella pagina del tuo albero. Se è un regalo, scrivi lì il nome di chi lo riceve.</p>
+      <button type="button" onClick="{{ esci }}" style="border: 0; background: transparent; padding: 0; font: inherit; font-size: 16px; color: #0A5806; text-decoration: underline; cursor: pointer">Esci</button>
+    </div>
+  </form>
 </div>
 </sc-if>
 
@@ -353,7 +396,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { albero: null, cred: null, errore: '', attesa: false, invio: false, erroreTarghetta: '', consensoFoto: false, genera: '', bozza: { nome: '', detto: 0, dettoCustom: '', traduzioneCustom: '', foto: '' } };
+  state = { scelta: null, sel: '', erroreScelta: '', invioScelta: false, albero: null, cred: null, errore: '', attesa: false, invio: false, erroreTarghetta: '', consensoFoto: false, genera: '', bozza: { nome: '', detto: 0, dettoCustom: '', traduzioneCustom: '', foto: '' } };
   KEY = 'sef-area-albero';
   COLORI = { Concimazione: '#0A5806', Potatura: '#7A5410', Trattamento: '#00607D', Irrigazione: '#00607D', Forzatura: '#7A5410', Raccolta: '#9A3B00' };
   pronto(fn) { if (window.SEF) return fn(); const t = setInterval(() => { if (window.SEF) { clearInterval(t); fn(); } }, 100); setTimeout(() => clearInterval(t), 8000); }
@@ -366,7 +409,8 @@ class Component extends DCLogic {
     this.setState({ attesa: true, errore: '' });
     window.SEF.chiama('accedi', c).then(a => {
       try { sessionStorage.setItem(this.KEY, JSON.stringify(c)); } catch (e) {}
-      this.setState({ albero: a, cred: c, attesa: false });
+      if (a && a.daScegliere) this.setState({ scelta: a, albero: null, cred: c, attesa: false });
+      else this.setState({ albero: a, scelta: null, cred: c, attesa: false });
       window.scrollTo(0, 0);
     }, e => {
       try { sessionStorage.removeItem(this.KEY); } catch (x) {}
@@ -396,7 +440,28 @@ class Component extends DCLogic {
     const on = 'color-mix(in srgb, #E8A838 18%, var(--color-bg))';
     const foto = a && a.foto ? a.foto : [], diario = a && a.diario ? a.diario : [], consegne = a && a.consegne ? a.consegne : [];
     return {
-      loggato: !!a, nonLoggato: !a,
+      loggato: !!a, nonLoggato: !a && !this.state.scelta, scegliendo: !a && !!this.state.scelta,
+      sc: (() => { const x = this.state.scelta; return x ? { formula: x.formula || 'Adotta un limone', saluto: x.adottante ? 'Ciao ' + x.adottante + ', grazie' : 'Grazie', adottante: x.adottante || '', nLiberi: (x.liberi || []).length } : {}; })(),
+      liberi: ((this.state.scelta && this.state.scelta.liberi) || []).map(n => {
+        const F = window.SEF_FONDO, p = F && F.piante ? F.piante[+n] : null, sel = this.state.sel === n;
+        return { numero: n, varieta: p ? p.varieta : 'Limone', info: p ? 'Filare ' + p.filare + (p.anno ? ' · piantato nel ' + p.anno : '') : '', sel, bg: sel ? 'color-mix(in srgb, #E8A838 24%, var(--color-bg))' : '#ffffff', bordo: sel ? '#E8A838' : 'color-mix(in srgb, #0D6E08 22%, transparent)', scegli: () => this.setState({ sel: n, erroreScelta: '' }) };
+      }),
+      erroreScelta: this.state.erroreScelta,
+      testoConferma: this.state.invioScelta ? 'Salvo la scelta…' : (this.state.sel ? "Conferma l'albero n. " + this.state.sel : 'Scegli un albero'),
+      conferma: e => {
+        e.preventDefault();
+        if (this.state.invioScelta) return;
+        const n = this.state.sel;
+        if (!n) { this.setState({ erroreScelta: "Scegli un albero dall'elenco." }); return; }
+        const fd = new FormData(e.target), note = String(fd.get('note') || '').trim();
+        this.setState({ invioScelta: true, erroreScelta: '' });
+        S.chiama('scegli', Object.assign({}, this.state.cred, { albero: n, adottante: String(fd.get('adottante') || '').trim(), telefono: String(fd.get('telefono') || '').trim(), consegna: String(fd.get('tipo') || '') + (note ? ' — ' + note : '') }))
+          .then(x => { this.setState({ albero: x, scelta: null, sel: '', invioScelta: false }); window.scrollTo(0, 0); },
+            err => {
+              this.setState({ invioScelta: false, erroreScelta: err.message });
+              if (/appena stato scelto/.test(err.message)) S.chiama('accedi', this.state.cred).then(x => { if (x && x.daScegliere) this.setState({ scelta: x, sel: '' }); }, () => {});
+            });
+      },
       testoEntra: this.state.attesa ? 'Accesso…' : 'Entra',
       errore: this.state.errore,
       accedi: e => {
@@ -412,7 +477,7 @@ class Component extends DCLogic {
         if (this.state.genera) return; this.setState({ genera: 'social' });
         S.scaricaFoto(a).then(() => { this.setState({ genera: '' }); }, () => this.setState({ genera: '' }));
       },
-      esci: () => { try { sessionStorage.removeItem(this.KEY); } catch (e) {} this.setState({ albero: null, cred: null }); },
+      esci: () => { try { sessionStorage.removeItem(this.KEY); } catch (e) {} this.setState({ albero: null, scelta: null, sel: '', cred: null }); },
       v: a ? {
         numero: S.pad(a.numero), formula: a.formula || 'Adozione', adottante: a.adottante || 'chi lo ha adottato',
         periodo: a.inizio ? 'Adozione dal ' + S.data(a.inizio) + ' al ' + S.fine(a.inizio) : '',

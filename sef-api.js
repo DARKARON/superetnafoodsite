@@ -50,16 +50,49 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbwImWTXewt9tjELLVK20i
     c.diario = d.diario.filter(function (f) { return pad(f.numero) === n; }).sort(desc);
     return c;
   }
-  function utente(d, p) { var a = d.alberi[pad(p.numero)]; if (!a || !a.password || a.password !== String(p.password)) throw new Error('Numero o password non corretti.'); return a; }
+  function adoz(d, e) { d.adozioni = d.adozioni || {}; return d.adozioni[String(e || '').trim().toLowerCase()]; }
+  function liberi(d) { var out = []; for (var i = 1; i <= 100; i++) { var a = d.alberi[pad(i)]; if (!a || !(a.adottante || a.email || a.password)) out.push(pad(i)); } return out; }
+  function listaAd(d) { return Object.keys(d.adozioni || {}).map(function (k) { return JSON.parse(JSON.stringify(d.adozioni[k])); }).sort(function (x, y) { return String(y.creataIl).localeCompare(String(x.creataIl)); }); }
+  function assegna(d, ad, numero, x) {
+    var n = pad(numero); if (+n < 1 || +n > 100) throw new Error('Albero non valido.');
+    if (liberi(d).indexOf(n) < 0) throw new Error('Questo albero è appena stato scelto da qualcun altro: scegline un altro.');
+    var a = d.alberi[n] || { numero: n, stato: '' };
+    Object.assign(a, { numero: n, password: ad.password, email: ad.email, formula: ad.formula, inizio: ad.inizio || oggi(), adottante: x.adottante || ad.adottante || '', telefono: x.telefono || '', consegnaPref: x.consegna || '' });
+    d.alberi[n] = a; Object.assign(ad, { albero: n, adottante: a.adottante, telefono: a.telefono, consegna: a.consegnaPref, sceltaIl: oggi() });
+    return a;
+  }
+  function credAd(d, p) { var ad = adoz(d, p.numero); if (!ad || ad.password !== String(p.password)) throw new Error('Nome utente o password non corretti.'); return ad; }
+  function utente(d, p) {
+    if (String(p.numero).indexOf('@') >= 0) { var ad = credAd(d, p); if (!ad.albero) throw new Error('Prima scegli il tuo albero.'); return d.alberi[ad.albero]; }
+    var a = d.alberi[pad(p.numero)]; if (!a || !a.password || a.password !== String(p.password)) throw new Error('Numero o password non corretti.'); return a; }
   function master(p) { if (p._h !== MASTER_HASH) throw new Error('Password master non corretta.'); }
-  var DATI = ['password','adottante','email','formula','inizio','varieta','posizione','impianto','ultimaRaccolta','note','certificato','consegne','targa'];
+  var DATI = ['password','adottante','email','formula','inizio','varieta','posizione','impianto','ultimaRaccolta','note','certificato','consegne','targa','telefono','consegnaPref'];
   function locale(p) {
     var d = carica(), a, n, i;
     if (p.azione.charAt(0) === 'm') master(p);
     n = p.numero != null ? pad(p.numero) : (p.albero ? pad(p.albero.numero) : '');
     a = d.alberi[n];
     switch (p.azione) {
-      case 'accedi': return pub(d, utente(d, p));
+      case 'accedi':
+        if (String(p.numero).indexOf('@') >= 0) { var ad = credAd(d, p); if (!ad.albero) return { daScegliere: true, email: ad.email, adottante: ad.adottante, formula: ad.formula, liberi: liberi(d) }; return pub(d, d.alberi[ad.albero]); }
+        return pub(d, utente(d, p));
+      case 'scegli':
+        var ad2 = credAd(d, p);
+        if (ad2.albero) throw new Error('Hai già scelto il tuo albero: il n. ' + ad2.albero + '.');
+        if (!String(p.adottante || '').trim()) throw new Error('Scrivi il tuo nome e cognome.');
+        if (!String(p.telefono || '').trim()) throw new Error('Scrivi il tuo numero di telefono.');
+        a = assegna(d, ad2, p.albero, { adottante: String(p.adottante).trim(), telefono: String(p.telefono).trim(), consegna: p.consegna || '' });
+        salva(d); return pub(d, a);
+      case 'mAdozioni': return listaAd(d);
+      case 'mNuovaAdozione':
+        var em = String(p.email || '').trim().toLowerCase();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) throw new Error('Mail non valida.');
+        if (adoz(d, em)) throw new Error("Esiste già un'adozione con questa mail.");
+        d.adozioni[em] = { email: em, password: String(p.password || '').trim() || ('zagara-' + (1000 + Math.floor(Math.random() * 9000))), adottante: String(p.adottante || '').trim(), formula: p.formula || '', inizio: p.inizio || oggi(), albero: '', creataIl: oggi(), mailInviata: p.invia ? oggi() + ' (demo: non inviata)' : '' };
+        salva(d); return listaAd(d);
+      case 'mInviaCredenziali': var ad3 = adoz(d, p.email); if (!ad3) throw new Error('Adozione non trovata.'); ad3.mailInviata = oggi() + ' (demo: non inviata)'; salva(d); return listaAd(d);
+      case 'mAssegna': var ad4 = adoz(d, p.email); if (!ad4) throw new Error('Adozione non trovata.'); if (ad4.albero) throw new Error("Questa adozione ha già l'albero n. " + ad4.albero + '.'); assegna(d, ad4, p.albero, {}); salva(d); return listaAd(d);
+      case 'mEliminaAdozione': var ad5 = adoz(d, p.email); if (!ad5) throw new Error('Adozione non trovata.'); if (ad5.albero) throw new Error("L'adozione ha già un albero."); delete d.adozioni[ad5.email]; salva(d); return listaAd(d);
       case 'proponi':
         a = utente(d, p);
         if (a.stato === 'inviato' || a.stato === 'approvato') throw new Error('La targhetta è già stata inviata.');
@@ -329,7 +362,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbwImWTXewt9tjELLVK20i
     argento: { nome: 'Argento', per: 'Sostenitore a distanza', bg: 'assets/targhetta-argento.jpg', fondo: '#B9BCC0', ink: '#7A5208', ombra: 'none', foto: '76.7%', vuota: '#7A5208' },
     oro: { nome: 'Oro', per: 'Sostenitore da vicino', bg: 'assets/targhetta-oro.jpg', fondo: '#D1A94A', ink: '#FAFBFC', ombra: 'none', foto: '76.7%', vuota: '#FAFBFC' }
   };
-  S.FORMULA_METALLO = { "Il tuo albero sull'Etna": 'bronzo', 'Spedito in Italia': 'argento', 'Dal fondo alle tue mani': 'oro' };
+  S.FORMULA_METALLO = { "Il tuo albero sull'Etna": 'bronzo', 'Spedito in Italia': 'argento', 'Il raccolto a casa tua': 'argento', 'Una stagione di limoni': 'argento', 'Dal fondo alle tue mani': 'oro' };
   S.metallo = function (a) { var k = (a && a.targa) || (a && S.FORMULA_METALLO[a.formula]) || 'bronzo'; return Object.assign({ chiave: k }, S.METALLI[k] || S.METALLI.bronzo); };
   S.scaricaFoto = function (a) {
     return storia(a).then(function (c) { return blob(c, 'image/png'); }).then(function (b) { scarica(b, 'certificato-albero-' + S.pad(a.numero) + '.png'); return 'scaricato'; });
