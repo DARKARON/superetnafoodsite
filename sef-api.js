@@ -3,7 +3,7 @@
    2. Incolla qui sotto l'indirizzo dell'app web (finisce con /exec).
    Finché è vuoto le pagine girano in modalità DEMO: i dati restano solo in questo browser
    (accesso amministratore: PERICLE22 + la tua password · albero demo: 001 / zagara-4821). */
-var SEF_API_URL = '';
+var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbzMZ8fKJ4KAaDJnWwHtbfD7P0U8DxaLws_Sns16AhlR1JogU2dtP7rNIAftSh_IcziC/exec';
 
 (function () {
   var MASTER_HASH = '6fd20959ba757e658f5554e112ca1d50595510338cf9df85aa31176951ee986b', K = 'sef-demo-db-2';
