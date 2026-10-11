@@ -378,7 +378,7 @@ class Component extends DCLogic {
     window.SEF.chiama('mElenco', { master: pw }).then(() => {
       try { sessionStorage.setItem('sef-master', pw); } catch (e) {}
       window.location.href = 'gestione.html';
-    }, () => this.setState({ attesa: false, errore: 'Credenziali amministratore non corrette.' }));
+    }, (e) => this.setState({ attesa: false, errore: (e && e.message) || 'Credenziali amministratore non corrette.' }));
   }
   bozza(p) { this.setState(s => ({ bozza: Object.assign({}, s.bozza, p), erroreTarghetta: '' })); }
   renderVals() {
