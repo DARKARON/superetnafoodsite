@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="ds/styles.css">
 <script src="ds/ds-bundle.js"></script>
 <script src="image-slot.js"></script>
+<script src="sef-api.js"></script>
 <script>
 (function () {
   var KEY = 'sef-consenso-analytics';
@@ -66,7 +67,7 @@
   image-slot, image-slot * { touch-action: pan-y !important; }
   @media (pointer: coarse) { image-slot { pointer-events: none !important; } }
   @media (max-width: 1000px) { #hero-grid { grid-template-columns: 1fr !important; } }
-  a.nav-plate { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; height: 76px; min-width: 0; flex: 0 1 auto; padding: 0 clamp(10px, 1.6vw, 26px); box-sizing: border-box; border-radius: 5px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: none; box-shadow: none; -webkit-mask-image: radial-gradient(115% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%); mask-image: radial-gradient(115% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%); color: #F7E9CF; text-shadow: 0 1px 2px rgba(36,16,4,0.7); font-weight: 700; font-size: clamp(17px, 1.5vw, 22px); white-space: nowrap; text-decoration: none; }
+  a.nav-plate { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; height: 76px; min-width: 0; flex: 0 1 auto; padding: 0 clamp(10px, 1.6vw, 26px); box-sizing: border-box; border-radius: 5px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: none; box-shadow: none; -webkit-mask-image: radial-gradient(115% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%); mask-image: radial-gradient(115% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%); color: #F7E9CF; text-shadow: 0 1px 2px rgba(36,16,4,0.7); font-weight: 700; font-size: clamp(18.5px, 1.5vw, 22px); white-space: nowrap; text-decoration: none; }
   a.nav-plate:hover { background-color: #C99A7B; color: #FFF3DC; }
   a.nav-plate[aria-current="page"] { color: #FFF3DC; background-color: #8E5F3E; }
   .nav-glyph { display: block; position: relative; flex: 0 0 auto; }
@@ -108,6 +109,9 @@
   .home-menu .nav-toggle:checked ~ .nav-links { display: flex; }
   .home-menu .nav-links > a.nav-plate { width: 100%; height: 64px; flex-direction: row; gap: 12px; font-size: 21px; }
   .home-menu .nav-links > a.btn { width: 100%; min-height: 52px; justify-content: center; box-sizing: border-box; margin-top: 4px; }
+  @keyframes heroIn { 0% { opacity: 0; } 4%, 24% { opacity: 1; } 24.1%, 100% { opacity: 0; } }
+  @keyframes heroUltima { 0% { opacity: 0; } 4%, 20% { opacity: 1; } 24%, 100% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { [style*="heroIn"], [style*="heroUltima"] { animation: none !important; } }
 </style>
 </helmet>
 
@@ -120,6 +124,10 @@
         <div style="position: relative; min-width: 0; width: 100%; aspect-ratio: 4624 / 2080; overflow: hidden; border-radius: 18px">
           <a href="index.html" style="position: absolute; top: clamp(10px, 2vw, 24px); left: clamp(10px, 2vw, 24px); z-index: 2; display: block; line-height: 0"><img src="assets/logo-round.png" alt="Super Etna Food, azienda agricola etnea" style="width: clamp(84px, 15vw, 190px); max-width: 100%; border-radius: 50%; box-shadow: 0 6px 20px rgba(0,0,0,0.3)"></a>
         <image-slot id="home-hero" shape="rect" fit="cover" src="assets/limoneto-etna.jpg" role="img" aria-label="Il limoneto di Acireale con l'Etna sullo sfondo" placeholder="Foto larga del campo" style="position: absolute; inset: 0; width: 100%; height: 100%"></image-slot>
+          <img src="assets/etna-mano-di-buddha.jpg" alt="L'Etna innevato sopra il limoneto, con un cedro mano di Buddha in primo piano" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 1; animation: heroIn 30s ease-in-out -1.2s infinite">
+          <img src="assets/etna-tramonto.jpg" alt="L'Etna al tramonto sopra il limoneto" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 1; animation: heroIn 30s ease-in-out 4.8s infinite">
+          <img src="assets/etna-limoneto-sereno.jpg" alt="L'Etna innevato e il limoneto carico di frutti in una giornata serena" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 1; animation: heroIn 30s ease-in-out 10.8s infinite">
+          <img src="assets/etna-cassetta-limoni.jpg" alt="Una cassetta di limoni appena raccolti, con l'Etna innevato sullo sfondo" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; pointer-events: none; z-index: 1; animation: heroUltima 30s ease-in-out 16.8s infinite">
       </div>
         <div class="home-menu">
     <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
@@ -136,11 +144,11 @@
         </div>
         <div style="display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px">
           <div style="min-width: 0">
-            <span style="display: block; font-size: 15px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 78%, transparent); margin-bottom: 16px">Acireale · versante est dell'Etna</span>
+            <span style="display: block; font-size: 17px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 95%, transparent); margin-bottom: 16px">Acireale · versante est dell'Etna</span>
         <h1 style="font-weight: 700; font-size: clamp(28px, 4.2vw, 46px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; color: #ffffff">Limoni che maturano<br>sulla pietra nera</h1>
           </div>
           <div style="min-width: 0">
-            <p style="font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.65; margin: 0; max-width: none; color: color-mix(in srgb, #ffffff 86%, transparent)">550 alberi su settemila metri quadri di terra lavica. I limoni restano sulla pianta fino all'ultimo momento: basta un tuo messaggio e il mattino seguente iniziamo la raccolta per spedirteli immediatamente.</p>
+            <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 0; max-width: none; color: color-mix(in srgb, #ffffff 95%, transparent)">550 alberi su settemila metri quadri di terra lavica. I limoni restano sulla pianta fino all'ultimo momento: basta un tuo messaggio e il mattino seguente iniziamo la raccolta per spedirteli immediatamente.</p>
         <div style="display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap">
           <a class="btn" style="background: #25D366; color: #0B2E10; border-color: #25D366; font-weight: 600; font-size: 18px; border-radius: 999px" href="https://wa.me/393515286188" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
           <a class="btn" style="background: #E8A838; color: #33230A; border-color: #E8A838; font-weight: 600; font-size: 18px; border-radius: 999px" href="#ora">Cosa c'è in campo</a>
@@ -149,7 +157,7 @@
         </div>
         <aside aria-label="Adotta un limone" style="margin-top: 28px; background: #F5E11A; color: #2A2400; box-shadow: 0 10px 30px color-mix(in srgb, #000000 28%, transparent); border-radius: 18px; padding: clamp(20px, 3vw, 32px) clamp(20px, 3.5vw, 40px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px">
     <div style="min-width: 0; flex: 1 1 260px">
-      <span style="display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #0A5806; margin-bottom: 8px">Novità · 100 alberi</span>
+      <span style="display: block; font-size: 15.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #0A5806; margin-bottom: 8px">Novità · {{ nLiberi }} alberi liberi su 100</span>
       <p style="font-family: var(--font-heading); font-weight: 700; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.25; margin: 0">Adotta un limone: un albero del fondo con il tuo nome, da 19,90 € l'anno.</p>
     </div>
     <a class="btn" style="background: #0D6E08; color: #ffffff; border-color: #0D6E08; font-weight: 700; font-size: 18px; border-radius: 999px; white-space: nowrap" href="adotta.html">Scopri come adottarlo</a>
@@ -161,15 +169,15 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 2px solid #ffffff; border-bottom: 1px solid color-mix(in srgb, #ffffff 40%, transparent)">
       <div style="padding: 14px 18px 16px 0">
         <span style="display: block; font-family: var(--font-heading); font-weight: 500; font-size: 34px; line-height: 1.1; color: #ffffff">550</span>
-        <p style="font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; margin: 4px 0 0; color: color-mix(in srgb, #ffffff 70%, transparent)">alberi in filare</p>
+        <p style="font-size: 17.5px; letter-spacing: 0.06em; text-transform: uppercase; margin: 4px 0 0; color: color-mix(in srgb, #ffffff 95%, transparent)">alberi in filare</p>
       </div>
       <div style="padding: 14px 18px 16px 0">
         <span style="display: block; font-family: var(--font-heading); font-weight: 500; font-size: 34px; line-height: 1.1; color: #ffffff">7.000 m²</span>
-        <p style="font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; margin: 4px 0 0; color: color-mix(in srgb, #ffffff 70%, transparent)">di terra nera</p>
+        <p style="font-size: 17.5px; letter-spacing: 0.06em; text-transform: uppercase; margin: 4px 0 0; color: color-mix(in srgb, #ffffff 95%, transparent)">di terra nera</p>
       </div>
       <div style="padding: 14px 18px 16px 0">
         <span style="display: block; font-family: var(--font-heading); font-weight: 500; font-size: 34px; line-height: 1.1; color: #ffffff">1 giorno</span>
-        <p style="font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; margin: 4px 0 0; color: color-mix(in srgb, #ffffff 70%, transparent)">fra ordine e raccolta</p>
+        <p style="font-size: 17.5px; letter-spacing: 0.06em; text-transform: uppercase; margin: 4px 0 0; color: color-mix(in srgb, #ffffff 95%, transparent)">fra ordine e raccolta</p>
       </div>
     </div>
 
@@ -177,22 +185,22 @@
       <div style="color: #ffffff">
         <div style="aspect-ratio: 4 / 3"><image-slot id="home-limoni-thumb-cassetta" shape="rect" fit="cover" src="assets/cassetta-limoni-raccolta-2.jpg" role="img" aria-label="Cassetta di limoni appena raccolti nel fondo" placeholder="Foto limoni" style="display: block; width: 100%; height: 100%"></image-slot></div>
         <a class="btn" style="display: flex; justify-content: center; margin-top: 16px; width: 100%; box-sizing: border-box; background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 19px; border-radius: 999px" href="limoni.html">Scopri i limoni</a>
-        <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 80%, transparent)">Tre varietà vecchie di decenni. A novembre tocca al Primofiore.</p>
+        <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Tre varietà vecchie di decenni. A novembre tocca al Primofiore.</p>
       </div>
       <div style="color: #ffffff">
         <div style="aspect-ratio: 4 / 3"><image-slot id="home-microgreen-thumb" shape="rect" fit="cover" src="assets/microgreen-vassoio.jpg" role="img" aria-label="Vassoio di microgreen misti appena tagliati" placeholder="Foto microgreen" style="display: block; width: 100%; height: 100%"></image-slot></div>
         <a class="btn" style="display: flex; justify-content: center; margin-top: 16px; width: 100%; box-sizing: border-box; background: #C1272D; color: #ffffff; border-color: #C1272D; font-weight: 700; font-size: 19px; border-radius: 999px" href="microgreen.html">Scopri i microgreen</a>
-        <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 80%, transparent)">Il seme parte col tuo ordine, le forbici passano il giorno del ritiro.</p>
+        <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Il seme parte col tuo ordine, le forbici passano il giorno del ritiro.</p>
       </div>
       <div style="color: #ffffff">
         <div style="aspect-ratio: 4 / 3"><image-slot id="home-zafferano-thumb" shape="rect" fit="cover" src="assets/zafferano-fiore-dettaglio.jpg" role="img" aria-label="Fiore di zafferano aperto con gli stimmi rossi in evidenza" placeholder="Foto zafferano" style="display: block; width: 100%; height: 100%"></image-slot></div>
         <a class="btn" style="display: flex; justify-content: center; margin-top: 16px; width: 100%; box-sizing: border-box; background: #7C2D8E; color: #ffffff; border-color: #7C2D8E; font-weight: 700; font-size: 19px; border-radius: 999px" href="zafferano.html">Scopri lo zafferano</a>
-        <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 80%, transparent)">Raccolta 2026 esaurita: si prenota già la 2027.</p>
+        <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Raccolta 2026 esaurita: si prenota già la 2027.</p>
       </div>
       <div style="color: #ffffff">
         <div style="aspect-ratio: 4 / 3"><image-slot id="home-fondo-thumb" shape="rect" fit="cover" src="assets/potatura.jpg" role="img" aria-label="Un limone appena potato nel fondo di famiglia" placeholder="Foto del fondo" style="display: block; width: 100%; height: 100%"></image-slot></div>
         <a class="btn" style="display: flex; justify-content: center; margin-top: 16px; width: 100%; box-sizing: border-box; background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 19px; border-radius: 999px" href="chi-siamo.html">Scopri il fondo</a>
-        <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 80%, transparent)">Gli stessi filari di famiglia, ripresi in mano da me.</p>
+        <p style="font-size: 18px; font-weight: 700; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Gli stessi filari di famiglia, ripresi in mano da me.</p>
       </div>
     </div>
   </div>
@@ -204,7 +212,7 @@
     <section id="ora" style="padding: clamp(44px, 7vw, 80px) 0 0">
       <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px 24px; margin-bottom: 24px">
         <h2 style="font-weight: 700; font-size: clamp(30px, 4.4vw, 50px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Cosa c'è in campo</h2>
-        <span style="font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 62%, transparent)">Ottobre 2026</span>
+        <span style="font-size: 15.5px; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Ottobre 2026</span>
       </div>
       <div style="overflow-x: auto">
         <table class="table" style="font-size: 17px; font-weight: 700; min-width: 620px">
@@ -219,15 +227,15 @@
           </tbody>
         </table>
       </div>
-      <p style="font-size: 19px; line-height: 1.7; color: color-mix(in srgb, var(--color-text) 65%, transparent); margin: 14px 0 0">Quanto entra in cassetta lo decide la giornata di raccolta. Il prezzo lo scrivo in chat, prima di salire sull'albero.</p>
+      <p style="font-size: 19px; line-height: 1.7; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin: 14px 0 0">Quanto entra in cassetta lo decide la giornata di raccolta. Il prezzo lo scrivo in chat, prima di salire sull'albero.</p>
     </section>
   </sc-if>
 
   <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(24px, 4vw, 64px); align-items: center; padding: clamp(44px, 7vw, 80px) 0 0">
     <div style="min-width: 0">
-      <span style="display: block; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin-bottom: 14px">Limoni</span>
+      <span style="display: block; font-size: 17px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin-bottom: 14px">Limoni</span>
       <h2 style="font-weight: 700; font-size: clamp(30px, 4.2vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Tre varietà, tre momenti dell'anno</h2>
-      <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 84%, transparent); margin: 20px 0 0; max-width: 52ch">Monachello per la cottura e le conserve, Nostrale da spremuta, Femminello Zagara Bianca per la pasticceria.</p>
+      <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin: 20px 0 0; max-width: 52ch">Monachello per la cottura e le conserve, Nostrale da spremuta, Femminello Zagara Bianca per la pasticceria.</p>
       <p style="margin: 20px 0 0"><a href="limoni.html" style="font-size: 22px; font-weight: 600">Le tre varietà, una per una →</a></p>
     </div>
     <figure style="margin: 0; min-width: 0">
@@ -239,26 +247,26 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: clamp(24px, 4vw, 56px); align-items: center">
       <figure style="margin: 0; min-width: 0">
         <div style="aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden"><image-slot id="home-microgreen-ravanello" shape="rect" fit="cover" src="assets/microgreen-ravanello.jpg" role="img" aria-label="Vassoio di ravanello Red Rubin con gambi rossi su fibra di cocco" placeholder="Vassoio di ravanello" style="display: block; width: 100%; height: 100%"></image-slot></div>
-        <figcaption style="font-family: var(--font-heading); font-style: italic; font-size: 20px; line-height: 1.5; color: color-mix(in srgb, var(--color-text) 88%, transparent); margin-top: 14px">Ravanello Red Rubin, due giorni prima del taglio.</figcaption>
+        <figcaption style="font-family: var(--font-heading); font-style: italic; font-size: 20px; line-height: 1.5; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin-top: 14px">Ravanello Red Rubin, due giorni prima del taglio.</figcaption>
       </figure>
       <div style="min-width: 0">
-        <span style="display: block; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin-bottom: 14px">Microgreen</span>
+        <span style="display: block; font-size: 17px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin-bottom: 14px">Microgreen</span>
         <h2 style="font-weight: 700; font-size: clamp(30px, 4.2vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; max-width: 26ch">Microgreen che non conoscono il frigorifero</h2>
-        <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 84%, transparent); margin: 20px 0 0">Nessuna scorta: si semina quando ordini e si taglia il giorno del ritiro. Dieci varietà in rotazione.</p>
+        <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin: 20px 0 0">Nessuna scorta: si semina quando ordini e si taglia il giorno del ritiro. Dieci varietà in rotazione.</p>
       </div>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px clamp(24px, 4vw, 56px); margin-top: 32px">
       <div>
         <h3 style="font-weight: 600; font-size: 24px; line-height: 1.3; margin: 0">Semina a chiamata</h3>
-        <p style="font-size: 20px; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 78%, transparent)">Dal tuo messaggio al taglio, il tempo che serve alla varietà.</p>
+        <p style="font-size: 20px; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Dal tuo messaggio al taglio, il tempo che serve alla varietà.</p>
       </div>
       <div>
         <h3 style="font-weight: 600; font-size: 24px; line-height: 1.3; margin: 0">Semi biologici</h3>
-        <p style="font-size: 20px; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 78%, transparent)">Su fibra di cocco o compost, con l'acqua del pozzo sotto la lava.</p>
+        <p style="font-size: 20px; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Su fibra di cocco o compost, con l'acqua del pozzo sotto la lava.</p>
       </div>
       <div>
         <h3 style="font-weight: 600; font-size: 24px; line-height: 1.3; margin: 0">Niente in mezzo</h3>
-        <p style="font-size: 20px; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 78%, transparent)">Né trattamenti, né corrieri, né giorni di scaffale.</p>
+        <p style="font-size: 20px; line-height: 1.6; margin: 8px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Né trattamenti, né corrieri, né giorni di scaffale.</p>
       </div>
     </div>
     <p style="margin: 24px 0 0"><a href="microgreen.html" style="font-size: 22px; font-weight: 600">Le varietà e gli usi in cucina →</a></p>
@@ -270,9 +278,9 @@
         <div style="aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden"><image-slot id="home-zafferano-vasetto" shape="rect" fit="cover" src="assets/zafferano-vasetto-stimmi.jpg" role="img" aria-label="Vasetto con fiori e stimmi di zafferano appena raccolti" placeholder="Il vasetto della raccolta" style="display: block; width: 100%; height: 100%"></image-slot></div>
       </figure>
       <div style="min-width: 0; order: 1">
-        <span style="display: block; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin-bottom: 14px">Zafferano</span>
+        <span style="display: block; font-size: 17px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin-bottom: 14px">Zafferano</span>
         <h2 style="font-weight: 700; font-size: clamp(30px, 4.2vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; max-width: 22ch">Raccolta 2026 esaurita, si prenota la 2027</h2>
-        <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 84%, transparent); margin: 20px 0 0; max-width: 52ch">Un fiore, tre stimmi, nessuna scorta: ogni annata finisce prima della prossima fioritura.</p>
+        <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin: 20px 0 0; max-width: 52ch">Un fiore, tre stimmi, nessuna scorta: ogni annata finisce prima della prossima fioritura.</p>
         <p style="margin: 20px 0 0"><a href="zafferano.html" style="font-size: 22px; font-weight: 600">Lo zafferano del fondo →</a></p>
       </div>
     </div>
@@ -284,9 +292,9 @@
         <div style="aspect-ratio: 5 / 4"><image-slot id="home-fondo" shape="rect" fit="cover" src="assets/potatura.jpg" role="img" aria-label="Un limone appena potato nel fondo di famiglia ad Acireale" placeholder="Il fondo, o tu al lavoro" style="display: block; width: 100%; height: 100%"></image-slot></div>
       </figure>
       <div style="min-width: 0">
-        <span style="display: block; font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 62%, transparent); margin-bottom: 14px">Il fondo</span>
+        <span style="display: block; font-size: 17px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin-bottom: 14px">Il fondo</span>
         <h2 style="font-weight: 700; font-size: clamp(30px, 4.2vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; max-width: 22ch">Il limoneto è di famiglia da tre generazioni</h2>
-        <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 84%, transparent); margin: 20px 0 0; max-width: 52ch">Gli stessi filari, la stessa acqua, un impianto che ha più anni di me.</p>
+        <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin: 20px 0 0; max-width: 52ch">Gli stessi filari, la stessa acqua, un impianto che ha più anni di me.</p>
         <p style="margin: 20px 0 0"><a href="chi-siamo.html" style="font-size: 22px; font-weight: 600">La storia del fondo →</a></p>
       </div>
     </section>
@@ -294,7 +302,7 @@
 
   <section style="padding: clamp(48px, 8vw, 88px) 0 0">
     <h2 style="font-weight: 700; font-size: clamp(30px, 4.8vw, 54px); line-height: 1.06; letter-spacing: -0.02em; margin: 0; max-width: 24ch">Dimmi cosa ti serve e per quando</h2>
-    <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 84%, transparent); margin: 18px 0 0">Rispondo io, dal campo: prezzo del giorno, quantità e data del ritiro.</p>
+    <p style="font-size: 22px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 90%, transparent); margin: 18px 0 0">Rispondo io, dal campo: prezzo del giorno, quantità e data del ritiro.</p>
     <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px">
       <a class="btn" style="background: #25D366; color: #0B2E10; border-color: #25D366; font-weight: 600; font-size: 18px; border-radius: 999px" href="https://wa.me/393515286188" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
       <a class="btn btn-secondary" style="font-size: 18px; border-radius: 999px" href="mailto:superetnafood@gmail.com">superetnafood@gmail.com</a>
@@ -302,26 +310,32 @@
     </div>
   </section>
 
-  <footer style="padding: clamp(36px, 6vw, 64px) 0 clamp(32px, 5vw, 56px); font-size: 13.5px; line-height: 1.8; color: color-mix(in srgb, var(--color-text) 62%, transparent)">
-    <p style="margin: 0">Super Etna Food — azienda agricola Antonio Grasso · Via Stazione 83, 95024 Acireale (CT) · superetnafood@gmail.com · P.IVA 06189010876 · <a href="privacy.html">Privacy</a></p>
+  <footer style="padding: clamp(36px, 6vw, 64px) 0 clamp(32px, 5vw, 56px); font-size: 15.5px; line-height: 1.8; color: color-mix(in srgb, var(--color-text) 90%, transparent)">
+    <p style="margin: 0">Super Etna Food — azienda agricola Antonio Grasso · Acireale (CT) · superetnafood@gmail.com · P.IVA 06189010876 · <a href="privacy.html">Privacy</a></p>
     <p style="margin: 0">Si vende direttamente dal produttore. Le quantità le decide la raccolta del giorno.</p>
   </footer>
 </div>
 
 <aside id="privacy-banner" role="region" aria-label="Informativa privacy" style="display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 999; background: #0D6E08; color: #ffffff; padding: 16px clamp(16px, 5vw, 48px); box-shadow: 0 -6px 24px rgba(0,0,0,0.18)">
   <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
-    <p style="flex: 1 1 320px; font-size: 15.5px; line-height: 1.6; margin: 0; color: color-mix(in srgb, #ffffff 92%, transparent)">Usiamo Google Analytics per sapere quali pagine vengono lette. I dati non vengono diffusi né venduti a terzi. Se rifiuti, il sito funziona esattamente come prima e nessuna statistica viene raccolta. <a href="privacy.html" style="color: #F5E11A; text-decoration: underline">Informativa completa</a></p>
+    <p style="flex: 1 1 320px; font-size: 17px; line-height: 1.6; margin: 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Usiamo Google Analytics per sapere quali pagine vengono lette. I dati non vengono diffusi né venduti a terzi. Se rifiuti, il sito funziona esattamente come prima e nessuna statistica viene raccolta. <a href="privacy.html" style="color: #F5E11A; text-decoration: underline">Informativa completa</a></p>
     <div style="display: flex; gap: 10px; flex-wrap: wrap">
-      <button type="button" id="privacy-rifiuta" class="btn" style="background: transparent; color: #ffffff; border-color: color-mix(in srgb, #ffffff 60%, transparent); font-weight: 600; font-size: 16px; border-radius: 999px; white-space: nowrap; cursor: pointer">Rifiuta</button>
-      <button type="button" id="privacy-accetta" class="btn" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 16px; border-radius: 999px; white-space: nowrap; cursor: pointer">Accetta</button>
+      <button type="button" id="privacy-rifiuta" class="btn" style="background: transparent; color: #ffffff; border-color: color-mix(in srgb, #ffffff 60%, transparent); font-weight: 600; font-size: 17.5px; border-radius: 999px; white-space: nowrap; cursor: pointer">Rifiuta</button>
+      <button type="button" id="privacy-accetta" class="btn" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 17.5px; border-radius: 999px; white-space: nowrap; cursor: pointer">Accetta</button>
     </div>
   </div>
 </aside>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;mostraTabella&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sezioni della home&quot;},&quot;mostraStoria&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sezioni della home&quot;}}">
 class Component extends DCLogic {
+  state = { nLiberi: 100 };
+  componentDidMount() {
+    const S = window.SEF; if (!S) return;
+    S.chiama('disponibili').then(r => { if (r && r.liberi != null) this.setState({ nLiberi: r.liberi }); }, () => {});
+  }
   renderVals() {
     return {
+      nLiberi: this.state.nLiberi,
       mostraTabella: this.props.mostraTabella ?? true,
       mostraStoria: this.props.mostraStoria ?? true,
     };

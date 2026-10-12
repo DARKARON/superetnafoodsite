@@ -3,7 +3,7 @@
    2. Incolla qui sotto l'indirizzo dell'app web (finisce con /exec).
    Finché è vuoto le pagine girano in modalità DEMO: i dati restano solo in questo browser
    (accesso amministratore: PERICLE22 + la tua password · albero demo: 001 / zagara-4821). */
-var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbwImWTXewt9tjELLVK20iZR-ZhpFCIemrdm9gfOR14dEC_9WKxz03BqeTE5WcXpfZgT/exec';
+var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93PC_8FdyTkgZF0wbwUMXXROedK-aaEEm4Z6Saofio2_GdT5d/exec';
 
 (function () {
   var MASTER_HASH = '6fd20959ba757e658f5554e112ca1d50595510338cf9df85aa31176951ee986b', K = 'sef-demo-db-2';
@@ -73,9 +73,20 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbwImWTXewt9tjELLVK20i
     n = p.numero != null ? pad(p.numero) : (p.albero ? pad(p.albero.numero) : '');
     a = d.alberi[n];
     switch (p.azione) {
+      case 'disponibili': return { liberi: liberi(d).length, totale: 100 };
       case 'accedi':
-        if (String(p.numero).indexOf('@') >= 0) { var ad = credAd(d, p); if (!ad.albero) return { daScegliere: true, email: ad.email, adottante: ad.adottante, formula: ad.formula, liberi: liberi(d) }; return pub(d, d.alberi[ad.albero]); }
+        if (String(p.numero).indexOf('@') >= 0) { var ad = credAd(d, p); if (!ad.albero) return { daScegliere: true, email: ad.email, adottante: ad.adottante, formula: ad.formula, liberi: liberi(d), galleria: liberi(d).indexOf('001') >= 0 ? [{ numero: '001', data: '2026-08-02', src: 'assets/pianta-1-2026-08-02.jpg' }] : [] }; return pub(d, d.alberi[ad.albero]); }
         return pub(d, utente(d, p));
+      case 'liberiFoto': var lb = liberi(d); return { liberi: lb, galleria: ['001'].concat(lb.slice(0, 5)).map(function (x) { return { numero: x, data: '2026-08-02', src: 'assets/pianta-1-2026-08-02.jpg' }; }) };
+      case 'cambia':
+        var vec = utente(d, p), nn = pad(p.nuovo);
+        if (vec.stato === 'inviato' || vec.stato === 'approvato') throw new Error('La targhetta è già stata inviata: per cambiare albero scrivimi su WhatsApp.');
+        if (liberi(d).indexOf(nn) < 0) throw new Error('Questo albero è appena stato scelto da qualcun altro: scegline un altro.');
+        var nuo = d.alberi[nn] || { numero: nn, stato: '' };
+        ['password','adottante','email','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl'].forEach(function (k) { nuo[k] = vec[k] || ''; vec[k] = ''; });
+        nuo.numero = nn; d.alberi[nn] = nuo;
+        var ad3 = nuo.email ? adoz(d, nuo.email) : null; if (ad3) ad3.albero = nn;
+        salva(d); return pub(d, nuo);
       case 'scegli':
         var ad2 = credAd(d, p);
         if (ad2.albero) throw new Error('Hai già scelto il tuo albero: il n. ' + ad2.albero + '.');
@@ -178,10 +189,8 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbwImWTXewt9tjELLVK20i
   function fotoSicura(a) {
     var f = (a.foto || [])[0];
     var src = (f && f.src) || '';
-    return img(src, /^https?:/.test(src)).then(function (im) {
-      if (!im) return null;
-      try { var c = document.createElement('canvas'); c.width = c.height = 2; c.getContext('2d').drawImage(im, 0, 0, 2, 2); c.toDataURL(); return im; } catch (e) { return null; }
-    });
+    function ok(im) { if (!im) return null; try { var c = document.createElement('canvas'); c.width = c.height = 2; c.getContext('2d').drawImage(im, 0, 0, 2, 2); c.toDataURL(); return im; } catch (e) { return null; } }
+    return img(src, /^https?:/.test(src)).then(ok).then(function (im) { return im || img('assets/verdello-pianta.jpg').then(ok); });
   }
   function dati(a) {
     var nome = a.nomePianta || a.nomeProposto || '';
@@ -339,7 +348,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbwImWTXewt9tjELLVK20i
   function pdfDaJpeg(bytes, w, h) {
     var enc = new TextEncoder(), parti = [], off = 0, offs = [];
     function add(x) { var b = typeof x === 'string' ? enc.encode(x) : x; parti.push(b); off += b.length; }
-    var PW = w > h ? 842 : 595, PH = w > h ? 595 : 842, stream = 'q ' + PW + ' 0 0 ' + PH + ' 0 0 cm /Im0 Do Q';
+    var PW = Math.round(w / 2), PH = Math.round(h / 2), stream = 'q ' + PW + ' 0 0 ' + PH + ' 0 0 cm /Im0 Do Q';
     add('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
     offs[1] = off; add('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
     offs[2] = off; add('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
@@ -353,7 +362,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbwImWTXewt9tjELLVK20i
   }
   function scarica(b, nome) { var u = URL.createObjectURL(b), l = document.createElement('a'); l.href = u; l.download = nome; document.body.appendChild(l); l.click(); l.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 4000); }
   S.scaricaCertificato = function (a) {
-    return certificato(a).then(function (c) { return blob(c, 'image/jpeg', 0.92).then(function (b) { return b.arrayBuffer(); }).then(function (ab) {
+    return storia(a).then(function (c) { return blob(c, 'image/jpeg', 0.95).then(function (b) { return b.arrayBuffer(); }).then(function (ab) {
       scarica(pdfDaJpeg(new Uint8Array(ab), c.width, c.height), 'certificato-albero-' + S.pad(a.numero) + '.pdf');
     }); });
   };
