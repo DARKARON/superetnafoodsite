@@ -103,7 +103,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
         salva(d); return listaAd(d);
       case 'mInviaCredenziali': var ad3 = adoz(d, p.email); if (!ad3) throw new Error('Adozione non trovata.'); ad3.mailInviata = oggi() + ' (demo: non inviata)'; salva(d); return listaAd(d);
       case 'mAssegna': var ad4 = adoz(d, p.email); if (!ad4) throw new Error('Adozione non trovata.'); if (ad4.albero) throw new Error("Questa adozione ha già l'albero n. " + ad4.albero + '.'); assegna(d, ad4, p.albero, {}); salva(d); return listaAd(d);
-      case 'mEliminaAdozione': var ad5 = adoz(d, p.email); if (!ad5) throw new Error('Adozione non trovata.'); if (ad5.albero) throw new Error("L'adozione ha già un albero."); delete d.adozioni[ad5.email]; salva(d); return listaAd(d);
+      case 'mEliminaAdozione': var ad5 = adoz(d, p.email); if (!ad5) throw new Error('Adozione non trovata.'); if (ad5.albero && d.alberi[ad5.albero]) { var al5 = d.alberi[ad5.albero]; ['password','adottante','email','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl','nomePianta','detto','traduzione','approvatoIl'].forEach(function (k) { if (k in al5) al5[k] = k === 'consegne' ? [] : ''; }); } delete d.adozioni[ad5.email]; salva(d); return listaAd(d);
       case 'proponi':
         a = utente(d, p);
         if (a.stato === 'inviato' || a.stato === 'approvato') throw new Error('La targhetta è già stata inviata.');
