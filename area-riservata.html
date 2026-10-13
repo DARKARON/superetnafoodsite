@@ -551,7 +551,7 @@ class Component extends DCLogic {
         numero: S.pad(a.numero), formula: a.formula || 'Adozione', adottante: a.adottante || 'chi lo ha adottato',
         periodo: a.inizio ? 'Adozione dal ' + S.data(a.inizio) + ' al ' + S.fine(a.inizio) : '',
         varieta: a.varieta || '—', posizione: a.posizione || '—', impianto: a.impianto || '—', ultimaRaccolta: a.ultimaRaccolta || '—',
-        note: a.note || '', dataAdozione: a.inizio ? 'Adottato il ' + S.data(a.inizio) : '', certificato: a.certificato || '', inviatoIl: S.data(a.inviatoIl), approvatoIl: S.data(a.approvatoIl)
+        note: a.note || '', dataAdozione: (a.inizio || a.approvatoIl || a.inviatoIl) ? 'Adottato il ' + S.data(a.inizio || a.approvatoIl || a.inviatoIl) : '', certificato: a.certificato || '', inviatoIl: S.data(a.inviatoIl), approvatoIl: S.data(a.approvatoIl)
       } : {},
       consegne, haConsegne: consegne.length > 0,
       foto: foto.map(f => ({ src: f.src, nota: f.nota, data: S.data(f.data) })), nessunaFoto: !!a && foto.length === 0,
@@ -580,7 +580,7 @@ class Component extends DCLogic {
         });
         const scorri = d => { const el = this.cambioRef.current; if (el) el.scrollBy({ left: d * Math.max(260, el.clientWidth * 0.8), behavior: 'smooth' }); };
         return {
-          puoCambiare: gal.length > 0, mostraCambio: compila, cambioGal: gal, cambioRef: this.cambioRef, cambioPrev: () => scorri(-1), cambioNext: () => scorri(1),
+          puoCambiare: false, mostraCambio: compila, cambioGal: gal, cambioRef: this.cambioRef, cambioPrev: () => scorri(-1), cambioNext: () => scorri(1),
           cambioDisabilitato: !selC || !!this.state.invioCambio, erroreCambio: this.state.erroreCambio || '',
           testoCambio: this.state.invioCambio ? 'Cambio albero…' : (selC ? "Passa all'albero n. " + selC : 'Tocca una foto per scegliere'),
           confermaCambio: () => {
