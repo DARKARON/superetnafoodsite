@@ -147,11 +147,25 @@
   .nav-glyph-lock .bd { left: 0; bottom: 0; width: 16px; height: 10px; border-radius: 2px; background: linear-gradient(#FFE58A, #F2B90E); }
   a.nav-plate-home { margin-right: 0; }
   }
+
+  nav.nav { flex-wrap: nowrap !important; align-items: center; position: relative; z-index: 40; }
+  .menu-btn { position: relative; margin-left: auto; flex: 0 0 auto; }
+  .menu-btn .nav-burger { display: flex !important; margin: 0 !important; flex-direction: column; justify-content: center; gap: 6px; width: 52px; height: 52px; padding: 13px; box-sizing: border-box; cursor: pointer; border-radius: 12px; background: #B98868 url('assets/targa-fascia.jpg') center / cover; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+  .menu-btn .nav-burger span { display: block; height: 2.5px; background: #3A1B08; border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
+  .menu-btn .nav-toggle:checked + .nav-burger span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+  .menu-btn .nav-toggle:checked + .nav-burger span:nth-child(2) { opacity: 0; }
+  .menu-btn .nav-toggle:checked + .nav-burger span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+  .menu-btn .nav-links { display: none !important; position: absolute; right: 0; top: 62px; width: min(300px, calc(100vw - 32px)); flex-direction: column; align-items: stretch; gap: 6px !important; padding: 10px !important; margin: 0 !important; box-sizing: border-box; border-radius: 14px; background: #7A5432; box-shadow: 0 16px 40px rgba(0,0,0,0.35); z-index: 60; }
+  .menu-btn .nav-toggle:checked ~ .nav-links { display: flex !important; }
+  .menu-btn .nav-links > a.nav-plate, .menu-btn .nav-links > a.nav-plate[href] { width: 100%; height: 64px !important; min-height: 64px; flex: 0 0 auto !important; flex-direction: row !important; justify-content: center !important; gap: 12px; font-size: 21px !important; padding: 0 16px !important; margin: 0 !important; }
+  .menu-btn .nav-links > a.nav-plate .nav-glyph { margin-left: 0 !important; transform: none !important; }
+  .menu-btn .nav-links > a.btn { width: 100%; height: auto !important; min-height: 52px; flex: 0 0 auto !important; justify-content: center; box-sizing: border-box; margin: 4px 0 0 !important; padding: 0 16px !important; }
 </style>
 </helmet>
 
 <nav class="nav" style="padding: 12px clamp(16px, 5vw, 72px); flex-wrap: wrap; gap: 10px 20px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; border: 0">
   <a class="nav-plate nav-plate-home" href="index.html" aria-label="Super Etna Food — torna alla home"><img src="assets/logo-round.png" alt="">Home</a>
+  <div class="menu-btn">
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
   <label for="nav-toggle" class="nav-burger" aria-label="Apri il menù"><span></span><span></span><span></span></label>
   <div class="nav-links">
@@ -161,6 +175,7 @@
   <a class="nav-plate" href="chi-siamo.html"><span>Il Fondo</span><span class="nav-glyph nav-glyph-leaf"><i class="lf lf-l"></i><i class="lf lf-r"></i></span></a>
   <a class="nav-plate" href="area-riservata.html"><span>Area riservata</span><span class="nav-glyph nav-glyph-lock"><i class="sh"></i><i class="bd"></i></span></a>
   <a class="btn" style="background: #25D366; color: #0B2E10; border-color: #25D366; font-weight: 600; font-size: 18px; border-radius: 999px; white-space: nowrap" href="https://wa.me/393515286188" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
+  </div>
   </div>
 </nav>
 
