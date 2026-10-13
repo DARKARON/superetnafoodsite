@@ -151,6 +151,7 @@
   a.nav-plate-home { margin-right: 0; }
   }
 
+summary::-webkit-details-marker { display: none; }
 </style>
 </helmet>
 
@@ -168,13 +169,16 @@
   </div>
 </nav>
 
+
+
 <section style="background: #0D6E08">
   <div style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
     <div class="hero-grid" style="padding: clamp(14px, 2vw, 24px) 0 clamp(36px, 6vw, 64px)">
-      <h1 class="hero-kicker" style="margin-bottom: 16px; font-weight: 500; font-size: clamp(32px, 4.8vw, 52px); line-height: 1.08; letter-spacing: -0.02em; color: #ffffff">🍋 Il tuo albero sull'Etna: sostieni la terra, ricevi la freschezza.</h1>
+      <h1 class="hero-kicker" style="margin-bottom: 16px; font-weight: 500; font-size: clamp(32px, 4.8vw, 52px); line-height: 1.08; letter-spacing: -0.02em; color: #ffffff"><span style="font-size: clamp(32px, 4.8vw, 52px); letter-spacing: -0.02em; text-wrap-mode: initial;">Il tuo albero sull'Etna: sostieni la terra, ricevi la freschezza.&nbsp;</span>🍋<br></h1>
       <div class="hero-text" style="min-width: 0">
-        <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 0; max-width: 46ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Scegli uno dei 100 alberi del nostro limoneto e dagli il tuo nome. Ti mando foto e video fino al raccolto, che ricevi a casa.</p>
-        <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 14px 0 0; max-width: 46ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Così ci aiuti a coprire acqua, concimi e manodopera, che il mercato non ripaga.</p>
+        <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 0; max-width: 46ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Dai il tuo nome a <strong style="font-weight: 700; color: #ffffff">uno dei 100 alberi</strong> del nostro limoneto: una <strong style="font-weight: 700; color: #ffffff">pianta vera</strong>, con numero e targhetta, <strong style="font-weight: 700; color: #ffffff">tua per un anno</strong>. Ricevi <strong style="font-weight: 700; color: #ffffff">foto e video</strong> e il <strong style="font-weight: 700; color: #ffffff">raccolto a casa</strong>.</p>
+        <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 14px 0 0; max-width: 46ch; color: color-mix(in srgb, #ffffff 95%, transparent)">🎁 <strong style="font-weight: 700; color: #ffffff">È anche un regalo</strong>: metti sulla targhetta il nome di una persona speciale.</p>
+        <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 14px 0 0; max-width: 46ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Così ci aiuti a coprire <strong style="font-weight: 700; color: #ffffff">acqua, concimi e manodopera</strong>, che il mercato non ripaga.</p>
         <p style="font-family: var(--font-heading); font-style: italic; font-size: clamp(19px, 1.9vw, 22px); line-height: 1.4; margin: 16px 0 0; color: #ffffff">Proteggi la tradizione, adotta il tuo albero.</p>
         <div style="display: flex; align-items: baseline; gap: 14px; margin-top: 30px; flex-wrap: wrap">
           <span style="font-family: var(--font-heading); font-weight: 500; font-size: clamp(40px, 5vw, 56px); line-height: 1; color: #F5E11A">{{ nLiberi }}</span>
@@ -194,25 +198,50 @@
 
 <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
 
-  <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(28px, 5vw, 72px); align-items: center; padding: clamp(44px, 7vw, 80px) 0 0">
-    <figure style="margin: 0; min-width: 0">
-      <div style="aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden"><image-slot id="adotta-targhetta" shape="rect" fit="cover" src="assets/adotta-targhetta.webp" role="img" aria-label="La targhetta col nome dell'adottante appesa all'albero" placeholder="Foto della targhetta sull'albero" style="display: block; width: 100%; height: 100%"></image-slot></div>
-    </figure>
-    <div style="min-width: 0">
-      <h2 style="font-weight: 500; font-size: clamp(26px, 3.2vw, 34px); line-height: 1.15; margin: 0">Un albero vero, non un simbolo</h2>
-      <p style="font-size: 18px; line-height: 1.7; margin: 14px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Ogni adozione corrisponde a una pianta precisa del filare, con il suo numero e la sua targhetta. Non la sposto e non la cambio: per un anno è quella.</p>
-      <p style="font-size: 18px; line-height: 1.7; margin: 14px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">🎁 <strong style="font-weight: 600">Il regalo perfetto per chi ama la natura.</strong> Oltre a dare il tuo nome all'albero, puoi scegliere di <strong style="font-weight: 600">regalare l'adozione a una persona speciale</strong>: scriveremo il suo nome sulla targhetta e le manderemo le foto e il raccolto freschissimo direttamente a casa.</p>
+  <section style="padding: clamp(32px, 4vw, 48px) 0 0">
+    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Come funziona</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px clamp(20px, 3vw, 32px); margin-top: 32px">
+      <div style="background: color-mix(in srgb, #E8A838 16%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #7A5410">1</span>
+        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Adotti e paghi</h3>
+        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Scegli la <strong style="font-weight: 700; color: var(--color-text)">formula</strong> e paga dal pulsante <strong style="font-weight: 700; color: var(--color-text)">PayPal</strong>, con il conto o con la carta. Non devi fare altro.</p>
+      </div>
+      <div style="background: color-mix(in srgb, #0088B0 12%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #00607D">2</span>
+        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Ricevi le credenziali</h3>
+        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Entro 24 ore</strong> ti arriva una <strong style="font-weight: 700; color: var(--color-text)">mail</strong>, all’indirizzo usato per il pagamento, con <strong style="font-weight: 700; color: var(--color-text)">nome utente e password</strong> della tua area riservata.</p>
+      </div>
+      <div style="background: color-mix(in srgb, #0D6E08 8%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #0A5806">3</span>
+        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Scegli il tuo albero</h3>
+        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Entra nell’<a href="area-riservata.html" style="font-weight: 700">area riservata</a>, <strong style="font-weight: 700; color: var(--color-text)">scegli la pianta</strong> tra quelle ancora libere e inserisci il <strong style="font-weight: 700; color: var(--color-text)">nome da mettere sulla targhetta</strong>, il tuo telefono e le preferenze per la consegna. Appendo la targhetta, ti mando la <strong style="font-weight: 700; color: var(--color-text)">foto e il certificato</strong>, e da lì <strong style="font-weight: 700; color: var(--color-text)">segui la tua pianta per un anno</strong>.</p>
+      </div>
     </div>
+    <figure style="margin: clamp(32px, 4vw, 48px) 0 0; display: grid; gap: 12px">
+      <img src="assets/area-riservata-scelta-albero.png" alt="L'area riservata: lo slider con le foto degli alberi del limoneto, da cui scegli il tuo albero" loading="lazy" style="width: 100%; height: auto; display: block; border-radius: 18px; box-shadow: var(--shadow-md)">
+      <figcaption style="font-size: 17.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 600; color: #0A5806">Punto 3</strong> · Così appare l’area riservata: scorri le foto degli alberi, tocca quello che ti piace e confermalo.</figcaption>
+    </figure>
+    <figure style="margin: clamp(32px, 4vw, 48px) 0 0; display: grid; gap: 12px">
+      <img src="assets/esempio-targhetta.png" alt="Esempio di targhetta: il nome Sofia, un detto siciliano con la traduzione, il numero dell'albero, la data di adozione e la foto di famiglia" loading="lazy" style="width: 100%; max-width: 1148px; height: auto; display: block; border-radius: 12px; box-shadow: var(--shadow-md)">
+      <figcaption style="font-size: 17.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 600; color: #0A5806">La tua targhetta</strong> · Scegli il nome, un detto e una foto: dopo l’approvazione la targhetta mostra anche il numero dell’albero e la data di adozione.</figcaption>
+    </figure>
   </section>
 
-  <section id="formule" style="padding: clamp(44px, 7vw, 80px) 0 0">
+  <section style="padding: clamp(32px, 4vw, 48px) 0 0">
+    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Il cruscotto del tuo albero</h2>
+    <p style="font-size: 18px; line-height: 1.7; margin: 14px 0 0; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Con l'adozione ricevi l'accesso all'area riservata: la tua pianta in 3D da girare a 360°, gli interventi in campo, le consegne e le foto, sempre aggiornati.</p>
+    <figure style="margin: 32px 0 0"><img src="assets/cruscotto-anteprima.jpg" alt="Anteprima del cruscotto dell'area riservata: dati della pianta, modello 3D, interventi e consegne" loading="lazy" style="display: block; width: 100%; max-width: 1100px; height: auto; border-radius: 18px; box-shadow: 0 2px 6px rgba(16,32,24,0.08), 0 16px 40px rgba(16,32,24,0.12)"></figure>
+  </section>
+
+  <section id="formule" style="padding: clamp(32px, 4vw, 48px) 0 0">
     <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Tre formule, un anno</h2>
-    <div ref="{{ trackRef }}" onScroll="{{ onScroll }}" aria-label="Formule di adozione" style="display: flex; gap: clamp(16px, 2.5vw, 28px); margin: 28px -4px 0; padding: 4px 4px 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; align-items: stretch; overscroll-behavior-x: contain">
-      <article style="flex: 0 0 min(86%, 400px); scroll-snap-align: start; display: flex; flex-direction: column; background: color-mix(in srgb, #0D6E08 6%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+    <div ref="{{ trackRef }}" aria-label="Formule di adozione" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(16px, 2.5vw, 28px); margin: 32px 0 0">
+      <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #0D6E08 6%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
         <span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #0A5806; font-weight: 600">Custode</span>
         <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Il tuo albero sull'Etna</h3>
         <p style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 18px 0 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">19,90 €</span><span style="font-size: 17.5px; color: color-mix(in srgb, var(--color-text) 90%, transparent)">per un anno</span></p>
-        <figure style="margin: 18px 0 0; display: grid; gap: 8px"><img src="assets/targhetta-esempio-bronzo-v2.jpg" alt="Segnaposto color bronzo appeso all'albero con questa adozione" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
+        <figure style="margin: 18px 0 0; display: grid; gap: 8px; align-self: end"><img src="assets/targhetta-esempio-bronzo-v2.jpg" alt="Segnaposto color bronzo appeso all'albero con questa adozione" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
+        <details style="margin: 16px 0 0"><summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 10px 20px; border: 1.5px solid #0A5806; border-radius: 999px; color: #0A5806; font-weight: 600; font-size: 17px; text-align: center" style-hover="background: color-mix(in srgb, #0A5806 8%, transparent)">Scopri le condizioni dell'offerta <span aria-hidden="true" style="font-size: 14px">▾</span></summary>
         <ul style="list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55">
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Targhetta col tuo nome appesa all'albero</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Foto dell'albero e certificato di adozione</span></li>
@@ -221,83 +250,48 @@
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Una cassetta da 5 kg garantiti<a href="#nota-kg" aria-label="Vedi nota sui chili" style="text-decoration: none; color: inherit">*</a> dei limoni del tuo albero</span></li>
         </ul>
         <p style="font-size: 17px; line-height: 1.6; margin: 18px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">La cassetta te la spedisco in tutta Italia (paghi solo la spedizione) oppure te la consegno a mano a Catania e Acireale, nel giorno che concordiamo.</p>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 26px"><a class="btn" style="background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 18px; border-radius: 999px" style-hover="background: #F2B52A; border-color: #F2B52A" href="https://paypal.me/superetnafood/19.90EUR" target="_blank" rel="noopener">Adotta e paga · 19,90 €</a></div>
-        <p style="font-size: 16px; line-height: 1.5; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Dopo il pagamento ricevi via mail le credenziali della tua area riservata: lì scegli l’albero tra quelli liberi e inserisci il nome per la targhetta.</p>
+        </details>
+        <div style="display: flex; align-self: end; padding-top: 26px"><a class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 18px; border-radius: 999px" style-hover="background: #F2B52A; border-color: #F2B52A" href="https://paypal.me/superetnafood/19.90EUR" target="_blank" rel="noopener">Adotta e paga · 19,90 €</a></div>
       </article>
-      <article style="flex: 0 0 min(86%, 400px); scroll-snap-align: start; display: flex; flex-direction: column; background: color-mix(in srgb, #0088B0 10%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+      <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #0088B0 10%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
         <span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #00607D; font-weight: 600">Spedito in Italia</span>
         <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Il raccolto a casa tua</h3>
         <p style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 18px 0 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">60 €</span><span style="font-size: 17.5px; color: color-mix(in srgb, var(--color-text) 90%, transparent)">per un anno, spedizione compresa</span></p>
-        <figure style="margin: 18px 0 0; display: grid; gap: 8px"><img src="assets/targhetta-esempio-argento-v2.jpg" alt="Segnaposto color argento appeso all'albero con questa adozione" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
+        <figure style="margin: 18px 0 0; display: grid; gap: 8px; align-self: end"><img src="assets/targhetta-esempio-argento-v2.jpg" alt="Segnaposto color argento appeso all'albero con questa adozione" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
+        <details style="margin: 16px 0 0"><summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 10px 20px; border: 1.5px solid #0A5806; border-radius: 999px; color: #0A5806; font-weight: 600; font-size: 17px; text-align: center" style-hover="background: color-mix(in srgb, #0A5806 8%, transparent)">Scopri le condizioni dell'offerta <span aria-hidden="true" style="font-size: 14px">▾</span></summary>
         <ul style="list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55">
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Targhetta, certificato, area riservata e aggiornamenti della formula Custode</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Due spedizioni da 15 kg garantiti<a href="#nota-kg" aria-label="Vedi nota sui chili" style="text-decoration: none; color: inherit">*</a>, nelle finestre di raccolta (primofiore e verdello)</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Limoni del tuo albero, raccolti il giorno prima della spedizione</span></li>
         </ul>
         <p id="nota-kg" style="font-size: 17px; line-height: 1.6; margin: 18px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">* I chili sono garantiti: se la tua pianta produce meno, completo la cassetta con i limoni degli alberi vicini.</p>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 26px"><a class="btn" style="background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 18px; border-radius: 999px" style-hover="background: #F2B52A; border-color: #F2B52A" href="https://paypal.me/superetnafood/60EUR" target="_blank" rel="noopener">Adotta e paga · 60 €</a></div>
-        <p style="font-size: 16px; line-height: 1.5; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Dopo il pagamento ricevi via mail le credenziali della tua area riservata: lì scegli l’albero tra quelli liberi e inserisci il nome per la targhetta.</p>
+        </details>
+        <div style="display: flex; align-self: end; padding-top: 26px"><a class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 18px; border-radius: 999px" style-hover="background: #F2B52A; border-color: #F2B52A" href="https://paypal.me/superetnafood/60EUR" target="_blank" rel="noopener">Adotta e paga · 60 €</a></div>
       </article>
-      <article style="flex: 0 0 min(86%, 400px); scroll-snap-align: start; display: flex; flex-direction: column; background: color-mix(in srgb, #E8A838 14%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+      <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #E8A838 14%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
         <span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #7A5410; font-weight: 600">Catania e Acireale</span>
         <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Dal fondo alle tue mani</h3>
-        <p style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 18px 0 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">90 €</span><span style="font-size: 17.5px; color: color-mix(in srgb, var(--color-text) 90%, transparent)">per un anno</span></p>
-        <figure style="margin: 18px 0 0; display: grid; gap: 8px"><img src="assets/targhetta-esempio-oro-v2.jpg" alt="Segnaposto color oro appeso all'albero con questa adozione" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
+        <p style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 18px 0 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">90 €</span><span style="font-size: 17.5px; color: color-mix(in srgb, var(--color-text) 90%, transparent)">per un anno, spedizione compresa</span></p>
+        <figure style="margin: 18px 0 0; display: grid; gap: 8px; align-self: end"><img src="assets/targhetta-esempio-oro-v2.jpg" alt="Segnaposto color oro appeso all'albero con questa adozione" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
+        <details style="margin: 16px 0 0"><summary style="list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 10px 20px; border: 1.5px solid #0A5806; border-radius: 999px; color: #0A5806; font-weight: 600; font-size: 17px; text-align: center" style-hover="background: color-mix(in srgb, #0A5806 8%, transparent)">Scopri le condizioni dell'offerta <span aria-hidden="true" style="font-size: 14px">▾</span></summary>
         <ul style="list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55">
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Targhetta, certificato, area riservata e aggiornamenti della formula Custode</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>30 kg garantiti<a href="#nota-kg" aria-label="Vedi nota sui chili" style="text-decoration: none; color: inherit">*</a> in due consegne a mano, nelle finestre di raccolta</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Una consegna per il primofiore e una per il verdello</span></li>
         </ul>
         <p style="font-size: 17px; line-height: 1.6; margin: 18px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Consegna a mano a Catania e Acireale: giorno e posto li concordiamo insieme.</p>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 26px"><a class="btn" style="background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 18px; border-radius: 999px" style-hover="background: #F2B52A; border-color: #F2B52A" href="https://paypal.me/superetnafood/90EUR" target="_blank" rel="noopener">Adotta e paga · 90 €</a></div>
-        <p style="font-size: 16px; line-height: 1.5; margin: 10px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Dopo il pagamento ricevi via mail le credenziali della tua area riservata: lì scegli l’albero tra quelli liberi e inserisci il nome per la targhetta.</p>
+        </details>
+        <div style="display: flex; align-self: end; padding-top: 26px"><a class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 18px; border-radius: 999px" style-hover="background: #F2B52A; border-color: #F2B52A" href="https://paypal.me/superetnafood/90EUR" target="_blank" rel="noopener">Adotta e paga · 90 €</a></div>
       </article>
     </div>
-    <sc-if value="{{ hasScroll }}" hint-placeholder-val="{{ true }}"><div style="display: flex; align-items: center; gap: 16px; margin-top: 12px">
-      <button type="button" aria-label="Formula precedente" onClick="{{ prev }}" disabled="{{ atStart }}" style="flex: 0 0 auto; width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid #0D6E08; background: transparent; color: #0D6E08; font-size: 22px; line-height: 1; cursor: pointer" style-hover="background: #0D6E08; color: #ffffff">←</button>
-      <div style="display: flex; gap: 8px; align-items: center">
-        <sc-for list="{{ dots }}" as="d" hint-placeholder-count="3"><button type="button" aria-label="{{ d.label }}" onClick="{{ d.go }}" style="width: {{ d.w }}; height: 10px; border-radius: 999px; border: 0; padding: 0; background: {{ d.bg }}; cursor: pointer; transition: width 0.2s, background 0.2s"></button></sc-for>
-      </div>
-      <button type="button" aria-label="Formula successiva" onClick="{{ next }}" disabled="{{ atEnd }}" style="flex: 0 0 auto; width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid #0D6E08; background: transparent; color: #0D6E08; font-size: 22px; line-height: 1; cursor: pointer" style-hover="background: #0D6E08; color: #ffffff">→</button>
-    </div></sc-if>
-    <p style="font-size: 17px; line-height: 1.6; margin: 24px 0 0">Hai una domanda prima di adottare? <a href="https://wa.me/393515286188" target="_blank" rel="noopener" style="color: #0A5806; font-weight: 700">Scrivimi su WhatsApp</a></p>
+    <p style="font-size: 17px; line-height: 1.6; margin: 28px 0 0">Hai una domanda prima di adottare? <a href="https://wa.me/393515286188" target="_blank" rel="noopener" style="color: #0A5806; font-weight: 700">Scrivimi su WhatsApp</a></p>
   </section>
 
-  <section style="padding: clamp(44px, 7vw, 80px) 0 0">
-    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Come funziona</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px clamp(28px, 4vw, 60px); margin-top: 28px">
-      <div style="background: color-mix(in srgb, #E8A838 16%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #7A5410">1</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Adotti e paghi</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Scegli la formula e paga dal pulsante PayPal, con il conto o con la carta. Non devi fare altro.</p>
-      </div>
-      <div style="background: color-mix(in srgb, #0088B0 12%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #00607D">2</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Ricevi le credenziali</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Entro 24 ore ti arriva una mail, all’indirizzo usato per il pagamento, con nome utente e password della tua area riservata.</p>
-      </div>
-      <div style="background: color-mix(in srgb, #0D6E08 8%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #0A5806">3</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Scegli il tuo albero</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Entra nell’<a href="area-riservata.html">area riservata</a>, scegli la pianta tra quelle ancora libere e inserisci il nome da mettere sulla targhetta (se è un regalo, quello di chi lo riceve), il tuo telefono e le preferenze per la consegna. Appendo la targhetta, ti mando la foto e il certificato, e da lì segui la tua pianta per un anno.</p>
-      </div>
-    </div>
-    <figure style="margin: clamp(28px, 4vw, 44px) 0 0; display: grid; gap: 12px">
-      <img src="assets/area-riservata-scelta-albero.png" alt="L'area riservata: lo slider con le foto degli alberi del limoneto, da cui scegli il tuo albero" loading="lazy" style="width: 100%; height: auto; display: block; border-radius: 18px; box-shadow: var(--shadow-md)">
-      <figcaption style="font-size: 17.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 600; color: #0A5806">Punto 3</strong> · Così appare l’area riservata: scorri le foto degli alberi, tocca quello che ti piace e confermalo.</figcaption>
-    </figure>
-  </section>
-
-  <section style="padding: clamp(44px, 7vw, 80px) 0 0">
-    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Il cruscotto del tuo albero</h2>
-    <p style="font-size: 18px; line-height: 1.7; margin: 14px 0 0; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Con l'adozione ricevi l'accesso all'area riservata: la tua pianta in 3D da girare a 360°, gli interventi in campo, le consegne e le foto, sempre aggiornati.</p>
-    <figure style="margin: 28px 0 0"><img src="assets/cruscotto-anteprima.jpg" alt="Anteprima del cruscotto dell'area riservata: dati della pianta, modello 3D, interventi e consegne" loading="lazy" style="display: block; width: 100%; max-width: 1100px; height: auto; border-radius: 18px; box-shadow: 0 2px 6px rgba(16,32,24,0.08), 0 16px 40px rgba(16,32,24,0.12)"></figure>
-  </section>
-
-  <section id="condizioni" style="padding: clamp(44px, 7vw, 80px) 0 0; max-width: 72ch">
+  <section id="condizioni" style="padding: clamp(32px, 4vw, 48px) 0 0; max-width: 72ch">
     <details>
     <summary style="cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #0D6E08; color: #ffffff; font-family: var(--font-body); font-weight: 600; font-size: 17px; user-select: none" style-hover="background: #0A5806">Condizioni dell'adozione<span aria-hidden="true" style="font-size: 16px">▾</span></summary>
     <ul style="padding-left: 20px; margin: 16px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 90%, transparent)">
+      <li>Dopo il pagamento ricevi via mail le credenziali della tua area riservata: lì scegli l’albero tra quelli liberi e inserisci il nome per la targhetta.</li>
       <li>L'adozione dura un anno dalla conferma del pagamento.</li>
       <li>Il certificato lo puoi scaricare subito dalla tua area riservata. Sul tuo albero appendo un segnaposto col tuo nome, color bronzo, argento o oro in base alla formula scelta. Resta appeso all'albero per tutta la durata dell'adozione.</li>
       <li>Hai 14 giorni dalla conferma per ripensarci senza dare spiegazioni (diritto di recesso, art. 52 del Codice del Consumo): scrivimi su WhatsApp o via mail e ti rimborso tutto entro 14 giorni, con lo stesso metodo di pagamento. Per questo faccio incidere la targhetta solo dopo i 14 giorni: è un bene personalizzato e, una volta incisa, non è più rimborsabile (art. 59, lett. c). Il recesso non vale nemmeno per i limoni già consegnati, che sono deperibili (art. 59, lett. d).</li>
@@ -313,7 +307,7 @@
     </details>
   </section>
 
-  <footer style="padding: clamp(36px, 6vw, 64px) 0 clamp(32px, 5vw, 56px); font-size: 15.5px; line-height: 1.8; color: color-mix(in srgb, var(--color-text) 90%, transparent)">
+  <footer style="padding: clamp(24px, 3vw, 36px) 0 clamp(24px, 4vw, 40px); font-size: 15.5px; line-height: 1.8; color: color-mix(in srgb, var(--color-text) 90%, transparent)">
     <p style="margin: 0">Super Etna Food — azienda agricola Antonio Grasso · Acireale (CT) · superetnafood@gmail.com · P.IVA 06189010876 · <a href="privacy.html">Privacy</a></p>
   </footer>
 </div>
