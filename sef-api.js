@@ -73,7 +73,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
     n = p.numero != null ? pad(p.numero) : (p.albero ? pad(p.albero.numero) : '');
     a = d.alberi[n];
     switch (p.azione) {
-      case 'disponibili': return { liberi: liberi(d).length, totale: 100 };
+      case 'disponibili': var lbd = liberi(d); return { liberi: Math.min(100, lbd.length + (lbd.indexOf('001') < 0 ? 1 : 0)), totale: 100 };
       case 'accedi':
         if (String(p.numero).indexOf('@') >= 0) { var ad = credAd(d, p); if (!ad.albero) return { daScegliere: true, email: ad.email, adottante: ad.adottante, formula: ad.formula, liberi: liberi(d), galleria: liberi(d).indexOf('001') >= 0 ? [{ numero: '001', data: '2026-08-02', src: 'assets/pianta-1-2026-08-02.jpg' }] : [] }; return pub(d, d.alberi[ad.albero]); }
         return pub(d, utente(d, p));
