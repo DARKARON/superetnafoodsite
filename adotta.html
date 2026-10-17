@@ -190,7 +190,7 @@ summary::-webkit-details-marker { display: none; }
 <section style="background: #0D6E08">
   <div style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
     <div class="hero-grid" style="padding: clamp(14px, 2vw, 24px) 0 clamp(36px, 6vw, 64px)">
-      <h1 class="hero-kicker" style="margin: 0 0 clamp(20px, 2.5vw, 32px); padding-top: 0; font-weight: 500; font-size: clamp(40px, 7.5vw, 92px); line-height: 1.04; letter-spacing: -0.025em; color: #ffffff; max-width: none; text-wrap: pretty">Il tuo albero sull'Etna: sostieni la terra, ricevi la freschezza. 🍋</h1>
+      <h1 class="hero-kicker" style="margin: 0 0 clamp(20px, 2.5vw, 32px); padding-top: 0; font-weight: 500; font-size: clamp(28px, 8vw, 92px); line-height: 1.04; letter-spacing: -0.025em; color: #ffffff; max-width: none; text-wrap: pretty"><span style="display: block">Il tuo albero sull'Etna:</span><span style="display: block">sostieni la terra,</span><span style="display: block">ricevi la freschezza. 🍋</span></h1>
       <div class="hero-text" style="min-width: 0">
         <p style="font-size: clamp(20px, 2vw, 23px); line-height: 1.6; margin: 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Dai il tuo nome, o quello di una persona speciale, a <strong style="font-weight: 700; color: #ffffff">uno dei 100 alberi</strong> del nostro limoneto: <strong style="font-weight: 700; color: #ffffff">tuo per un anno</strong>, con targhetta, foto, video e <strong style="font-weight: 700; color: #ffffff">raccolto a casa</strong>; con la formula Oro puoi anche <strong style="font-weight: 700; color: #ffffff">venire a raccoglierlo in campo</strong>.</p><p style="font-size: clamp(20px, 2vw, 23px); line-height: 1.6; margin: 14px 0 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">🎁 Ordina <strong style="font-weight: 700; color: #ffffff">entro il 5 dicembre</strong> e la prima consegna arriva in <strong style="font-weight: 700; color: #ffffff">confezione regalo</strong>.</p>
         <p style="font-family: var(--font-heading); font-style: italic; font-size: clamp(26px, 2.8vw, 34px); line-height: 1.3; margin: 20px 0 0; color: #ffffff">Proteggi la tradizione, sostieni il tuo albero.</p>
@@ -200,7 +200,7 @@ summary::-webkit-details-marker { display: none; }
         </div>
       </div>
       <figure class="hero-photo" style="margin: 0; position: relative; min-width: 0">
-        <div style="width: 100%; height: clamp(240px, 46vw, 520px); overflow: hidden; border-radius: 18px"><image-slot id="adotta-hero" shape="rect" fit="cover" src="assets/limoneto-etna.jpg" role="img" aria-label="Limoni appena raccolti nel limoneto" placeholder="Un albero con la targhetta" style="display: block; width: 100%; height: 100%"></image-slot></div>
+        <div style="position: relative; width: 100%; height: clamp(240px, 46vw, 520px); overflow: hidden; border-radius: 18px"><image-slot id="adotta-hero" shape="rect" fit="cover" src="assets/limoneto-etna.jpg" role="img" aria-label="Limoni appena raccolti nel limoneto" placeholder="Un albero con la targhetta" style="display: block; width: 100%; height: 100%"></image-slot><div aria-hidden="{{ heroAlt2Hidden }}" style="position: absolute; inset: 0; opacity: {{ heroOp2 }}; transition: opacity 1.2s ease"><img src="assets/limoni-reali.jpg" alt="Limoni dalle forme irregolari appena raccolti, in una vaschetta bianca" style="display: block; width: 100%; height: 100%; object-fit: cover"><span style="position: absolute; top: 14px; left: 14px; max-width: 70%; padding: 8px 14px; border-radius: 10px; background: #0A5806; color: #ffffff; font-size: clamp(14px, 1.4vw, 17px); line-height: 1.3; font-weight: 700; text-align: left">Limoni reali, generati senza aiuto di AI</span></div></div>
       </figure>
     </div>
   </div>
@@ -370,6 +370,7 @@ class Component extends DCLogic {
   };
   rif3d = el => { if (!el) return; const go = () => window.SEFModello ? window.SEFModello.monta(el) : setTimeout(go, 300); go(); };
   componentDidMount() {
+    this.heroT = setInterval(() => this.setState(s => ({ hero2: s.hero2 === false })), 5000);
     this.fitTitle(); window.addEventListener('resize', this.fitTitle); if (document.fonts && document.fonts.ready) document.fonts.ready.then(this.fitTitle);
     const S = window.SEF; if (S) S.chiama('disponibili').then(r => { if (r && r.liberi != null) this.setState({ nLiberi: r.liberi }); }, () => {});
     this.onScroll();
@@ -378,10 +379,12 @@ class Component extends DCLogic {
     window.addEventListener('load', this.onScroll);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(this.onScroll);
   }
-  componentWillUnmount() { window.removeEventListener('resize', this.fitTitle); if (this.ro) this.ro.disconnect(); window.removeEventListener('resize', this.onScroll); window.removeEventListener('load', this.onScroll); }
+  componentWillUnmount() { clearInterval(this.heroT); window.removeEventListener('resize', this.fitTitle); if (this.ro) this.ro.disconnect(); window.removeEventListener('resize', this.onScroll); window.removeEventListener('load', this.onScroll); }
   renderVals() {
     const { i, n } = this.state;
     return {
+      heroOp2: this.state.hero2 === false ? 0 : 1,
+      heroAlt2Hidden: this.state.hero2 === false ? "true" : "false",
       rif3d: this.rif3d,
       nLiberi: this.state.nLiberi,
       testoLiberi: (this.state.nLiberi === 1 ? 'albero ancora libero' : 'alberi ancora liberi') + ' su 100',
