@@ -367,9 +367,9 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
     }); });
   };
   S.METALLI = {
-    bronzo: { nome: 'Bronzo', per: 'Sostenitore base', bg: 'assets/targhetta-bronzo.jpg', fondo: '#8E5A3C', ink: '#FFFFFF', ombra: 'none', foto: '77.2%', vuota: '#FFFFFF' },
-    argento: { nome: 'Argento', per: 'Sostenitore a distanza', bg: 'assets/targhetta-argento.jpg', fondo: '#B9BCC0', ink: '#7A5208', ombra: 'none', foto: '76.7%', vuota: '#7A5208' },
-    oro: { nome: 'Oro', per: 'Sostenitore da vicino', bg: 'assets/targhetta-oro.jpg', fondo: '#D1A94A', ink: '#FAFBFC', ombra: 'none', foto: '76.7%', vuota: '#FAFBFC' }
+    bronzo: { nome: 'Bronzo', per: 'Adottante base', bg: 'assets/targhetta-bronzo.jpg', fondo: '#8E5A3C', ink: '#FFFFFF', ombra: 'none', foto: '77.2%', vuota: '#FFFFFF' },
+    argento: { nome: 'Argento', per: 'Adottante a distanza', bg: 'assets/targhetta-argento.jpg', fondo: '#B9BCC0', ink: '#7A5208', ombra: 'none', foto: '76.7%', vuota: '#7A5208' },
+    oro: { nome: 'Oro', per: 'Adottante da vicino', bg: 'assets/targhetta-oro.jpg', fondo: '#D1A94A', ink: '#FAFBFC', ombra: 'none', foto: '76.7%', vuota: '#FAFBFC' }
   };
   S.FORMULA_METALLO = { "Il tuo albero sull'Etna": 'bronzo', 'Spedito in Italia': 'argento', 'Il raccolto a casa tua': 'argento', 'Una stagione di limoni': 'argento', 'Dal fondo alle tue mani': 'oro' };
   S.metallo = function (a) { var k = (a && a.targa) || (a && S.FORMULA_METALLO[a.formula]) || 'bronzo'; return Object.assign({ chiave: k }, S.METALLI[k] || S.METALLI.bronzo); };

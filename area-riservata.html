@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
-<title>Area riservata — Sostieni un limone · Super Etna Food</title>
+<title>Area riservata — Adotta un limone · Super Etna Food</title>
 </head>
 <body>
 <x-dc>
@@ -188,7 +188,7 @@
 <section style="background: #0D6E08">
   <div style="max-width: 1200px; margin: 0 auto; padding: clamp(36px, 6vw, 72px) clamp(16px, 5vw, 72px) clamp(44px, 7vw, 88px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(28px, 5vw, 72px); align-items: center">
     <div style="min-width: 0">
-      <span style="display: block; font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 95%, transparent); margin-bottom: 16px">Area riservata · Sostieni un limone</span>
+      <span style="display: block; font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 95%, transparent); margin-bottom: 16px">Area riservata · Adotta un limone</span>
       <h1 style="font-weight: 500; font-size: clamp(34px, 5.4vw, 58px); line-height: 1.06; letter-spacing: -0.02em; margin: 0; color: #ffffff">Il tuo albero, da vicino</h1>
       <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 42ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Inserisci il nome utente e la password che hai ricevuto via mail dopo il pagamento. Qui scegli il tuo albero, il nome e il detto della targhetta, e segui la pianta durante l'anno.</p>
     </div>
@@ -202,7 +202,7 @@
   </div>
 </section>
 <div style="max-width: 1200px; margin: 0 auto; padding: clamp(44px, 7vw, 80px) clamp(16px, 5vw, 72px) 0">
-  <p style="margin: 0; font-size: 18px; line-height: 1.7; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Non hai ancora un albero? <a href="adotta.html" style="font-weight: 600">Scopri come sostenerne uno →</a></p>
+  <p style="margin: 0; font-size: 18px; line-height: 1.7; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Non hai ancora un albero? <a href="adotta.html" style="font-weight: 600">Scopri come adottarne uno →</a></p>
 </div>
 </sc-if>
 
@@ -211,7 +211,7 @@
   <div style="max-width: 1200px; margin: 0 auto; padding: clamp(36px, 6vw, 72px) clamp(16px, 5vw, 72px) clamp(32px, 5vw, 56px)">
     <span style="display: block; font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 95%, transparent); margin-bottom: 16px">Area riservata · {{ sc.formula }}</span>
     <h1 style="font-weight: 500; font-size: clamp(34px, 5.4vw, 58px); line-height: 1.06; letter-spacing: -0.02em; margin: 0; color: #ffffff">Scegli il tuo albero</h1>
-    <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">{{ sc.saluto }} per aver sostenuto un limone sull'Etna. Questi sono gli alberi ancora liberi: scegline uno, sarà il tuo per un anno.</p>
+    <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">{{ sc.saluto }} per aver adottato un limone sull'Etna. Questi sono gli alberi ancora liberi: scegline uno, sarà il tuo per un anno.</p>
   </div>
 </section>
 <div style="max-width: 1200px; margin: 0 auto; padding: clamp(32px, 5vw, 56px) clamp(16px, 5vw, 72px) 0">
@@ -515,7 +515,7 @@ class Component extends DCLogic {
     const foto = a && a.foto ? a.foto : [], diario = a && a.diario ? a.diario : [], consegne = a && a.consegne ? a.consegne : [];
     return {
       loggato: !!a, nonLoggato: !a && !this.state.scelta, scegliendo: !a && !!this.state.scelta,
-      sc: (() => { const x = this.state.scelta; return x ? { formula: x.formula || 'Sostieni un limone', saluto: x.adottante ? 'Ciao ' + x.adottante + ', grazie' : 'Grazie', adottante: x.adottante || '', nLiberi: (x.liberi || []).length } : {}; })(),
+      sc: (() => { const x = this.state.scelta; return x ? { formula: x.formula || 'Adotta un limone', saluto: x.adottante ? 'Ciao ' + x.adottante + ', grazie' : 'Grazie', adottante: x.adottante || '', nLiberi: (x.liberi || []).length } : {}; })(),
       liberi: ((this.state.scelta && this.state.scelta.liberi) || []).map(n => {
         const F = window.SEF_FONDO, p = F && F.piante ? F.piante[+n] : null, sel = this.state.sel === n;
         return { numero: n, varieta: p ? p.varieta : 'Limone', info: p ? 'Filare ' + p.filare + (p.anno ? ' · piantato nel ' + p.anno : '') : '', sel, bg: sel ? 'color-mix(in srgb, #E8A838 24%, var(--color-bg))' : '#ffffff', bordo: sel ? '#E8A838' : 'color-mix(in srgb, #0D6E08 22%, transparent)', scegli: () => this.setState({ sel: n, erroreScelta: '' }) };
