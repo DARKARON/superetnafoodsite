@@ -200,7 +200,7 @@ summary::-webkit-details-marker { display: none; }
         </div>
       </div>
       <figure class="hero-photo" style="margin: 0; position: relative; min-width: 0">
-        <div style="position: relative; width: 100%; height: clamp(240px, 46vw, 520px); overflow: hidden; border-radius: 18px"><image-slot id="adotta-hero" shape="rect" fit="cover" src="assets/limoneto-etna.jpg" role="img" aria-label="Limoni appena raccolti nel limoneto" placeholder="Un albero con la targhetta" style="display: block; width: 100%; height: 100%"></image-slot><div aria-hidden="{{ heroAlt2Hidden }}" style="position: absolute; inset: 0; opacity: {{ heroOp2 }}; transition: opacity 1.2s ease"><img src="assets/limoni-reali.jpg" alt="Limoni dalle forme irregolari appena raccolti, in una vaschetta bianca" style="display: block; width: 100%; height: 100%; object-fit: cover"><span style="position: absolute; top: 14px; left: 14px; max-width: 70%; padding: 8px 14px; border-radius: 10px; background: #0A5806; color: #ffffff; font-size: clamp(14px, 1.4vw, 17px); line-height: 1.3; font-weight: 700; text-align: left">Limoni reali, generati senza aiuto di AI</span></div></div>
+        <div style="position: relative; width: 100%; height: clamp(240px, 46vw, 520px); overflow: hidden; border-radius: 18px"><img src="assets/limoneto-etna.jpg" alt="Il limoneto sotto l'Etna innevato" style="display: block; width: 100%; height: 100%; object-fit: cover"><div ref="{{ heroRef }}" style="position: absolute; inset: 0; opacity: 1; transition: opacity 1.2s ease"><img src="assets/limoni-reali.jpg" alt="Limoni dalle forme irregolari appena raccolti, in una vaschetta bianca" style="display: block; width: 100%; height: 100%; object-fit: cover"><span style="position: absolute; top: 14px; left: 14px; max-width: 70%; padding: 8px 14px; border-radius: 10px; background: #0A5806; color: #ffffff; font-size: clamp(14px, 1.4vw, 17px); line-height: 1.3; font-weight: 700; text-align: left">Limoni reali, generati senza aiuto di AI</span></div></div>
       </figure>
     </div>
   </div>
@@ -369,8 +369,8 @@ class Component extends DCLogic {
     if (s > 0) t.style.fontSize = Math.min(72, 40 * w / s * 0.995) + 'px';
   };
   rif3d = el => { if (!el) return; const go = () => window.SEFModello ? window.SEFModello.monta(el) : setTimeout(go, 300); go(); };
+  heroRef = el => { this.heroEl = el; if (el && !this.heroT) { let on = true; this.heroT = setInterval(() => { on = !on; if (this.heroEl) this.heroEl.style.opacity = on ? "1" : "0"; }, 5000); } };
   componentDidMount() {
-    this.heroT = setInterval(() => this.setState(s => ({ hero2: s.hero2 === false })), 5000);
     this.fitTitle(); window.addEventListener('resize', this.fitTitle); if (document.fonts && document.fonts.ready) document.fonts.ready.then(this.fitTitle);
     const S = window.SEF; if (S) S.chiama('disponibili').then(r => { if (r && r.liberi != null) this.setState({ nLiberi: r.liberi }); }, () => {});
     this.onScroll();
@@ -383,8 +383,7 @@ class Component extends DCLogic {
   renderVals() {
     const { i, n } = this.state;
     return {
-      heroOp2: this.state.hero2 === false ? 0 : 1,
-      heroAlt2Hidden: this.state.hero2 === false ? "true" : "false",
+      heroRef: this.heroRef,
       rif3d: this.rif3d,
       nLiberi: this.state.nLiberi,
       testoLiberi: (this.state.nLiberi === 1 ? 'albero ancora libero' : 'alberi ancora liberi') + ' su 100',
