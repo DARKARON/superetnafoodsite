@@ -66,7 +66,7 @@
   a:hover { color: #0D6E08; }
   img { max-width: 100%; height: auto; }
   :focus-visible { outline: 2px solid #E8A838; outline-offset: 2px; }
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "kicker photo" "text photo"; grid-template-rows: auto 1fr; align-items: start; column-gap: clamp(24px, 4vw, 48px); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "kicker kicker" "text photo"; grid-template-rows: auto 1fr; align-items: start; column-gap: clamp(24px, 4vw, 48px); }
   .hero-kicker { grid-area: kicker; }
   .hero-text { grid-area: text; }
   .hero-photo { grid-area: photo; }
@@ -190,10 +190,10 @@ summary::-webkit-details-marker { display: none; }
 <section style="background: #0D6E08">
   <div style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
     <div class="hero-grid" style="padding: clamp(14px, 2vw, 24px) 0 clamp(36px, 6vw, 64px)">
-      <h1 class="hero-kicker" style="margin: 0 0 clamp(20px, 2.5vw, 32px); padding-top: 0; font-weight: 500; font-size: clamp(30px, 3.6vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: #ffffff; max-width: 26ch; text-wrap: balance">Il tuo albero sull'Etna: sostieni la terra, ricevi la freschezza. 🍋</h1>
+      <h1 class="hero-kicker" style="margin: 0 0 clamp(20px, 2.5vw, 32px); padding-top: 0; font-weight: 500; font-size: clamp(40px, 7.5vw, 92px); line-height: 1.04; letter-spacing: -0.025em; color: #ffffff; max-width: none; text-wrap: pretty">Il tuo albero sull'Etna: sostieni la terra, ricevi la freschezza. 🍋</h1>
       <div class="hero-text" style="min-width: 0">
-        <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 0; max-width: 46ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Dai il tuo nome, o quello di una persona speciale, a <strong style="font-weight: 700; color: #ffffff">uno dei 100 alberi</strong> del nostro limoneto: <strong style="font-weight: 700; color: #ffffff">tuo per un anno</strong>, con targhetta, foto, video e <strong style="font-weight: 700; color: #ffffff">raccolto a casa</strong>; con la formula Oro puoi anche <strong style="font-weight: 700; color: #ffffff">venire a raccoglierlo in campo</strong>.</p><p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 14px 0 0; max-width: 46ch; color: color-mix(in srgb, #ffffff 95%, transparent)">🎁 Ordina <strong style="font-weight: 700; color: #ffffff">entro il 5 dicembre</strong> e la prima consegna arriva in <strong style="font-weight: 700; color: #ffffff">confezione regalo</strong>.</p>
-        <p style="font-family: var(--font-heading); font-style: italic; font-size: clamp(19px, 1.9vw, 22px); line-height: 1.4; margin: 16px 0 0; color: #ffffff">Proteggi la tradizione, sostieni il tuo albero.</p>
+        <p style="font-size: clamp(20px, 2vw, 23px); line-height: 1.6; margin: 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Dai il tuo nome, o quello di una persona speciale, a <strong style="font-weight: 700; color: #ffffff">uno dei 100 alberi</strong> del nostro limoneto: <strong style="font-weight: 700; color: #ffffff">tuo per un anno</strong>, con targhetta, foto, video e <strong style="font-weight: 700; color: #ffffff">raccolto a casa</strong>; con la formula Oro puoi anche <strong style="font-weight: 700; color: #ffffff">venire a raccoglierlo in campo</strong>.</p><p style="font-size: clamp(20px, 2vw, 23px); line-height: 1.6; margin: 14px 0 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">🎁 Ordina <strong style="font-weight: 700; color: #ffffff">entro il 5 dicembre</strong> e la prima consegna arriva in <strong style="font-weight: 700; color: #ffffff">confezione regalo</strong>.</p>
+        <p style="font-family: var(--font-heading); font-style: italic; font-size: clamp(26px, 2.8vw, 34px); line-height: 1.3; margin: 20px 0 0; color: #ffffff">Proteggi la tradizione, sostieni il tuo albero.</p>
         <div style="display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap">
           <a class="btn" style="background: #E8A838; color: #33230A; border-color: #E8A838; font-weight: 600; font-size: 18px; border-radius: 999px" href="#formule">Scegli la formula</a>
           <a class="btn" style="background: #25D366; color: #0B2E10; border-color: #25D366; font-weight: 600; font-size: 18px; border-radius: 999px" href="https://wa.me/393515286188" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
@@ -295,24 +295,25 @@ summary::-webkit-details-marker { display: none; }
   </section>
 
   <section id="condizioni" style="padding: clamp(32px, 4vw, 48px) 0 0; max-width: 72ch">
+    <p style="font-size: 17px; line-height: 1.6; margin: 0 0 20px">Hai una domanda prima di sostenere un limone? <a href="https://wa.me/393515286188" target="_blank" rel="noopener" style="color: #0A5806; font-weight: 700">Scrivimi su WhatsApp</a></p>
     <details>
     <summary style="cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #0D6E08; color: #ffffff; font-family: var(--font-body); font-weight: 600; font-size: 17px; user-select: none" style-hover="background: #0A5806">Condizioni di sostegno<span aria-hidden="true" style="font-size: 16px">▾</span></summary>
     <ul style="padding-left: 20px; margin: 16px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 90%, transparent)">
-      <li>Dopo il pagamento ricevi via mail le credenziali della tua area riservata: lì scegli l’albero tra quelli liberi e inserisci il nome per la targhetta.</li>
-      <li>Il sostegno dura un anno dalla conferma del pagamento.</li>
-      <li>Il certificato lo puoi scaricare subito dalla tua area riservata. Sul tuo albero appendo una targhetta col tuo nome, color bronzo, argento o oro in base alla formula scelta. Resta appesa all'albero per tutta la durata del sostegno.</li>
-      <li>Hai 14 giorni dalla conferma per ripensarci senza dare spiegazioni (diritto di recesso, art. 52 del Codice del Consumo): scrivimi su WhatsApp o via mail e ti rimborso tutto entro 14 giorni, con lo stesso metodo di pagamento. Per questo faccio incidere la targhetta solo dopo i 14 giorni: è un bene personalizzato e, una volta incisa, non è più rimborsabile (art. 59, lett. c). Il recesso non vale nemmeno per i limoni già consegnati, che sono deperibili (art. 59, lett. d).</li>
-      <li>La mail con le credenziali vale anche come conferma del sostegno. Serve come promemoria e non ha valore fiscale.</li>
+      <li>Dopo il pagamento ricevi via mail le credenziali della tua area riservata: lì scegli l’albero tra quelli liberi e inserisci il nome per la targhetta. La mail vale anche come conferma del sostegno; serve come promemoria e non ha valore fiscale.</li>
       <li>Se entro 7 giorni dalla mail non hai ancora scelto l’albero, te ne assegno uno io: puoi chiedermi di cambiarlo finché la targhetta non è stata incisa.</li>
-      <li>Vendo come produttore agricolo (art. 34 del DPR 633/72): per la vendita diretta dei miei prodotti ai privati non sono previsti scontrino né ricevuta, quindi nella cassetta non li trovi. Se acquisti con partita IVA, scrivimi prima di pagare: ti spiego come documentare l'acquisto.</li>
-      <li>Se durante l'anno la pianta muore per una malattia, ti viene assegnato un altro albero con la tua targhetta.</li>
+      <li>Il sostegno dura un anno dalla conferma del pagamento.</li>
+      <li>Sul tuo albero appendo una targhetta col tuo nome, color bronzo, argento o oro in base alla formula scelta, e resta appesa per tutto l’anno. Il certificato lo scarichi dalla tua area riservata; con Il tuo albero sull’Etna ti spedisco anche una targhetta col certificato a casa, in confezione regalo.</li>
+      <li>La targhetta è un bene personalizzato e i limoni sono deperibili: per questo, una volta incisa la targhetta o consegnati i limoni, il sostegno non è rimborsabile (art. 59, lett. c e d, del Codice del Consumo).</li>
+      <li>Le consegne: Mezzo limone, una cassetta da 3 kg; Un limone, 3 box da 3 kg; Il tuo albero sull’Etna, 3 box da 9 kg. Le box arrivano nei mesi di dicembre, febbraio e aprile-maggio: il mese di ogni box lo scegli tu dall’area riservata, entro queste finestre.</li>
       <li>I chili sono garantiti anche se la tua pianta produce meno: completo con i limoni del limoneto dove vive il tuo albero.</li>
-      <li>Spedisco in tutta Italia con corriere, in cassetta e senza foglie, il giorno dopo la raccolta. A Catania e Acireale la consegna è a mano, nel giorno e nel posto che concordiamo.</li>
+      <li>Le spedizioni sono comprese nel prezzo. Spedisco in tutta Italia con corriere, in cassetta e senza foglie, il giorno dopo la raccolta.</li>
+      <li>Con Il tuo albero sull’Etna puoi venire a raccogliere i limoni in campo, direttamente dal tuo albero, in un giorno che concordiamo.</li>
+      <li>Se durante l’anno la pianta muore per una malattia, ti assegno un altro albero con la tua targhetta.</li>
       <li>Se i limoni arrivano rovinati, mandami una foto entro 48 ore dalla consegna: li sostituisco (garanzia legale di conformità, artt. 128 e seguenti del Codice del Consumo).</li>
+      <li>Vendo come produttore agricolo (art. 34 del DPR 633/72): per la vendita diretta dei miei prodotti ai privati non sono previsti scontrino né ricevuta, quindi nella cassetta non li trovi. Se acquisti con partita IVA, scrivimi prima di pagare: ti spiego come documentare l’acquisto.</li>
       <li>Venditore: Azienda agricola Antonio Grasso — Super Etna Food, Acireale (CT) · P.IVA 06189010876 · superetnafood@gmail.com · WhatsApp +39 351 528 6188.</li>
     </ul>
     </details>
-    <p style="font-size: 17px; line-height: 1.6; margin: 28px 0 0">Hai una domanda prima di sostenere un limone? <a href="https://wa.me/393515286188" target="_blank" rel="noopener" style="color: #0A5806; font-weight: 700">Scrivimi su WhatsApp</a></p>
   </section>
 
   <footer style="padding: clamp(24px, 3vw, 36px) 0 clamp(24px, 4vw, 40px); font-size: 15.5px; line-height: 1.8; color: color-mix(in srgb, var(--color-text) 90%, transparent)">
