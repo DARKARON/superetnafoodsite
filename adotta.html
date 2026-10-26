@@ -55,9 +55,9 @@
 })();
 </script>
 
-<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="fonts/caratteri.css">
 <style>
-  :root { --font-heading: 'Newsreader', Georgia, serif; --font-body: 'Karla', system-ui, sans-serif; }
+  :root { --font-heading: 'Young Serif', Georgia, serif; --font-body: 'Instrument Sans', system-ui, sans-serif; font-synthesis-weight: none; }
   summary::-webkit-details-marker { display: none; }
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body { margin: 0; font-family: var(--font-body); font-size: 17px; text-wrap: pretty; overflow-x: hidden; }
@@ -193,14 +193,14 @@ summary::-webkit-details-marker { display: none; }
     <div class="hero-grid" style="padding: clamp(14px, 2vw, 24px) 0 clamp(36px, 6vw, 64px)">
       <h1 class="hero-kicker" style="margin: 0 0 clamp(20px, 2.5vw, 32px); padding-top: 0; font-weight: 500; font-size: clamp(28px, 8vw, 92px); line-height: 1.04; letter-spacing: -0.025em; color: #ffffff; max-width: none; text-wrap: pretty"><span style="display: block">Il tuo albero sull'Etna:</span><span style="display: block">adotta un limone, proteggi la tradizione 🍋</span></h1>
       <div class="hero-text" style="min-width: 0">
-        <p style="font-size: clamp(20px, 2vw, 23px); line-height: 1.6; margin: 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Dai il tuo nome o quello di una persona speciale, a <strong style="font-weight: 700; color: #ffffff">uno dei 100 alberi</strong> del nostro limoneto: <strong style="font-weight: 700; color: #ffffff">tuo per un anno</strong>, con targhetta, foto, <strong style="font-weight: 700; color: #ffffff">videogioco educativo</strong> e <strong style="font-weight: 700; color: #ffffff">raccolto a casa</strong>. Inoltre con la formula Oro puoi anche <strong style="font-weight: 700; color: #ffffff">venire a raccoglierlo in campo</strong>. 🎁 Ordina <strong style="font-weight: 700; color: #ffffff">entro il 5 dicembre</strong> e la prima consegna arriva in <strong style="font-weight: 700; color: #ffffff">confezione regalo</strong>.</p>
+        <p style="font-size: clamp(20px, 2vw, 23px); line-height: 1.6; margin: 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Dai il tuo nome a <strong style="font-weight: 700; color: #ffffff">uno dei 100 alberi</strong> del limoneto: <strong style="font-weight: 700; color: #ffffff">tuo per un anno</strong>, con targhetta, foto, videogioco e <strong style="font-weight: 700; color: #ffffff">limoni a casa</strong>. 🎁 Entro il 5 dicembre, prima consegna in <strong style="font-weight: 700; color: #ffffff">confezione regalo</strong>.</p>
         <div style="display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap">
           <a class="btn" style="background: #E8A838; color: #33230A; border-color: #E8A838; font-weight: 600; font-size: 18px; border-radius: 999px" href="#formule">Scegli la formula</a>
           <a class="btn" style="background: #25D366; color: #0B2E10; border-color: #25D366; font-weight: 600; font-size: 18px; border-radius: 999px" href="https://wa.me/393515286188" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
         </div>
       </div>
       <figure class="hero-photo" style="margin: 0; position: relative; min-width: 0">
-        <div style="position: relative; width: 100%; height: clamp(240px, 46vw, 520px); overflow: hidden; border-radius: 18px"><img src="assets/limoneto-etna.jpg" alt="Il limoneto sotto l'Etna innevato" style="display: block; width: 100%; height: 100%; object-fit: cover"><div ref="{{ heroRef }}" style="position: absolute; inset: 0; opacity: 1; transition: opacity 1.2s ease"><img src="assets/limoni-reali.jpg" alt="Limoni dalle forme irregolari appena raccolti, in una vaschetta bianca" style="display: block; width: 100%; height: 100%; object-fit: cover"><span style="position: absolute; top: 14px; left: 14px; max-width: 70%; padding: 8px 14px; border-radius: 10px; background: #0A5806; color: #ffffff; font-size: clamp(14px, 1.4vw, 17px); line-height: 1.3; font-weight: 700; text-align: left">“Frutti delle meraviglie”: limoni scolpiti in forme uniche fin dal fiore!</span></div></div>
+        <div style="position: relative; width: 100%; height: clamp(240px, 46vw, 520px); overflow: hidden; border-radius: 18px"><img src="assets/limoneto-etna.jpg" alt="Il limoneto sotto l'Etna innevato" style="display: block; width: 100%; height: 100%; object-fit: cover"><div ref="{{ heroRef }}" style="position: absolute; inset: 0; opacity: 1; transition: opacity 1.2s ease"><img src="assets/limoni-reali.jpg" alt="Limoni dalle forme irregolari appena raccolti, in una vaschetta bianca" style="display: block; width: 100%; height: 100%; object-fit: cover"></div></div>
       </figure>
     </div>
   </div>
@@ -208,38 +208,17 @@ summary::-webkit-details-marker { display: none; }
 
 <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
 
-  <section style="padding: clamp(32px, 4vw, 48px) 0 0">
-    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Come funziona</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px clamp(20px, 3vw, 32px); margin-top: 32px">
-      <div style="background: color-mix(in srgb, #E8A838 16%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #7A5410">1</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Adotta un limone e paghi</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Scegli la <strong style="font-weight: 700; color: var(--color-text)">formula</strong> e paga dal pulsante <strong style="font-weight: 700; color: var(--color-text)">PayPal</strong>, con il conto o con la carta. Non devi fare altro.</p>
-      </div>
-      <div style="background: color-mix(in srgb, #0088B0 12%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #00607D">2</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Ricevi le credenziali</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Ti arriva una <strong style="font-weight: 700; color: var(--color-text)">mail</strong>, all’indirizzo usato per il pagamento, con <strong style="font-weight: 700; color: var(--color-text)">nome utente e password</strong> della tua area riservata.</p>
-      </div>
-      <div style="background: color-mix(in srgb, #0D6E08 8%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #0A5806">3</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Scegli il tuo albero</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Entra nell’<a href="area-riservata.html" style="font-weight: 700">area riservata</a>, <strong style="font-weight: 700; color: var(--color-text)">scegli la pianta</strong> e scrivi il <strong style="font-weight: 700; color: var(--color-text)">nome per la targhetta</strong>. Lo appendo e ti mando <strong style="font-weight: 700; color: var(--color-text)">foto e certificato</strong>.</p>
-      </div>
-    </div>
-  </section>
-
   <section id="formule" style="padding: clamp(32px, 4vw, 48px) 0 0">
     <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Tre formule, un anno</h2>
+    <p style="font-size: 18px; line-height: 1.6; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Tutte includono il <strong style="font-weight: 700; color: var(--color-text)">videogioco</strong> per i più piccoli.</p>
     <div ref="{{ trackRef }}" aria-label="Formule di adozione" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(16px, 2.5vw, 28px); margin: 32px 0 0">
       <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #0D6E08 6%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
         <span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #0A5806; font-weight: 600">Bronzo · Assaggio</span>
         <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Mezzo limone</h3>
-        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">20 €</span></p><p style="font-size: 17px; line-height: 1.55; margin: 14px 0 0"><strong style="font-weight: 700">3 kg di limoni</strong> a mano a Catania e Acireale, oppure spediti in Italia a 30 €</p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Pensata per:</strong> provare i nostri limoni o fare un regalo.</p></div>
+        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">20 €</span></p><p style="font-size: 17px; line-height: 1.55; margin: 14px 0 0"><strong style="font-weight: 700">3 kg di limoni</strong> a mano a Catania e Acireale, oppure spediti in Italia a 30 €</p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Per</strong> provarli o regalarli.</p></div>
         <figure style="margin: 16px 0 0; display: grid; gap: 8px; align-self: start"><img src="assets/targhetta-esempio-bronzo-v2.jpg" alt="Targhetta col tuo nome appesa all'albero, color bronzo" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
         <div style="margin: 0">
         <ul style="list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55">
-          <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Videogioco educativo</strong> per i più piccoli, dall’area riservata</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Targhetta col tuo nome</strong> appesa all'albero</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Foto dell'albero</strong> e <strong style="font-weight: 700">certificato di adozione</strong></span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Accesso all'<strong style="font-weight: 700">area riservata</strong> con le informazioni sulla pianta</span></li>
@@ -250,28 +229,25 @@ summary::-webkit-details-marker { display: none; }
       <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #0088B0 10%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
         <span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #00607D; font-weight: 600">Argento · Famiglia</span>
         <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Un limone</h3>
-        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">40 €</span></p><p style="font-size: 17px; line-height: 1.55; margin: 14px 0 0"><strong style="font-weight: 700">9 kg di limoni</strong> a mano a Catania e Acireale, oppure spediti in Italia a 75 €</p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Pensata per:</strong> una famiglia, circa 25 limoni al mese senza sprechi.</p></div>
+        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">40 €</span></p><p style="font-size: 17px; line-height: 1.55; margin: 14px 0 0"><strong style="font-weight: 700">9 kg di limoni</strong> a mano a Catania e Acireale, oppure spediti in Italia a 75 €</p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Per</strong> una famiglia.</p></div>
         <figure style="margin: 16px 0 0; display: grid; gap: 8px; align-self: start"><img src="assets/targhetta-esempio-argento-v2.jpg" alt="Targhetta col tuo nome appesa all'albero, color argento" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
         <div style="margin: 0">
         <ul style="list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55">
-          <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Videogioco educativo</strong> per i più piccoli, dall’area riservata</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Targhetta, certificato e area riservata</strong> della formula Mezzo limone</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Limoni del tuo albero, <strong style="font-weight: 700">raccolti il giorno prima</strong> della spedizione</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Un video per ogni raccolta</strong> dal tuo albero</span></li>
         </ul>
-        <p id="nota-kg" style="font-size: 17px; line-height: 1.6; margin: 18px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">* I chili sono garantiti: se la tua pianta produce meno, completo la cassetta con i limoni del limoneto dove vive il tuo albero.</p>
         </div>
         <div style="display: flex; align-self: end; padding-top: 26px"><button type="button" onClick="{{ apriArgento }}" aria-haspopup="dialog" class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 17px; border-radius: 999px; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; cursor: pointer" style-hover="background: #F2BA36; border-color: #F2BA36"><span>Adotta Argento · da 40 €</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #003087">Pay</span><span style="color: #009CDE">Pal</span></span></button></div>
       </article>
       <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #E8A838 14%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
         <span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #7A5410; font-weight: 600">Oro · Grande</span>
         <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Il tuo albero sull'Etna</h3>
-        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">80 €</span></p><p style="font-size: 17px; line-height: 1.55; margin: 14px 0 0"><strong style="font-weight: 700">27 kg di limoni</strong> a mano a Catania e Acireale, oppure spediti in Italia a 130 €</p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Pensata per:</strong> famiglie numerose, da dividere con parenti e vicini, bar e ristoranti.</p></div>
+        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">80 €</span></p><p style="font-size: 17px; line-height: 1.55; margin: 14px 0 0"><strong style="font-weight: 700">27 kg di limoni</strong> a mano a Catania e Acireale, oppure spediti in Italia a 130 €</p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Per</strong> famiglie numerose e ristoranti.</p></div>
         <figure style="margin: 16px 0 0; display: grid; gap: 8px; align-self: start"><img src="assets/targhetta-esempio-oro-v2.jpg" alt="Targhetta col tuo nome appesa all'albero, color oro" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
         <div style="margin: 0">
         <ul style="list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55">
-          <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Videogioco educativo</strong> per i più piccoli, dall’area riservata</span></li>
-          <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Targhetta, certificato e area riservata</strong> della formula Mezzo limone, e in più ti spedisco <strong style="font-weight: 700">una targhetta con il certificato</strong> direttamente a casa tua, in <strong style="font-weight: 700">confezione regalo</strong></span></li>
+          <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Tutto della formula Mezzo limone, più <strong style="font-weight: 700">targhetta e certificato a casa</strong> in confezione regalo</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span><strong style="font-weight: 700">Aggiornamenti mensili</strong> con foto e video dal campo</span></li>
           <li style="display: flex; gap: 12px; align-items: baseline"><span style="flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: #E8A838; transform: translateY(-2px)"></span><span>Se vuoi, <strong style="font-weight: 700">vieni a raccogliere i limoni in campo</strong> direttamente dal tuo albero, in un giorno che concordiamo</span></li>
         </ul>
@@ -279,30 +255,55 @@ summary::-webkit-details-marker { display: none; }
         <div style="display: flex; align-self: end; padding-top: 26px"><button type="button" onClick="{{ apriOro }}" aria-haspopup="dialog" class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 17px; border-radius: 999px; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; cursor: pointer" style-hover="background: #F2BA36; border-color: #F2BA36"><span>Adotta Oro · da 80 €</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #003087">Pay</span><span style="color: #009CDE">Pal</span></span></button></div>
       </article>
     </div>
-    <figure style="margin: clamp(32px, 4vw, 48px) 0 0; display: grid; gap: 12px">
-      <img src="assets/area-riservata-scelta-albero.png" alt="L'area riservata: lo slider con le foto degli alberi del limoneto, da cui scegli il tuo albero" loading="lazy" style="width: 100%; height: auto; display: block; border-radius: 18px; box-shadow: var(--shadow-md)">
-      <figcaption style="font-size: 17.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Così appare l’area riservata: scorri le foto degli alberi, tocca quello che ti piace e confermalo.</figcaption>
-    </figure>
   </section>
 
   <section style="padding: clamp(32px, 4vw, 48px) 0 0">
-    <div>
-    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Il cruscotto del tuo albero</h2>
-    <p style="font-size: 18px; line-height: 1.7; margin: 14px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Dalla tua area riservata segui il tuo albero come se fossi in campo: lo <strong style="font-weight: 700; color: var(--color-text)">giri a 360° in 3D</strong>, vedi <strong style="font-weight: 700; color: var(--color-text)">ogni intervento</strong> che faccio, dalla potatura alla concimazione, controlli <strong style="font-weight: 700; color: var(--color-text)">quando arrivano i tuoi limoni</strong> e sfogli le <strong style="font-weight: 700; color: var(--color-text)">foto della stagione</strong>. Tutto aggiornato man mano che il lavoro va avanti.</p>
-    <figure style="margin: 32px 0 0; width: 100%; background: #ffffff; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,32,24,0.06), 0 4px 14px rgba(16,32,24,0.05); overflow: hidden"><div ref="{{ rif3d }}" aria-label="Modello 3D di un albero del limoneto: trascina per girarlo" style="height: clamp(340px, 48vw, 600px); width: 100%; background: radial-gradient(120% 90% at 50% 25%, #FBFAF6, #ECEADF)"></div><figcaption style="padding: 12px 18px 14px; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: #5C5550">Modello 3D · trascina per girarlo</figcaption></figure>
+    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Come funziona</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px clamp(20px, 3vw, 32px); margin-top: 32px">
+      <div style="background: color-mix(in srgb, #E8A838 16%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #7A5410">1</span>
+        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Adotta un limone e paghi</h3>
+        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Paga con <strong style="font-weight: 700; color: var(--color-text)">PayPal</strong>, con il conto o con la carta.</p>
+      </div>
+      <div style="background: color-mix(in srgb, #0088B0 12%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #00607D">2</span>
+        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Ricevi le credenziali</h3>
+        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Ricevi via <strong style="font-weight: 700; color: var(--color-text)">mail</strong> le credenziali dell’area riservata.</p>
+      </div>
+      <div style="background: color-mix(in srgb, #0D6E08 8%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
+        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #0A5806">3</span>
+        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Scegli il tuo albero</h3>
+        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Scegli l’albero e il nome</strong> nell’<a href="area-riservata.html" style="font-weight: 700">area riservata</a>: appendo la targhetta e ti mando foto e certificato.</p>
+      </div>
     </div>
+  </section>
+
   <section id="gioco" style="padding: clamp(32px, 4vw, 48px) 0 0">
     <div style="background: color-mix(in srgb, #F5D90A 22%, var(--color-bg)); border-radius: 22px; padding: clamp(28px, 4.5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; gap: clamp(24px, 4vw, 56px)">
       <div style="flex: 1 1 360px; min-width: 0; display: grid; gap: 18px; justify-items: start">
       <span style="font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #5C5550">Per i più piccoli · incluso in ogni formula</span>
       <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Il limoneto diventa un gioco</h2>
-      <p style="font-size: 18px; line-height: 1.7; margin: 0; max-width: 58ch; color: color-mix(in srgb, var(--color-text) 90%, transparent); text-wrap: pretty">Con l’adozione i bambini ricevono anche <strong style="font-weight: 700; color: var(--color-text)">un videogioco ambientato nel nostro limoneto</strong>, pensato per loro. Si apre dall’area riservata, insieme al tuo albero: un modo divertente per far conoscere ai più piccoli da dove arrivano i limoni.</p>
-      <p style="font-size: 18px; line-height: 1.7; margin: 0; max-width: 58ch; color: color-mix(in srgb, var(--color-text) 90%, transparent); text-wrap: pretty">Tra i rami si nascondono i <strong style="font-weight: 700; color: var(--color-text)">limoni delle meraviglie</strong>: frutti dalle forme irregolari, scolpiti così fin dal fiore dal vento, dagli insetti e dalle piccole ferite della pianta. Non sono difetti, sono la firma della natura: ognuno è diverso da tutti gli altri. Cercateli nel gioco e scoprite la storia di ciascuno.</p>
+      <p style="font-size: 18px; line-height: 1.7; margin: 0; max-width: 58ch; color: color-mix(in srgb, var(--color-text) 90%, transparent); text-wrap: pretty"><strong style="font-weight: 700; color: var(--color-text)">Un videogioco ambientato nel nostro limoneto</strong>, dall’area riservata. Tra i rami si nascondono i <strong style="font-weight: 700; color: var(--color-text)">limoni delle meraviglie</strong>, ognuno con la sua storia: trovateli tutti.</p>
+      <p style="font-size: 17px; line-height: 1.6; margin: 0; max-width: 58ch; font-weight: 600; color: var(--color-text)">Consigliato dai 6 anni con la supervisione di un adulto, dai 7 anni anche da soli.</p>
       <a href="#formule" class="btn" style="background: #F5D90A; color: #201e1d; border-color: #F5D90A; font-weight: 600; font-size: 17px; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-top: 6px" style-hover="background: #E8C800; border-color: #E8C800">Adotta un limone e gioca<span aria-hidden="true">→</span></a>
       </div>
       <figure style="margin: 0 auto; flex: 0 1 340px; width: 100%; max-width: 340px; display: grid; gap: 8px"><video src="assets/tutorial-gioco.mp4" controls="{{ true }}" playsinline="{{ true }}" preload="metadata" aria-label="Tutorial del videogioco nel limoneto" style="display: block; width: 100%; height: auto; max-height: 75vh; aspect-ratio: 9 / 16; object-fit: contain; border-radius: 14px; background: #201e1d; box-shadow: var(--shadow-md)"></video><figcaption style="font-size: 15.5px; line-height: 1.5; color: #5C5550">Il tutorial: come si gioca</figcaption></figure>
     </div>
   </section>
+
+  <section style="padding: clamp(32px, 4vw, 48px) 0 0">
+    <div>
+    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Il cruscotto del tuo albero</h2>
+    <p style="font-size: 18px; line-height: 1.7; margin: 14px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Gira il tuo albero in 3D</strong>, segui ogni intervento in campo e sappi quando arrivano i tuoi limoni.</p>
+    <figure style="margin: 32px 0 0; width: 100%; background: #ffffff; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,32,24,0.06), 0 4px 14px rgba(16,32,24,0.05); overflow: hidden"><div ref="{{ rif3d }}" aria-label="Modello 3D di un albero del limoneto: trascina per girarlo" style="height: clamp(340px, 48vw, 600px); width: 100%; background: radial-gradient(120% 90% at 50% 25%, #FBFAF6, #ECEADF)"></div><figcaption style="padding: 12px 18px 14px; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: #5C5550">Modello 3D · trascina per girarlo</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="alberi" style="padding: clamp(32px, 4vw, 48px) 0 0">
+    <figure style="margin: clamp(32px, 4vw, 48px) 0 0; display: grid; gap: 12px">
+      <img src="assets/area-riservata-scelta-albero.png" alt="L'area riservata: lo slider con le foto degli alberi del limoneto, da cui scegli il tuo albero" loading="lazy" style="width: 100%; height: auto; display: block; border-radius: 18px; box-shadow: var(--shadow-md)">
+      <figcaption style="font-size: 17.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Così appare l’area riservata: scorri le foto degli alberi, tocca quello che ti piace e confermalo.</figcaption>
+    </figure>
   </section>
 
   <section id="condizioni" style="padding: clamp(32px, 4vw, 48px) 0 0; max-width: 72ch">
@@ -315,11 +316,10 @@ summary::-webkit-details-marker { display: none; }
       <li>L’adozione dura un anno dalla conferma del pagamento.</li>
       <li>Sul tuo albero appendo una targhetta col tuo nome, color bronzo, argento o oro in base alla formula scelta, e resta appesa per tutto l’anno. Il certificato lo scarichi dalla tua area riservata; con Il tuo albero sull’Etna ti spedisco anche una targhetta col certificato a casa, in confezione regalo.</li>
       <li>La targhetta è un bene personalizzato e i limoni sono deperibili: per questo, una volta incisa la targhetta o consegnati i limoni, l’adozione non è rimborsabile (art. 59, lett. c e d, del Codice del Consumo).</li>
-      <li>Le consegne: Mezzo limone, una cassetta da 3 kg; Un limone, 2 cassette da 4,5 kg: scegli tu due delle tre finestre (dicembre, febbraio, aprile-maggio); Il tuo albero sull’Etna, 3 cassette da 9 kg, nei mesi di dicembre, febbraio e aprile-maggio. Il mese di ogni cassetta lo scegli tu dall’area riservata, entro queste finestre.</li>
+      <li>Finestre di consegna: dicembre, febbraio, agosto-settembre (Un limone: due a scelta). Il mese lo scegli dall’area riservata.</li>
       <li>I chili sono garantiti anche se la tua pianta produce meno: completo con i limoni del limoneto dove vive il tuo albero.</li>
       <li>Prezzi e consegne per formula:<ul style="padding-left: 20px; margin: 6px 0 0; display: grid; gap: 6px"><li><strong style="font-weight: 700">Mezzo limone</strong>: 3 kg di limoni in 1 cassetta da 3 kg. Consegna a mano 20 € (6,67 €/kg); spedito in Italia 30 €, cioè + 10 € di spedizione (10,00 €/kg).</li><li><strong style="font-weight: 700">Un limone</strong>: 9 kg di limoni in 2 cassette da 4,5 kg. Consegna a mano 40 € (4,44 €/kg); spedito in Italia 75 €, cioè + 35 € di spedizione (8,33 €/kg).</li><li><strong style="font-weight: 700">Il tuo albero sull’Etna</strong>: 27 kg di limoni in 3 cassette da 9 kg. Consegna a mano 80 € (2,96 €/kg); spedito in Italia 130 €, cioè + 50 € di spedizione (4,81 €/kg).</li></ul></li>
-      <li>Spedizioni: non comprese nel prezzo dell’adozione. Costano 10 € per Mezzo limone, 35 € per Un limone e 50 € per Il tuo albero sull’Etna, per tutte le consegne dell’anno; sono indicate prima del pagamento e comprese nel totale del pulsante “spedito in Italia”. Consegna a mano gratuita a Catania e Acireale. Spedisco in tutta Italia con corriere, in cassetta e senza foglie, il giorno dopo la raccolta.</li>
-            <li>Con Il tuo albero sull’Etna puoi venire a raccogliere i limoni in campo, direttamente dal tuo albero, in un giorno che concordiamo.</li>
+      <li>Consegna a mano gratuita a Catania e Acireale. Spedisco in tutta Italia con corriere, in cassetta e senza foglie, il giorno dopo la raccolta.</li>
       <li>Se durante l’anno la pianta muore per una malattia, ti assegno un altro albero con la tua targhetta.</li>
       <li>Se i limoni arrivano rovinati, mandami una foto entro 24 ore dalla consegna: li sostituisco (garanzia legale di conformità, artt. 128 e seguenti del Codice del Consumo).</li>
       <li>Vendo come produttore agricolo (art. 34 del DPR 633/72): per la vendita diretta dei miei prodotti ai privati non sono previsti scontrino né ricevuta, quindi nella cassetta non li trovi. Se acquisti con partita IVA, scrivimi prima di pagare: ti spiego come documentare l’acquisto.</li>
