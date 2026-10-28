@@ -290,7 +290,7 @@ class Component extends DCLogic {
       this.setState({ adozioni: ad || [], occupato: '' }); if (msg) this.avvisa(msg);
       if (azione === 'mAssegna') this.entra(this.state.master, true);
       return true;
-    }, e => { this.setState({ occupato: '' }); this.avvisa(e.message); return false; });
+    }, e => { this.setState({ occupato: '' }); const m = /Azione sconosciuta/.test(e.message) ? 'Il servizio Google non è aggiornato: pubblica la nuova versione di Codice.gs (Gestisci deployment → Versione: Nuova).' : e.message; this.avvisa(m); if (m !== e.message) alert(m); return false; });
   }
   avvisa(t) { this.setState({ avviso: t }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ avviso: '' }), 3000); }
   albero() {
@@ -380,7 +380,7 @@ class Component extends DCLogic {
         const giorni = x.creataIl ? Math.floor((Date.now() - new Date(x.creataIl + 'T12:00:00').getTime()) / 86400000) : 0;
         const st = x.albero ? ['Albero n. ' + x.albero + ' scelto il ' + S.data(x.sceltaIl || ''), '#0A4A06'] : (giorni >= 7 ? ['Non ha scelto da ' + giorni + ' giorni: assegnagli tu un albero', '#9A3B00'] : ["Deve ancora scegliere l'albero", '#5A3D08']);
         return {
-          titolo: x.utente + (x.adottante ? ' · ' + x.adottante : ''),
+          titolo: (x.utente || x.email || '—') + (x.adottante ? ' · ' + x.adottante : ''),
           info: [x.email || 'nessuna mail', x.formula, x.creataIl ? 'creata il ' + S.data(x.creataIl) : '', 'password ' + x.password, x.mailInviata ? 'mail inviata il ' + S.data(String(x.mailInviata).slice(0, 10)) : '', x.telefono ? 'tel. ' + x.telefono : '', x.consegna || ''].filter(Boolean).join(' · '),
           stato: st[0], coloreStato: st[1], albero: x.albero, haAlbero: !!x.albero, senzaAlbero: !x.albero,
           vai: () => this.vai(+x.albero),
