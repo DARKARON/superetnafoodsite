@@ -61,20 +61,22 @@
   <div style="max-width: 1320px; margin: 0 auto; padding: clamp(20px, 3vw, 32px) clamp(16px, 4vw, 48px); display: grid; gap: 20px">
     <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px">
       <h2 style="font-weight: 500; font-size: 28px; line-height: 1.15; margin: 0">Adozioni</h2>
-      <span style="font-size: 15px; color: color-mix(in srgb, var(--color-text) 75%, transparent)">{{ adozConteggio }}</span>
+      <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px"><span style="font-size: 15px; color: color-mix(in srgb, var(--color-text) 75%, transparent)">{{ adozConteggio }}</span><button type="button" onClick="{{ cancellaTutto }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #B3261E 50%, transparent); background: transparent; color: #8C1D18; font-weight: 600; font-size: 14px; cursor: pointer" style-hover="background: color-mix(in srgb, #B3261E 8%, transparent)">{{ testoCancellaTutto }}</button></span>
     </div>
     <form onSubmit="{{ creaAdozione }}" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px 16px; align-items: end; background: var(--color-bg); border-radius: 14px; padding: 18px">
-      <label style="display: grid; gap: 6px; font-size: 14px; font-weight: 600; min-width: 0">Mail del pagamento PayPal<input name="email" type="email" required="required" placeholder="nome@mail.it" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-family: var(--font-body); font-size: 16px; color: var(--color-text); box-sizing: border-box; width: 100%"></label>
+      <label style="display: grid; gap: 6px; font-size: 14px; font-weight: 600; min-width: 0">Nome utente<input name="utente" required="required" autocomplete="off" autocapitalize="off" spellcheck="false" pattern="[A-Za-z0-9._\-]{3,30}" title="Da 3 a 30 caratteri: lettere, numeri, punto, trattino" placeholder="es. rossi.maria" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-family: var(--font-body); font-size: 16px; color: var(--color-text); box-sizing: border-box; width: 100%"></label>
+      <label style="display: grid; gap: 6px; font-size: 14px; font-weight: 600; min-width: 0">Password<span style="display: flex; gap: 8px"><input name="password" autocomplete="off" spellcheck="false" minLength="6" placeholder="vuota = la creo io" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-family: var(--font-body); font-size: 16px; color: var(--color-text); box-sizing: border-box; width: 100%; flex: 1"><button type="button" onClick="{{ generaPwNuova }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #0D6E08 45%, transparent); background: transparent; color: #0A5806; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap">Genera</button></span></label>
+      <label style="display: grid; gap: 6px; font-size: 14px; font-weight: 600; min-width: 0">Mail (facoltativa)<input name="email" type="email" placeholder="per mandare le credenziali" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-family: var(--font-body); font-size: 16px; color: var(--color-text); box-sizing: border-box; width: 100%"></label>
       <label style="display: grid; gap: 6px; font-size: 14px; font-weight: 600; min-width: 0">Nome (facoltativo)<input name="adottante" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-family: var(--font-body); font-size: 16px; color: var(--color-text); box-sizing: border-box; width: 100%"></label>
-      <label style="display: grid; gap: 6px; font-size: 14px; font-weight: 600; min-width: 0">Formula<select name="formula" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-family: var(--font-body); font-size: 16px; color: var(--color-text); box-sizing: border-box; width: 100%"><option value="Il tuo albero sull'Etna">Bronzo · 19,90 €</option><option value="Spedito in Italia">Argento · 60 €</option><option value="Dal fondo alle tue mani">Oro · 90 €</option></select></label>
+      <label style="display: grid; gap: 6px; font-size: 14px; font-weight: 600; min-width: 0">Formula<select name="formula" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-family: var(--font-body); font-size: 16px; color: var(--color-text); box-sizing: border-box; width: 100%"><option value="Il tuo albero sull'Etna">Bronzo · 20 €</option><option value="Spedito in Italia">Argento · 40 €</option><option value="Dal fondo alle tue mani">Oro · 80 €</option></select></label>
       <label style="display: grid; gap: 6px; font-size: 14px; font-weight: 600; min-width: 0">Inizio adozione<input name="inizio" type="date" defaultValue="{{ oggiIso }}" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-family: var(--font-body); font-size: 16px; color: var(--color-text); box-sizing: border-box; width: 100%"></label>
-      <label style="display: flex; gap: 8px; align-items: center; font-size: 15px; min-height: 44px"><input name="invia" type="checkbox" defaultChecked="{{ true }}" style="width: 20px; height: 20px">Manda subito la mail con le credenziali</label>
+      <label style="display: flex; gap: 8px; align-items: center; font-size: 15px; min-height: 44px"><input name="invia" type="checkbox" defaultChecked="{{ true }}" style="width: 20px; height: 20px">Manda le credenziali alla mail (se c’è)</label>
       <div style="display: flex; flex-wrap: wrap; gap: 10px">
         <button type="submit" style="flex: 1 1 auto; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #0D6E08; color: #ffffff; font-weight: 600; font-size: 15px; cursor: pointer">{{ testoCrea }}</button>
         <button type="button" onClick="{{ cancellaDaForm }}" style="flex: 1 1 auto; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #B3261E 50%, transparent); background: #ffffff; color: #8C1D18; font-weight: 600; font-size: 15px; cursor: pointer" style-hover="background: color-mix(in srgb, #B3261E 8%, #ffffff)">{{ testoCancella }}</button>
       </div>
     </form>
-    <sc-if value="{{ nessunaAdozione }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 16px; color: color-mix(in srgb, var(--color-text) 75%, transparent)">Nessuna adozione ancora. Quando arriva un pagamento PayPal, inserisci qui la mail di chi ha pagato.</p></sc-if>
+    <sc-if value="{{ nessunaAdozione }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 16px; color: color-mix(in srgb, var(--color-text) 75%, transparent)">Nessuna adozione. Quando arriva un pagamento PayPal, crea qui nome utente e password per chi ha pagato e mandaglieli (mail o WhatsApp).</p></sc-if>
     <div style="display: grid; gap: 10px">
       <sc-for list="{{ adozioni }}" as="ad" hint-placeholder-count="2">
         <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; background: var(--color-bg); border-radius: 14px; padding: 14px 18px">
@@ -91,8 +93,9 @@
               </select>
               <button type="submit" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #0D6E08 45%, transparent); background: transparent; color: #0A5806; font-weight: 600; font-size: 14px; cursor: pointer">Assegna</button>
             </form>
-            <button type="button" onClick="{{ ad.reinvia }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #0D6E08 45%, transparent); background: transparent; color: #0A5806; font-weight: 600; font-size: 14px; cursor: pointer">Rimanda la mail</button>
+            <sc-if value="{{ ad.haMail }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ ad.reinvia }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #0D6E08 45%, transparent); background: transparent; color: #0A5806; font-weight: 600; font-size: 14px; cursor: pointer">Rimanda la mail</button></sc-if>
           </sc-if>
+          <button type="button" onClick="{{ ad.cambiaPw }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #0D6E08 45%, transparent); background: transparent; color: #0A5806; font-weight: 600; font-size: 14px; cursor: pointer">Cambia password</button>
           <button type="button" onClick="{{ ad.elimina }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #B3261E 50%, transparent); background: transparent; color: #8C1D18; font-weight: 600; font-size: 14px; cursor: pointer" style-hover="background: color-mix(in srgb, #B3261E 8%, transparent)">Cancella adozione</button>
         </div>
       </sc-for>
@@ -329,7 +332,7 @@ class Component extends DCLogic {
     return `<!doctype html><html><head><meta charset="utf-8"><title>Targhetta ${n}</title><link rel="stylesheet" href="${u('fonts/fonts.css')}"><style>@page{size:A4 landscape;margin:15mm}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-sizing:border-box}html,body{margin:0}body{display:flex;justify-content:center;padding-top:10mm}.t{width:160mm;aspect-ratio:1676/640;container-type:inline-size;position:relative;overflow:hidden;border-radius:1mm;background-color:${m.fondo};background-image:url('${u(m.bg)}');background-size:100% 100%;background-repeat:no-repeat;color:${m.ink}}.x{position:absolute;left:31.5%;right:23.8%;top:10%;bottom:8%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;text-shadow:${m.ombra}}.x span{display:block}.n{font-family:Newsreader,Georgia,serif;font-weight:500;font-size:6.5cqw;line-height:1;overflow-wrap:anywhere;text-wrap:balance}.d{font-family:Newsreader,Georgia,serif;font-style:italic;font-size:3.5cqw;line-height:1.25;margin-top:1.2cqw}.i{font-family:Karla,sans-serif;font-size:2.5cqw;line-height:1.2;margin-top:.6cqw}.k{font-family:Karla,sans-serif;font-size:2cqw;line-height:1.2;letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin-top:1.4cqw;white-space:nowrap}.a{font-family:Karla,sans-serif;font-size:1.85cqw;line-height:1.2;letter-spacing:.04em;margin-top:.5cqw;white-space:nowrap}.f{position:absolute;left:${m.foto};width:18.4%;top:11.9%;height:73.2%;border-radius:.6cqw;overflow:hidden}</style></head><body><div class="t"><div class="x"><span class="n">${e(t.nome)}</span><span class="d">${e(t.detto)}</span><span class="i">${e(t.trad)}</span><span class="k">Albero n. ${e(n)}</span><span class="a">${e(t.data)}</span></div><div class="f">${img}</div></div><${sc}>Promise.all([document.fonts.ready].concat([].map.call(document.images,function(i){return i.complete?0:new Promise(function(r){i.onload=i.onerror=r})})).concat([new Promise(function(r){var b=new Image();b.onload=b.onerror=r;b.src='${u(m.bg)}'})])).then(function(){setTimeout(function(){print()},300)})</${sc}></body></html>`;
   }
   renderVals() {
-    const S = window.SEF, el = this.state.elenco && this.state.elenco.filter(x => x.adottante || x.email || x.password);
+    const S = window.SEF, el = this.state.elenco && this.state.elenco.filter(x => x.adottante || x.email || x.password || x.utente);
     if (!S || !el) return {
       nonLoggato: true, loggato: false, demo: !!(S && S.demo), errore: this.state.errore,
       testoEntra: this.state.occupato === 'entra' ? 'Accesso…' : 'Entra',
@@ -349,32 +352,43 @@ class Component extends DCLogic {
       testoCrea: occ === 'mNuovaAdozione' ? 'Creo…' : 'Crea adozione',
       testoCancella: occ === 'mEliminaAdozione' ? 'Cancello…' : 'Cancella adozione',
       cancellaDaForm: e => {
-        const f = e.currentTarget.form, email = String(f.elements.email.value || '').trim().toLowerCase();
-        if (!email) { alert("Scrivi nel campo «Mail del pagamento PayPal» la mail dell'adozione da cancellare."); f.elements.email.focus(); return; }
-        const x = this.state.adozioni.find(a => String(a.email || '').toLowerCase() === email);
-        if (!x) { alert('Nessuna adozione trovata con la mail ' + email + '.'); return; }
-        if (!confirm("Cancellare l'adozione di " + x.email + '?' + (x.albero ? "\n\nL'albero n. " + x.albero + ' torna libero e i dati della targhetta vengono cancellati. Foto e diario della pianta restano.' : '') + "\n\nL'operazione non si può annullare.")) return;
-        this.adoz('mEliminaAdozione', { email: x.email }, 'Adozione cancellata').then(ok => { if (ok) { f.reset(); if (x.albero) this.entra(this.state.master, true); } });
+        const f = e.currentTarget.form, u = String(f.elements.utente.value || '').trim().toLowerCase();
+        if (!u) { alert("Scrivi nel campo «Nome utente» l'utente dell'adozione da cancellare."); f.elements.utente.focus(); return; }
+        const x = this.state.adozioni.find(a => String(a.utente || '').toLowerCase() === u);
+        if (!x) { alert("Nessuna adozione trovata con il nome utente " + u + '.'); return; }
+        if (!confirm("Cancellare l'adozione di " + x.utente + '?' + (x.albero ? "\n\nL'albero n. " + x.albero + ' torna libero e i dati della targhetta vengono cancellati. Foto e diario della pianta restano.' : '') + "\n\nL'operazione non si può annullare.")) return;
+        this.adoz('mEliminaAdozione', { utente: x.utente }, 'Adozione cancellata').then(ok => { if (ok) { f.reset(); if (x.albero) this.entra(this.state.master, true); } });
       },
+      testoCancellaTutto: occ === 'mCancellaTutto' ? 'Cancello tutto…' : 'Cancella tutte le adozioni',
+      cancellaTutto: () => {
+        const t = this.state.adozioni.length;
+        const r = prompt('Stai per cancellare TUTTE le adozioni' + (t ? ' (' + t + ')' : '') + ' e liberare tutti i 100 alberi.\nNomi, targhette, account e password degli adottanti vengono eliminati. Foto, diario e dati delle piante restano. Resta solo il tuo accesso PERICLE22.\n\nL\'operazione non si può annullare. Per confermare scrivi CANCELLA');
+        if (r === null) return;
+        if (r.trim() !== 'CANCELLA') { alert('Non hai scritto CANCELLA: non ho cancellato nulla.'); return; }
+        this.adoz('mCancellaTutto', { conferma: 'CANCELLA' }, 'Tutte le adozioni cancellate').then(ok => { if (ok) this.entra(this.state.master, true); });
+      },
+      generaPwNuova: e => { const f = e.currentTarget.form; f.elements.password.value = ['zagara', 'limone', 'etna', 'verdello', 'fiore', 'scirocco'][Math.floor(Math.random() * 6)] + '-' + (1000 + Math.floor(Math.random() * 9000)); },
       creaAdozione: e => {
         e.preventDefault();
-        const f = e.target, fd = new FormData(f), invia = !!fd.get('invia');
-        this.adoz('mNuovaAdozione', { email: String(fd.get('email') || '').trim(), adottante: String(fd.get('adottante') || '').trim(), formula: String(fd.get('formula') || ''), inizio: String(fd.get('inizio') || ''), invia }, invia ? 'Adozione creata, mail inviata' : 'Adozione creata').then(ok => { if (ok) { f.email.value = ''; f.adottante.value = ''; } });
+        const f = e.target, fd = new FormData(f), email = String(fd.get('email') || '').trim(), invia = !!fd.get('invia') && !!email, u = String(fd.get('utente') || '').trim();
+        this.adoz('mNuovaAdozione', { utente: u, password: String(fd.get('password') || '').trim(), email, adottante: String(fd.get('adottante') || '').trim(), formula: String(fd.get('formula') || ''), inizio: String(fd.get('inizio') || ''), invia }, invia ? 'Adozione creata, mail inviata' : 'Adozione creata: manda nome utente e password').then(ok => { if (ok) { f.utente.value = ''; f.password.value = ''; f.email.value = ''; f.adottante.value = ''; } });
       },
       adozConteggio: (() => { const t = this.state.adozioni.length, w = this.state.adozioni.filter(x => !x.albero).length; return t ? t + (t === 1 ? ' adozione' : ' adozioni') + (w ? ' · ' + w + ' in attesa della scelta' : '') : ''; })(),
       nessunaAdozione: this.state.adozioni.length === 0,
-      liberiOpz: (() => { const presi = {}; el.forEach(x => { if (x.adottante || x.email || x.password) presi[x.numero] = 1; }); const o = []; for (let i = 1; i <= 100; i++) { const p = S.pad(i); if (!presi[p]) o.push(p); } return o; })(),
+      liberiOpz: (() => { const presi = {}; el.forEach(x => { if (x.adottante || x.email || x.password || x.utente) presi[x.numero] = 1; }); const o = []; for (let i = 1; i <= 100; i++) { const p = S.pad(i); if (!presi[p]) o.push(p); } return o; })(),
       adozioni: this.state.adozioni.map(x => {
         const giorni = x.creataIl ? Math.floor((Date.now() - new Date(x.creataIl + 'T12:00:00').getTime()) / 86400000) : 0;
         const st = x.albero ? ['Albero n. ' + x.albero + ' scelto il ' + S.data(x.sceltaIl || ''), '#0A4A06'] : (giorni >= 7 ? ['Non ha scelto da ' + giorni + ' giorni: assegnagli tu un albero', '#9A3B00'] : ["Deve ancora scegliere l'albero", '#5A3D08']);
         return {
-          titolo: (x.adottante ? x.adottante + ' · ' : '') + x.email,
-          info: [x.formula, x.creataIl ? 'creata il ' + S.data(x.creataIl) : '', 'password ' + x.password, x.mailInviata ? 'mail inviata il ' + S.data(String(x.mailInviata).slice(0, 10)) : 'mail non inviata', x.telefono ? 'tel. ' + x.telefono : '', x.consegna || ''].filter(Boolean).join(' · '),
+          titolo: x.utente + (x.adottante ? ' · ' + x.adottante : ''),
+          info: [x.email || 'nessuna mail', x.formula, x.creataIl ? 'creata il ' + S.data(x.creataIl) : '', 'password ' + x.password, x.mailInviata ? 'mail inviata il ' + S.data(String(x.mailInviata).slice(0, 10)) : '', x.telefono ? 'tel. ' + x.telefono : '', x.consegna || ''].filter(Boolean).join(' · '),
           stato: st[0], coloreStato: st[1], albero: x.albero, haAlbero: !!x.albero, senzaAlbero: !x.albero,
           vai: () => this.vai(+x.albero),
-          reinvia: () => this.adoz('mInviaCredenziali', { email: x.email }, 'Mail inviata a ' + x.email),
-          elimina: () => { if (confirm("Cancellare l'adozione di " + x.email + '?' + (x.albero ? "\n\nL'albero n. " + x.albero + ' torna libero e i dati della targhetta vengono cancellati. Foto e diario della pianta restano.' : '') + "\n\nL'operazione non si può annullare.")) this.adoz('mEliminaAdozione', { email: x.email }, 'Adozione cancellata').then(ok => { if (ok && x.albero) this.entra(this.state.master, true); }); },
-          assegna: e => { e.preventDefault(); const n = String(new FormData(e.target).get('albero') || ''); if (n && confirm("Assegnare l'albero n. " + n + ' a ' + x.email + '?')) this.adoz('mAssegna', { email: x.email, albero: n }, 'Albero n. ' + n + ' assegnato'); }
+          haMail: !!x.email,
+          reinvia: () => this.adoz('mInviaCredenziali', { utente: x.utente }, 'Mail inviata a ' + x.email),
+          cambiaPw: () => { const p = prompt('Nuova password per ' + x.utente + ' (almeno 6 caratteri):', ''); if (p === null) return; if (p.trim().length < 6) { alert('La password deve avere almeno 6 caratteri.'); return; } this.adoz('mCredenziali', { utente: x.utente, password: p.trim() }, 'Password cambiata').then(ok => { if (ok && x.albero) this.entra(this.state.master, true); }); },
+          elimina: () => { if (confirm("Cancellare l'adozione di " + x.utente + '?' + (x.albero ? "\n\nL'albero n. " + x.albero + ' torna libero e i dati della targhetta vengono cancellati. Foto e diario della pianta restano.' : '') + "\n\nL'operazione non si può annullare.")) this.adoz('mEliminaAdozione', { utente: x.utente }, 'Adozione cancellata').then(ok => { if (ok && x.albero) this.entra(this.state.master, true); }); },
+          assegna: e => { e.preventDefault(); const n = String(new FormData(e.target).get('albero') || ''); if (n && confirm("Assegnare l'albero n. " + n + ' a ' + x.utente + '?')) this.adoz('mAssegna', { utente: x.utente, albero: n }, 'Albero n. ' + n + ' assegnato'); }
         };
       }),
       nonLoggato: false, loggato: true, demo: S.demo, errore: '', avviso: this.state.avviso,

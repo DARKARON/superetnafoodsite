@@ -2,11 +2,11 @@
    1. Segui apps-script/ISTRUZIONI.md per pubblicare lo script su Google.
    2. Incolla qui sotto l'indirizzo dell'app web (finisce con /exec).
    Finché è vuoto le pagine girano in modalità DEMO: i dati restano solo in questo browser
-   (accesso amministratore: PERICLE22 + la tua password · albero demo: 001 / zagara-4821). */
+   (accesso amministratore: PERICLE22 + la tua password). */
 var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93PC_8FdyTkgZF0wbwUMXXROedK-aaEEm4Z6Saofio2_GdT5d/exec';
 
 (function () {
-  var MASTER_HASH = '6fd20959ba757e658f5554e112ca1d50595510338cf9df85aa31176951ee986b', K = 'sef-demo-db-2';
+  var MASTER_HASH = '6fd20959ba757e658f5554e112ca1d50595510338cf9df85aa31176951ee986b', K = 'sef-demo-db-3';
   var DETTI = [
     ["Cu' simina, arricogghi.", 'Chi semina, raccoglie.'],
     ["L'àrbulu si canusci d'u fruttu.", "L'albero si riconosce dal frutto."],
@@ -28,8 +28,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
   /* ---------- modalità demo (stesse regole dello script Google) ---------- */
   function semina() {
     return {
-      alberi: { '001': { numero: '001', password: 'zagara-4821', adottante: 'Maria Rossi', email: '', formula: 'Spedito in Italia', inizio: '2026-10-01', varieta: 'Femminello', posizione: 'Filare F1, pianta 1', impianto: '1960', ultimaRaccolta: 'Gennaio 2026, primofiore', note: 'Pianta del 1960 nel primo filare, in buono stato.', certificato: '',
-        consegne: [{ quando: 'Dicembre 2026', cosa: 'Primofiore, 15 kg', stato: 'In programma' }, { quando: 'Agosto 2027', cosa: 'Verdello, 15 kg', stato: 'In programma' }], stato: '' } },
+      alberi: {}, adozioni: {},
       foto: [
         { id: id(), numero: '001', data: '2026-10-06', nota: 'Il verdello ancora sulla pianta, prima della raccolta.', src: 'assets/verdello-pianta.jpg' },
         { id: id(), numero: '001', data: '2026-05-10', nota: 'La potatura di produzione.', src: 'assets/potatura.jpg' },
@@ -51,20 +50,20 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
     return c;
   }
   function adoz(d, e) { d.adozioni = d.adozioni || {}; return d.adozioni[String(e || '').trim().toLowerCase()]; }
-  function liberi(d) { var out = []; for (var i = 1; i <= 100; i++) { var a = d.alberi[pad(i)]; if (!a || !(a.adottante || a.email || a.password)) out.push(pad(i)); } return out; }
+  function liberi(d) { var out = []; for (var i = 1; i <= 100; i++) { var a = d.alberi[pad(i)]; if (!a || !(a.adottante || a.email || a.password || a.utente)) out.push(pad(i)); } return out; }
   function listaAd(d) { return Object.keys(d.adozioni || {}).map(function (k) { return JSON.parse(JSON.stringify(d.adozioni[k])); }).sort(function (x, y) { return String(y.creataIl).localeCompare(String(x.creataIl)); }); }
   function assegna(d, ad, numero, x) {
     var n = pad(numero); if (+n < 1 || +n > 100) throw new Error('Albero non valido.');
     if (liberi(d).indexOf(n) < 0) throw new Error('Questo albero è appena stato scelto da qualcun altro: scegline un altro.');
     var a = d.alberi[n] || { numero: n, stato: '' };
-    Object.assign(a, { numero: n, password: ad.password, email: ad.email, formula: ad.formula, inizio: ad.inizio || oggi(), adottante: x.adottante || ad.adottante || '', telefono: x.telefono || '', consegnaPref: x.consegna || '' });
+    Object.assign(a, { numero: n, password: ad.password, email: ad.email || '', utente: ad.utente, formula: ad.formula, inizio: ad.inizio || oggi(), adottante: x.adottante || ad.adottante || '', telefono: x.telefono || '', consegnaPref: x.consegna || '' });
     d.alberi[n] = a; Object.assign(ad, { albero: n, adottante: a.adottante, telefono: a.telefono, consegna: a.consegnaPref, sceltaIl: oggi() });
     return a;
   }
   function credAd(d, p) { var ad = adoz(d, p.numero); if (!ad || ad.password !== String(p.password)) throw new Error('Nome utente o password non corretti.'); return ad; }
-  function utente(d, p) {
-    if (String(p.numero).indexOf('@') >= 0) { var ad = credAd(d, p); if (!ad.albero) throw new Error('Prima scegli il tuo albero.'); return d.alberi[ad.albero]; }
-    var a = d.alberi[pad(p.numero)]; if (!a || !a.password || a.password !== String(p.password)) throw new Error('Numero o password non corretti.'); return a; }
+  function utente(d, p) { var ad = credAd(d, p); if (!ad.albero) throw new Error('Prima scegli il tuo albero.'); return d.alberi[ad.albero]; }
+  var CAMPI = ['password','adottante','email','utente','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl','nomePianta','detto','traduzione','approvatoIl'];
+  function svuota(al) { CAMPI.forEach(function (k) { al[k] = k === 'consegne' ? [] : ''; }); }
   function master(p) { if (p._h !== MASTER_HASH) throw new Error('Password master non corretta.'); }
   var DATI = ['password','adottante','email','formula','inizio','varieta','posizione','impianto','ultimaRaccolta','note','certificato','consegne','targa','telefono','consegnaPref'];
   function locale(p) {
@@ -75,17 +74,16 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
     switch (p.azione) {
       case 'disponibili': var lbd = liberi(d); return { liberi: Math.min(100, lbd.length + (lbd.indexOf('001') < 0 ? 1 : 0)), totale: 100 };
       case 'accedi':
-        if (String(p.numero).indexOf('@') >= 0) { var ad = credAd(d, p); if (!ad.albero) return { daScegliere: true, email: ad.email, adottante: ad.adottante, formula: ad.formula, liberi: liberi(d), galleria: liberi(d).indexOf('001') >= 0 ? [{ numero: '001', data: '2026-08-02', src: 'assets/pianta-1-2026-08-02.jpg' }] : [] }; return pub(d, d.alberi[ad.albero]); }
-        return pub(d, utente(d, p));
+        var ad = credAd(d, p); if (!ad.albero) return { daScegliere: true, utente: ad.utente, email: ad.email, adottante: ad.adottante, formula: ad.formula, liberi: liberi(d), galleria: [] }; return pub(d, d.alberi[ad.albero]);
       case 'liberiFoto': var lb = liberi(d); return { liberi: lb, galleria: ['001'].concat(lb.slice(0, 5)).map(function (x) { return { numero: x, data: '2026-08-02', src: 'assets/pianta-1-2026-08-02.jpg' }; }) };
       case 'cambia':
         var vec = utente(d, p), nn = pad(p.nuovo);
         if (vec.stato === 'inviato' || vec.stato === 'approvato') throw new Error('La targhetta è già stata inviata: per cambiare albero scrivimi su WhatsApp.');
         if (liberi(d).indexOf(nn) < 0) throw new Error('Questo albero è appena stato scelto da qualcun altro: scegline un altro.');
         var nuo = d.alberi[nn] || { numero: nn, stato: '' };
-        ['password','adottante','email','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl'].forEach(function (k) { nuo[k] = vec[k] || ''; vec[k] = ''; });
+        ['password','adottante','email','utente','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl'].forEach(function (k) { nuo[k] = vec[k] || ''; vec[k] = ''; });
         nuo.numero = nn; d.alberi[nn] = nuo;
-        var ad3 = nuo.email ? adoz(d, nuo.email) : null; if (ad3) ad3.albero = nn;
+        var ad3 = nuo.utente ? adoz(d, nuo.utente) : null; if (ad3) ad3.albero = nn;
         salva(d); return pub(d, nuo);
       case 'scegli':
         var ad2 = credAd(d, p);
@@ -96,14 +94,18 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
         salva(d); return pub(d, a);
       case 'mAdozioni': return listaAd(d);
       case 'mNuovaAdozione':
-        var em = String(p.email || '').trim().toLowerCase();
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) throw new Error('Mail non valida.');
-        if (adoz(d, em)) throw new Error("Esiste già un'adozione con questa mail.");
-        d.adozioni[em] = { email: em, password: String(p.password || '').trim() || ('zagara-' + (1000 + Math.floor(Math.random() * 9000))), adottante: String(p.adottante || '').trim(), formula: p.formula || '', inizio: p.inizio || oggi(), albero: '', creataIl: oggi(), mailInviata: p.invia ? oggi() + ' (demo: non inviata)' : '' };
+        var us = String(p.utente || '').trim(), em = String(p.email || '').trim().toLowerCase();
+        if (!/^[A-Za-z0-9._-]{3,30}$/.test(us)) throw new Error('Nome utente non valido: da 3 a 30 caratteri, solo lettere, numeri, punto, trattino e trattino basso.');
+        if (us.toLowerCase() === 'pericle22') throw new Error('Questo nome utente è riservato.');
+        if (adoz(d, us)) throw new Error('Il nome utente ' + us + ' è già usato: scegline un altro.');
+        if (em && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) throw new Error('Mail non valida.');
+        d.adozioni[us.toLowerCase()] = { utente: us, email: em, password: String(p.password || '').trim() || ('zagara-' + (1000 + Math.floor(Math.random() * 9000))), adottante: String(p.adottante || '').trim(), formula: p.formula || '', inizio: p.inizio || oggi(), albero: '', creataIl: oggi(), mailInviata: p.invia && em ? oggi() + ' (demo: non inviata)' : '' };
         salva(d); return listaAd(d);
-      case 'mInviaCredenziali': var ad3 = adoz(d, p.email); if (!ad3) throw new Error('Adozione non trovata.'); ad3.mailInviata = oggi() + ' (demo: non inviata)'; salva(d); return listaAd(d);
-      case 'mAssegna': var ad4 = adoz(d, p.email); if (!ad4) throw new Error('Adozione non trovata.'); if (ad4.albero) throw new Error("Questa adozione ha già l'albero n. " + ad4.albero + '.'); assegna(d, ad4, p.albero, {}); salva(d); return listaAd(d);
-      case 'mEliminaAdozione': var ad5 = adoz(d, p.email); if (!ad5) throw new Error('Adozione non trovata.'); if (ad5.albero && d.alberi[ad5.albero]) { var al5 = d.alberi[ad5.albero]; ['password','adottante','email','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl','nomePianta','detto','traduzione','approvatoIl'].forEach(function (k) { if (k in al5) al5[k] = k === 'consegne' ? [] : ''; }); } delete d.adozioni[ad5.email]; salva(d); return listaAd(d);
+      case 'mCredenziali': var adc = adoz(d, p.utente); if (!adc) throw new Error('Adozione non trovata.'); if (String(p.password || '').trim().length < 6) throw new Error('La password deve avere almeno 6 caratteri.'); adc.password = String(p.password).trim(); if (adc.albero && d.alberi[adc.albero]) d.alberi[adc.albero].password = adc.password; salva(d); return listaAd(d);
+      case 'mCancellaTutto': if (p.conferma !== 'CANCELLA') throw new Error('Conferma non valida.'); d.adozioni = {}; Object.keys(d.alberi).forEach(function (k) { svuota(d.alberi[k]); }); salva(d); return [];
+      case 'mInviaCredenziali': var ad3 = adoz(d, p.utente); if (ad3 && !ad3.email) throw new Error("Per questa adozione non c'è una mail: manda le credenziali su WhatsApp."); if (!ad3) throw new Error('Adozione non trovata.'); ad3.mailInviata = oggi() + ' (demo: non inviata)'; salva(d); return listaAd(d);
+      case 'mAssegna': var ad4 = adoz(d, p.utente); if (!ad4) throw new Error('Adozione non trovata.'); if (ad4.albero) throw new Error("Questa adozione ha già l'albero n. " + ad4.albero + '.'); assegna(d, ad4, p.albero, {}); salva(d); return listaAd(d);
+      case 'mEliminaAdozione': var ad5 = adoz(d, p.utente); if (!ad5) throw new Error('Adozione non trovata.'); if (ad5.albero && d.alberi[ad5.albero]) svuota(d.alberi[ad5.albero]); delete d.adozioni[String(ad5.utente).toLowerCase()]; salva(d); return listaAd(d);
       case 'proponi':
         a = utente(d, p);
         if (a.stato === 'inviato' || a.stato === 'approvato') throw new Error('La targhetta è già stata inviata.');
