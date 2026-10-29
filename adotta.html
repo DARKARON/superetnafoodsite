@@ -335,7 +335,7 @@ summary::-webkit-details-marker { display: none; }
 
 <sc-if value="{{ sceltaAperta }}" hint-placeholder-val="{{ false }}">
 <div role="presentation" onClick="{{ chiudiScelta }}" style="position: fixed; inset: 0; z-index: 1000; background: rgba(20,18,16,0.55); display: grid; place-items: center; padding: 16px">
-  <div role="dialog" aria-modal="true" aria-labelledby="scelta-titolo" onClick="{{ fermaClick }}" style="width: 100%; max-width: 480px; background: #0D6E08; color: #ffffff; border-radius: 20px; padding: clamp(24px, 4vw, 36px); box-shadow: var(--shadow-lg); display: grid; gap: 14px">
+  <div role="dialog" aria-modal="true" aria-labelledby="scelta-titolo" onClick="{{ fermaClick }}" style="width: 100%; max-width: 480px; max-height: calc(100dvh - 32px); overflow-y: auto; box-sizing: border-box; background: #0D6E08; color: #ffffff; border-radius: 20px; padding: clamp(24px, 4vw, 36px); box-shadow: var(--shadow-lg); display: grid; gap: 14px">
     <div style="display: flex; justify-content: space-between; align-items: start; gap: 16px">
       <div>
         <span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: color-mix(in srgb, #ffffff 90%, transparent)">{{ sceltaTag }} · come ricevi i limoni?</span>
@@ -344,9 +344,19 @@ summary::-webkit-details-marker { display: none; }
       </div>
       <button type="button" onClick="{{ chiudiScelta }}" aria-label="Chiudi" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 999px; border: none; background: rgba(255,255,255,0.14); color: #ffffff; font-size: 22px; line-height: 1; cursor: pointer" style-hover="background: rgba(255,255,255,0.24)">×</button>
     </div>
-    <a href="{{ manoHref }}" target="_blank" rel="noopener" onClick="{{ chiudiScelta }}" style="display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 4px 16px; padding: 18px 20px; border-radius: 14px; background: #0A5806; color: #ffffff; text-decoration: none; border: 1px solid rgba(255,255,255,0.22)" style-hover="background: #084A05; border-color: rgba(255,255,255,0.4)"><span style="font-weight: 700; font-size: 18px">Consegna a mano</span><span style="font-family: var(--font-heading); font-size: 28px; line-height: 1">{{ manoPrezzo }} €</span><span style="font-size: 15.5px; line-height: 1.5; color: color-mix(in srgb, #ffffff 90%, transparent)">{{ manoNota }}</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #ffffff">Pay</span><span style="color: #F5D90A">Pal</span></span></a>
-    <a href="{{ spedHref }}" target="_blank" rel="noopener" onClick="{{ chiudiScelta }}" style="display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 4px 16px; padding: 18px 20px; border-radius: 14px; background: #0A5806; color: #ffffff; text-decoration: none; border: 1px solid rgba(255,255,255,0.22)" style-hover="background: #084A05; border-color: rgba(255,255,255,0.4)"><span style="font-weight: 700; font-size: 18px">Spedito in Italia</span><span style="font-family: var(--font-heading); font-size: 28px; line-height: 1">{{ spedPrezzo }} €</span><span style="font-size: 15.5px; line-height: 1.5; color: color-mix(in srgb, #ffffff 90%, transparent)">{{ spedNota }}</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #ffffff">Pay</span><span style="color: #F5D90A">Pal</span></span></a>
+    <sc-if value="{{ opzioniAperte }}" hint-placeholder-val="{{ true }}">
+    <a href="{{ manoHref }}" target="_blank" rel="noopener" onClick="{{ vaiMano }}" style="display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 4px 16px; padding: 18px 20px; border-radius: 14px; background: #0A5806; color: #ffffff; text-decoration: none; border: 1px solid rgba(255,255,255,0.22)" style-hover="background: #084A05; border-color: rgba(255,255,255,0.4)"><span style="font-weight: 700; font-size: 18px">Consegna a mano</span><span style="font-family: var(--font-heading); font-size: 28px; line-height: 1">{{ manoPrezzo }} €</span><span style="font-size: 15.5px; line-height: 1.5; color: color-mix(in srgb, #ffffff 90%, transparent)">{{ manoNota }}</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #ffffff">Pay</span><span style="color: #F5D90A">Pal</span></span></a>
+    <a href="{{ spedHref }}" target="_blank" rel="noopener" onClick="{{ vaiSped }}" style="display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 4px 16px; padding: 18px 20px; border-radius: 14px; background: #0A5806; color: #ffffff; text-decoration: none; border: 1px solid rgba(255,255,255,0.22)" style-hover="background: #084A05; border-color: rgba(255,255,255,0.4)"><span style="font-weight: 700; font-size: 18px">Spedito in Italia</span><span style="font-family: var(--font-heading); font-size: 28px; line-height: 1">{{ spedPrezzo }} €</span><span style="font-size: 15.5px; line-height: 1.5; color: color-mix(in srgb, #ffffff 90%, transparent)">{{ spedNota }}</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #ffffff">Pay</span><span style="color: #F5D90A">Pal</span></span></a>
     <p style="font-size: 15px; line-height: 1.5; margin: 2px 0 0; color: color-mix(in srgb, #ffffff 90%, transparent)">Paghi su PayPal in una nuova scheda. Il totale è quello indicato, senza costi aggiunti dopo.</p>
+    </sc-if>
+    <sc-if value="{{ pagaAperta }}" hint-placeholder-val="{{ false }}">
+    <div style="display: grid; gap: 12px">
+      <p style="font-size: 17px; line-height: 1.5; margin: 0; color: #ffffff"><strong style="font-weight: 700">{{ pagaTitolo }}</strong> · {{ pagaPrezzo }} €</p>
+      <div ref="{{ pagaRef }}" style="background: #ffffff; border-radius: 14px; padding: 16px; min-height: 120px"></div>
+      <p style="font-size: 15px; line-height: 1.5; margin: 0; color: color-mix(in srgb, #ffffff 90%, transparent)">Puoi pagare con il conto PayPal oppure con una carta di debito, di credito o prepagata, anche senza account.</p>
+      <button type="button" onClick="{{ indietroPaga }}" style="justify-self: start; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.4); background: transparent; color: #ffffff; font-weight: 600; font-size: 16px; cursor: pointer" style-hover="background: rgba(255,255,255,0.12)">← Cambia consegna</button>
+    </div>
+    </sc-if>
   </div>
 </div>
 </sc-if>
@@ -363,7 +373,22 @@ summary::-webkit-details-marker { display: none; }
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { i: 0, n: 0, start: true, end: false, nLiberi: 100, scelta: null };
+  state = { i: 0, n: 0, start: true, end: false, nLiberi: 100, scelta: null, paga: null };
+  PP_SDK = 'https://www.paypal.com/sdk/js?client-id=BAAYvczi4vjPrnnU6_uArOm0xJ8uUKosEFL3Vb2YUajPWtL9ABwzU_d_k5VyaiQxnE52RqXz4rd7dF4-mg&components=hosted-buttons&disable-funding=venmo&currency=EUR';
+  PP_BTN = {};
+  PP_LINK = { 20: 'https://www.paypal.com/ncp/payment/V79T6FRDMQECW', 30: 'https://www.paypal.com/ncp/payment/FDY4F9BRWVDYE', 40: 'https://www.paypal.com/ncp/payment/3RSK6QHQG5FZY', 75: 'https://www.paypal.com/ncp/payment/KMJ2BW7LFGWLU', 80: 'https://www.paypal.com/ncp/payment/YF7TB3NUE7AUJ', 130: 'https://www.paypal.com/ncp/payment/EZ3GW7E929PXA' };
+  ppHref(p) { return this.PP_LINK[p] || 'https://paypal.me/superetnafood/' + p + 'EUR'; }
+  sdkPP() {
+    if (window.paypal && window.paypal.HostedButtons) return Promise.resolve(window.paypal);
+    if (!this._pp) this._pp = new Promise((ok, ko) => { const s = document.createElement('script'); s.src = this.PP_SDK; s.async = true; s.onload = () => ok(window.paypal); s.onerror = () => { this._pp = null; ko(new Error('PayPal non raggiungibile')); }; document.head.appendChild(s); });
+    return this._pp;
+  }
+  pagaRef = el => {
+    if (!el || !this.state.paga) return;
+    const id = this.PP_BTN[this.state.paga.prezzo]; if (!id || el.dataset.btn === id) return;
+    el.dataset.btn = id; el.id = 'paypal-container-' + id; el.innerHTML = '';
+    this.sdkPP().then(pp => pp.HostedButtons({ hostedButtonId: id }).render('#' + el.id)).catch(() => { el.dataset.btn = ''; el.innerHTML = '<p style="margin:0;color:#201e1d;font-size:16px">PayPal non si è caricato. <a href="https://paypal.me/superetnafood/' + this.state.paga.prezzo + 'EUR" target="_blank" rel="noopener">Paga da qui</a>.</p>'; });
+  };
   trackRef = React.createRef();
   targets() {
     const t = this.trackRef.current;
@@ -415,11 +440,20 @@ class Component extends DCLogic {
     return {
       heroRef: this.heroRef,
       sceltaAperta: !!this.state.scelta,
-      ...(() => { const F = { bronzo: ['Mezzo limone','Bronzo',20,30,10,'3 kg di limoni in 1 cassetta da 3 kg'], argento: ['Un limone','Argento',40,75,35,'9 kg di limoni in 2 cassette da 4,5 kg'], oro: ['Il tuo albero sull’Etna','Oro',80,130,50,'27 kg di limoni in 3 cassette da 9 kg'] }; const f = F[this.state.scelta] || F.bronzo; return { sceltaNome: f[0], sceltaTag: f[1], sceltaKg: f[5], manoPrezzo: f[2], manoNota: 'Gratuita a Catania e Acireale: ci accordiamo su WhatsApp', manoHref: 'https://paypal.me/superetnafood/' + f[2] + 'EUR', spedPrezzo: f[3], spedNota: 'Con corriere in tutta Italia, spedizione + ' + f[4] + ' € inclusa', spedHref: 'https://paypal.me/superetnafood/' + f[3] + 'EUR' }; })(),
+      ...(() => { const F = { bronzo: ['Mezzo limone','Bronzo',20,30,10,'3 kg di limoni in 1 cassetta da 3 kg'], argento: ['Un limone','Argento',40,75,35,'9 kg di limoni in 2 cassette da 4,5 kg'], oro: ['Il tuo albero sull’Etna','Oro',80,130,50,'27 kg di limoni in 3 cassette da 9 kg'] }; const f = F[this.state.scelta] || F.bronzo; return { sceltaNome: f[0], sceltaTag: f[1], sceltaKg: f[5], manoPrezzo: f[2], manoNota: 'Gratuita a Catania e Acireale: ci accordiamo su WhatsApp', manoHref: this.ppHref(f[2]), spedPrezzo: f[3], spedNota: 'Con corriere in tutta Italia, spedizione + ' + f[4] + ' € inclusa', spedHref: this.ppHref(f[3]) }; })(),
       apriBronzo: () => this.setState({ scelta: 'bronzo' }),
       apriArgento: () => this.setState({ scelta: 'argento' }),
       apriOro: () => this.setState({ scelta: 'oro' }),
-      chiudiScelta: () => this.setState({ scelta: null }),
+      chiudiScelta: () => this.setState({ scelta: null, paga: null }),
+      opzioniAperte: !this.state.paga,
+      pagaAperta: !!this.state.paga,
+      pagaTitolo: this.state.paga ? this.state.paga.titolo : '',
+      pagaPrezzo: this.state.paga ? this.state.paga.prezzo : '',
+      pagaRef: this.pagaRef,
+      indietroPaga: () => this.setState({ paga: null }),
+      ...(() => { const F = { bronzo: [20,30], argento: [40,75], oro: [80,130] }, f = F[this.state.scelta] || F.bronzo;
+        const vai = (prezzo, titolo) => e => { if (this.PP_BTN[prezzo]) { e.preventDefault(); this.sdkPP().catch(() => {}); this.setState({ paga: { prezzo, titolo } }); } else this.setState({ scelta: null, paga: null }); };
+        return { vaiMano: vai(f[0], 'Consegna a mano'), vaiSped: vai(f[1], 'Spedito in Italia') }; })(),
       fermaClick: e => e.stopPropagation(),
       condRef: this.condRef || (this.condRef = React.createRef()),
       apriCondizioni: e => { e.preventDefault(); const d = this.condRef && this.condRef.current; if (!d) return; d.open = true; const y = d.getBoundingClientRect().top + window.scrollY - 90; window.scrollTo({ top: y, behavior: 'smooth' }); },
