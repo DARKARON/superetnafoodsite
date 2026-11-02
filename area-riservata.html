@@ -585,7 +585,8 @@ class Component extends DCLogic {
       errore: this.state.errore,
       accedi: e => {
         e.preventDefault();
-        const fd = new FormData(e.target), num = String(fd.get('numero') || '').trim(), pw = String(fd.get('password') || '');
+        const fd = new FormData(e.target), num = String(fd.get('numero') || '').trim(), pw = String(fd.get('password') || '').trim();
+        if (num.indexOf('@') >= 0) { this.setState({ errore: 'Si entra con il nome utente, non con la mail: lo trovi nel messaggio con le credenziali.' }); return; }
         if (num.toUpperCase() === 'PERICLE22') { this.pronto(() => this.admin(pw)); return; }
         this.pronto(() => this.entra({ numero: num, password: pw }));
       },

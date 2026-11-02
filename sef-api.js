@@ -60,7 +60,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
     d.alberi[n] = a; Object.assign(ad, { albero: n, adottante: a.adottante, telefono: a.telefono, consegna: a.consegnaPref, sceltaIl: oggi() });
     return a;
   }
-  function credAd(d, p) { var ad = adoz(d, p.numero); if (!ad || ad.password !== String(p.password)) throw new Error('Nome utente o password non corretti.'); return ad; }
+  function credAd(d, p) { var ad = adoz(d, p.numero); if (!ad || String(ad.password).trim() !== String(p.password || '').trim()) throw new Error('Nome utente o password non corretti.'); return ad; }
   function utente(d, p) { var ad = credAd(d, p); if (!ad.albero) throw new Error('Prima scegli il tuo albero.'); return d.alberi[ad.albero]; }
   var CAMPI = ['password','adottante','email','utente','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl','nomePianta','detto','traduzione','approvatoIl'];
   function svuota(al) { CAMPI.forEach(function (k) { al[k] = k === 'consegne' ? [] : ''; }); }
