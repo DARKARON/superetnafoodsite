@@ -6,7 +6,7 @@
 var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93PC_8FdyTkgZF0wbwUMXXROedK-aaEEm4Z6Saofio2_GdT5d/exec';
 
 (function () {
-  var MASTER_HASH = '6fd20959ba757e658f5554e112ca1d50595510338cf9df85aa31176951ee986b', K = 'sef-demo-db-3';
+  var MASTER_HASH = '', K = 'sef-demo-db-3';
   var DETTI = [
     ["Cu' simina, arricogghi.", 'Chi semina, raccoglie.'],
     ["L'àrbulu si canusci d'u fruttu.", "L'albero si riconosce dal frutto."],
@@ -64,7 +64,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
   function utente(d, p) { var ad = credAd(d, p); if (!ad.albero) throw new Error('Prima scegli il tuo albero.'); return d.alberi[ad.albero]; }
   var CAMPI = ['password','adottante','email','utente','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl','nomePianta','detto','traduzione','approvatoIl'];
   function svuota(al) { CAMPI.forEach(function (k) { al[k] = k === 'consegne' ? [] : ''; }); }
-  function master(p) { if (p._h !== MASTER_HASH) throw new Error('Password master non corretta.'); }
+  function master(p) { if (!MASTER_HASH || p._h !== MASTER_HASH) throw new Error('Password master non corretta.'); }
   var DATI = ['password','adottante','email','formula','inizio','varieta','posizione','impianto','ultimaRaccolta','note','certificato','consegne','targa','telefono','consegnaPref'];
   function locale(p) {
     var d = carica(), a, n, i;
