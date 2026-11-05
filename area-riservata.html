@@ -592,10 +592,10 @@ class Component extends DCLogic {
       },
       testoCert: this.state.genera === 'cert' ? 'Preparo il PDF…' : 'Scarica il certificato (PDF)',
       testoCondividi: this.state.genera === 'social' ? 'Preparo l\'immagine…' : 'Scarica il certificato in formato foto per i social',
-      scaricaCert: () => { if (this.state.genera) return; this.setState({ genera: 'cert' }); S.scaricaCertificato(a).then(() => this.setState({ genera: '' }), () => this.setState({ genera: '', errore: '' })); },
+      scaricaCert: () => { if (this.state.genera) return; this.setState({ genera: 'cert' }); S.scaricaCertificato(Object.assign({}, a, { _cred: this.state.cred })).then(() => this.setState({ genera: '' }), () => this.setState({ genera: '', errore: '' })); },
       condividi: () => {
         if (this.state.genera) return; this.setState({ genera: 'social' });
-        S.scaricaFoto(a).then(() => { this.setState({ genera: '' }); }, () => this.setState({ genera: '' }));
+        S.scaricaFoto(Object.assign({}, a, { _cred: this.state.cred })).then(() => { this.setState({ genera: '' }); }, () => this.setState({ genera: '' }));
       },
       esci: () => { try { sessionStorage.removeItem(this.KEY); } catch (e) {} this.setState({ albero: null, scelta: null, sel: '', cred: null }); },
       v: a ? {
