@@ -302,14 +302,8 @@ summary::-webkit-details-marker { display: none; }
         </ol>
       </div>
       <figure style="margin: 0; display: grid; gap: 14px; justify-items: center; min-width: 0">
-        <div aria-label="Esempio di certificato di adozione" style="width: 100%; max-width: 420px; box-sizing: border-box; background: #FBF7EC; border: 1px solid #E5D9B8; border-radius: 6px; box-shadow: var(--shadow-md); padding: clamp(28px, 4vw, 44px) clamp(20px, 3vw, 36px); display: grid; gap: 10px; justify-items: center; text-align: center; transform: rotate(-1.5deg)">
-          <img src="assets/logo-round.png" alt="" style="width: 72px; height: 72px; border-radius: 50%; display: block">
-          <span style="font-size: 13.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #7A5410">Super Etna Food · Acireale</span>
-          <p style="font-family: var(--font-heading); font-size: clamp(28px, 3.4vw, 36px); line-height: 1.1; margin: 6px 0 0">Certificato<br>di adozione</p>
-          <span style="font-family: var(--font-heading); font-size: 22px; color: #0A5806">Albero n. 028</span>
-          <span style="font-size: 17px; font-style: italic; color: color-mix(in srgb, var(--color-text) 90%, transparent)">«Per nonna Carmela»</span>
-        </div>
-        <figcaption style="font-size: 16.5px; line-height: 1.55; max-width: 42ch; text-align: center; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Il certificato lo scarichi dall’area riservata subito dopo aver scelto albero e nome.</figcaption>
+        <img src="assets/certificato-esempio.png" alt="Esempio di certificato di adozione: cornice di maioliche siciliane, foto dell’albero, nome «Pericle» e logo Super Etna Food" loading="lazy" style="display: block; width: 100%; max-width: 360px; height: auto; aspect-ratio: 1080 / 1920; border-radius: 6px; box-shadow: var(--shadow-md)">
+        <figcaption style="font-size: 16.5px; line-height: 1.55; max-width: 42ch; text-align: center; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Il certificato, con la foto del suo albero, lo scarichi dall’area riservata subito dopo aver scelto albero e nome.</figcaption>
       </figure>
     </div>
   </section>
@@ -407,7 +401,7 @@ summary::-webkit-details-marker { display: none; }
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { zona: 'italia', tutorial: false, heroFoto: [{ src: 'assets/limoni-reali.jpg', alt: 'Limoni dalle forme irregolari appena raccolti', numero: '' }], heroI: 0, heroFallback: true };
+  state = { zona: 'italia', tutorial: false, heroFoto: [], heroI: 0, heroFallback: true };
   PP_LINK = { 20: 'https://www.paypal.com/ncp/payment/V79T6FRDMQECW', 30: 'https://www.paypal.com/ncp/payment/FDY4F9BRWVDYE', 40: 'https://www.paypal.com/ncp/payment/3RSK6QHQG5FZY', 75: 'https://www.paypal.com/ncp/payment/KMJ2BW7LFGWLU', 80: 'https://www.paypal.com/ncp/payment/YF7TB3NUE7AUJ', 130: 'https://www.paypal.com/ncp/payment/EZ3GW7E929PXA' };
   rif3d = el => { if (!el) return; const go = () => window.SEFModello ? window.SEFModello.monta(el) : setTimeout(go, 300); go(); };
   caricaHero() {
@@ -423,7 +417,7 @@ class Component extends DCLogic {
   condRef = React.createRef();
   setZona(zona) { this.setState({ zona }); try { localStorage.setItem('sef-zona', zona); } catch (e) {} }
   componentDidMount() {
-    this.heroT = setInterval(() => this.setState(s => { const n = s.heroFoto.length; if (!n) return null; return { heroI: s.heroFallback ? (s.heroI === 0 ? -1 : 0) : (s.heroI + 1) % n }; }), 5000);
+    this.heroT = setInterval(() => this.setState(s => { const n = s.heroFoto.length; if (!n) return null; return { heroI: (s.heroI + 1) % n }; }), 5000);
     const t = setInterval(() => { if (window.SEF) { clearInterval(t); this.caricaHero(); } }, 150); setTimeout(() => clearInterval(t), 8000);
     try { const z = localStorage.getItem('sef-zona'); if (z === 'catania' || z === 'italia') this.setState({ zona: z }); } catch (e) {} }
   componentWillUnmount() { clearInterval(this.heroT); }
@@ -432,7 +426,7 @@ class Component extends DCLogic {
     const P = it ? [30, 75, 130] : [20, 40, 80];
     const on = ['#0D6E08', '#ffffff'], off = ['transparent', 'var(--color-text)'];
     return {
-      heroImgs: this.state.heroFoto.map((f, k) => React.createElement('img', { key: f.src + k, src: f.src, alt: f.alt, style: { position: 'absolute', inset: 0, display: 'block', width: '100%', height: '100%', objectFit: 'cover', opacity: k === this.state.heroI ? 1 : 0, transition: 'opacity 1.2s ease' } })),
+      heroImgs: this.state.heroFoto.map((f, k) => React.createElement('img', { key: f.src + k, src: f.src, alt: f.alt, style: { position: 'absolute', inset: 0, display: 'block', width: '100%', height: '100%', objectFit: f.numero ? 'contain' : 'cover', background: f.numero ? '#0A5806' : 'transparent', opacity: k === this.state.heroI ? 1 : 0, transition: 'opacity 1.2s ease' } })),
       heroBadge: (() => { const f = this.state.heroFoto[this.state.heroI]; return f && f.numero ? 'Albero n. ' + f.numero + ' · ancora libero' : ''; })(),
       rif3d: this.rif3d, condRef: this.condRef,
       zonaIt: it, zonaCt: !it,
