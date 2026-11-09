@@ -436,9 +436,9 @@ class Component extends DCLogic {
       notaPrezzo: it ? 'spedizione inclusa' : 'consegna a mano gratuita',
       pB: P[0], pA: P[1], pO: P[2],
       hrefB: this.PP_LINK[P[0]], hrefA: this.PP_LINK[P[1]], hrefO: this.PP_LINK[P[2]],
-      kgB: '5 kg di limoni in 1 cassetta',
-      kgA: '20 kg di limoni in 2 cassette da 10 kg',
-      kgO: '60 kg di limoni in 3 spedizioni da 20 kg',
+      kgB: '5 kg di limoni in 1 cassetta · a scelta tra novembre-dicembre, febbraio-marzo o agosto-settembre',
+      kgA: '20 kg di limoni in 2 cassette da 10 kg · due finestre a scelta tra novembre-dicembre, febbraio-marzo e agosto-settembre',
+      kgO: (it ? '60 kg di limoni in 3 spedizioni da 20 kg' : '60 kg di limoni in 3 consegne da 20 kg') + ' · novembre-dicembre, febbraio-marzo e agosto-settembre',
       tutorial: this.state.tutorial,
       toggleTutorial: () => this.setState(s => ({ tutorial: !s.tutorial }))
     };

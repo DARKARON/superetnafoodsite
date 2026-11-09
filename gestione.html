@@ -124,16 +124,14 @@
       </div>
       <div style="margin-top: 18px"></div>
       <div style="width: 100%; max-width: 900px; aspect-ratio: 1676 / 640; container-type: inline-size; position: relative; overflow: hidden; border-radius: 6px; background-color: {{ tm.fondo }}; background-image: {{ tm.img }}; background-size: 100% 100%; background-repeat: no-repeat; color: {{ tm.ink }}; box-shadow: 0 2px 4px rgba(40,18,8,0.25), 0 12px 30px rgba(40,18,8,0.22)">
-        <div style="position: absolute; left: 31.5%; right: 23.8%; top: 10%; bottom: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-shadow: {{ tm.ombra }}">
+        <div style="position: absolute; left: 31.5%; right: {{ tm.destra }}; top: 10%; bottom: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-shadow: {{ tm.ombra }}">
           <span style="font-family: var(--font-heading); font-weight: 500; font-size: 6.5cqw; line-height: 1; overflow-wrap: anywhere; text-wrap: balance">{{ tg.nome }}</span>
           <span style="font-family: var(--font-heading); font-style: italic; font-size: 3.5cqw; line-height: 1.25; margin-top: 1.2cqw">{{ tg.detto }}</span>
           <span style="font-size: 2.5cqw; line-height: 1.2; margin-top: 0.6cqw">{{ tg.trad }}</span>
           <span style="font-size: 2cqw; line-height: 1.2; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-top: 1.4cqw; white-space: nowrap">Albero n. {{ numeroPad }}</span>
           <span style="font-size: 1.85cqw; line-height: 1.2; letter-spacing: 0.04em; margin-top: 0.5cqw; white-space: nowrap">{{ dataAdozione }}</span>
         </div>
-        <div style="position: absolute; left: {{ tm.foto }}; width: 18.4%; top: 11.9%; height: 73.2%; border-radius: 0.6cqw; overflow: hidden; display: flex; align-items: center; justify-content: center">
-          <sc-if value="{{ tg.haFoto }}" hint-placeholder-val="{{ false }}">{{ fotoTg }}</sc-if>
-        </div>
+        <sc-if value="{{ tg.haFoto }}" hint-placeholder-val="{{ false }}"><div style="position: absolute; left: {{ tm.foto }}; width: 18.4%; top: 11.9%; height: 73.2%; border-radius: 0.6cqw; overflow: hidden; display: flex; align-items: center; justify-content: center">{{ fotoTg }}</div></sc-if>
       </div>
       <sc-if value="{{ motivoTesto }}" hint-placeholder-val="{{ false }}"><p style="margin: 14px 0 0; font-size: 16px; line-height: 1.55; color: #5A3D08">{{ motivoTesto }}</p></sc-if>
       <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px">
@@ -345,7 +343,7 @@ class Component extends DCLogic {
     const a = this.albero(), b = this.bozza(), n = a.numero, occ = this.state.occupato;
     const stato = a.stato || '';
     const tg = this.targhetta(a); tg.haFoto = !!tg.foto;
-    const bz = this.bozza(), mt = S.metallo({ targa: bz.targa, formula: bz.formula }), tm = Object.assign({}, mt, { img: "url('" + mt.bg + "')" }), tmAuto = S.METALLI[S.FORMULA_METALLO[bz.formula] || 'bronzo'].nome;
+    const bz = this.bozza(), mt = S.metallo({ targa: bz.targa, formula: bz.formula }), tm = Object.assign({}, mt, { img: "url('" + (tg.haFoto ? mt.bg : mt.bg.replace('.jpg', '-senza-foto.png')) + "')", destra: tg.haFoto ? '23.8%' : '8%' }), tmAuto = S.METALLI[S.FORMULA_METALLO[bz.formula] || 'bronzo'].nome;
     const ST = { '': ['Da scegliere', 'color-mix(in srgb, var(--color-text) 8%, var(--color-bg))', '#4A4440'], inviato: ['Da approvare', 'color-mix(in srgb, #E8A838 26%, var(--color-bg))', '#5A3D08'], approvato: ['Approvata', 'color-mix(in srgb, #0D6E08 14%, var(--color-bg))', '#0A4A06'], respinto: ['Da rifare', 'color-mix(in srgb, #B3261E 12%, var(--color-bg))', '#7A2A1E'] }[stato] || ['—', 'transparent', 'inherit'];
     const conf = el.length, kg = (a.diario || []).filter(x => x.tipo === 'Raccolta').reduce((s, x) => s + (parseFloat(String(x.kg).replace(',', '.')) || 0), 0);
     const modifica = e => this.setState({ bozza: Object.assign({}, b, { [e.target.name]: e.target.value }), sporco: true });

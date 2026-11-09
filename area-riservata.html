@@ -354,17 +354,14 @@
     <div style="display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 44px); margin-top: 24px">
       <div style="min-width: 0; display: grid; gap: 14px">
         <div style="width: 100%; max-width: 900px; aspect-ratio: 1676 / 640; container-type: inline-size; position: relative; overflow: hidden; border-radius: 6px; background-color: {{ tm.fondo }}; background-image: {{ tm.img }}; background-size: 100% 100%; background-repeat: no-repeat; color: {{ tm.ink }}; box-shadow: 0 2px 4px rgba(40,18,8,0.25), 0 12px 30px rgba(40,18,8,0.22)">
-          <div style="position: absolute; left: 31.5%; right: 23.8%; top: 10%; bottom: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-shadow: {{ tm.ombra }}">
+          <div style="position: absolute; left: 31.5%; right: {{ tm.destra }}; top: 10%; bottom: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-shadow: {{ tm.ombra }}">
             <span style="font-family: var(--font-heading); font-weight: 500; font-size: 6.5cqw; line-height: 1; overflow-wrap: anywhere; text-wrap: balance">{{ tg.nome }}</span>
             <span style="font-family: var(--font-heading); font-style: italic; font-size: 3.5cqw; line-height: 1.25; margin-top: 1.2cqw">{{ tg.detto }}</span>
             <span style="font-size: 2.5cqw; line-height: 1.2; margin-top: 0.6cqw">{{ tg.trad }}</span>
             <span style="font-size: 2cqw; line-height: 1.2; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-top: 1.4cqw; white-space: nowrap">Albero n. {{ v.numero }}</span>
             <span style="font-size: 1.85cqw; line-height: 1.2; letter-spacing: 0.04em; margin-top: 0.5cqw; white-space: nowrap">{{ v.dataAdozione }}</span>
           </div>
-          <div style="position: absolute; left: {{ tm.foto }}; width: 18.4%; top: 11.9%; height: 73.2%; border-radius: 0.6cqw; overflow: hidden; display: flex; align-items: center; justify-content: center">
-            <sc-if value="{{ tg.haFoto }}" hint-placeholder-val="{{ false }}">{{ fotoTg }}</sc-if>
-            <sc-if value="{{ tg.vuota }}" hint-placeholder-val="{{ false }}"><span style="padding: 8%; text-align: center; font-size: 1.4cqw; line-height: 1.35; color: {{ tm.vuota }}">La tua foto (facoltativa)</span></sc-if>
-          </div>
+          <sc-if value="{{ tg.haFoto }}" hint-placeholder-val="{{ false }}"><div style="position: absolute; left: {{ tm.foto }}; width: 18.4%; top: 11.9%; height: 73.2%; border-radius: 0.6cqw; overflow: hidden; display: flex; align-items: center; justify-content: center">{{ fotoTg }}</div></sc-if>
         </div>
         <sc-if value="{{ inAttesa }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 17px; line-height: 1.6; background: color-mix(in srgb, #0088B0 10%, var(--color-bg)); border-radius: 12px; padding: 14px 18px; color: #00405A">Inviata il {{ v.inviatoIl }}. La controllo e la mando in stampa: ti avviso quando è sull'albero.</p></sc-if>
         <sc-if value="{{ approvata }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 17px; line-height: 1.6; background: color-mix(in srgb, #0D6E08 10%, var(--color-bg)); border-radius: 12px; padding: 14px 18px; color: #0A4A06">Approvata il {{ v.approvatoIl }}: è questa la targhetta del tuo albero.</p></sc-if>
@@ -473,6 +470,7 @@
           <button type="button" onClick="{{ scaricaCert }}" class="btn" style="background: #F5E11A; color: #2A2400; border-color: #F5E11A; font-weight: 600; font-size: 17px; border-radius: 999px; cursor: pointer; white-space: nowrap; height: auto; min-height: 44px">{{ testoCert }}</button>
           <button type="button" onClick="{{ condividi }}" class="btn" style="background: #0D6E08; color: #ffffff; border-color: #0D6E08; font-weight: 600; font-size: 17px; border-radius: 999px; cursor: pointer; white-space: nowrap; height: auto; min-height: 44px">{{ testoCondividi }}</button>
         </div>
+        <sc-if value="{{ msgSocial }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 16px; line-height: 1.55; max-width: 60ch; color: #4A4440">{{ msgSocial }}</p></sc-if>
       </div>
     </div>
   </section>
@@ -591,11 +589,12 @@ class Component extends DCLogic {
         this.pronto(() => this.entra({ numero: num, password: pw }));
       },
       testoCert: this.state.genera === 'cert' ? 'Preparo il PDF…' : 'Scarica il certificato (PDF)',
-      testoCondividi: this.state.genera === 'social' ? 'Preparo l\'immagine…' : 'Scarica il certificato in formato foto per i social',
+      testoCondividi: this.state.genera === 'social' ? 'Preparo l\'immagine…' : 'Condividi su Instagram, Facebook, TikTok, WhatsApp',
+      msgSocial: this.state.msgSocial || '',
       scaricaCert: () => { if (this.state.genera) return; this.setState({ genera: 'cert' }); S.scaricaCertificato(Object.assign({}, a, { _cred: this.state.cred })).then(() => this.setState({ genera: '' }), () => this.setState({ genera: '', errore: '' })); },
       condividi: () => {
-        if (this.state.genera) return; this.setState({ genera: 'social' });
-        S.scaricaFoto(Object.assign({}, a, { _cred: this.state.cred })).then(() => { this.setState({ genera: '' }); }, () => this.setState({ genera: '' }));
+        if (this.state.genera) return; this.setState({ genera: 'social', msgSocial: '' });
+        S.condividi(Object.assign({}, a, { _cred: this.state.cred })).then(r => { this.setState({ genera: '', msgSocial: r === 'scaricato' ? 'Da computer non si può condividere direttamente: ho scaricato l’immagine. Pubblicala dal telefono su Instagram, Facebook, TikTok o nello stato di WhatsApp.' : '' }); }, () => this.setState({ genera: '' }));
       },
       esci: () => { try { sessionStorage.removeItem(this.KEY); } catch (e) {} this.setState({ albero: null, scelta: null, sel: '', cred: null }); },
       v: a ? {
@@ -649,7 +648,7 @@ class Component extends DCLogic {
       motivo: a && a.motivo ? 'Ti chiedo di rifarla: ' + a.motivo : 'Ti chiedo di rifare la scelta della targhetta.',
       fotoTg: tg.foto ? React.createElement('img', { src: tg.foto, alt: 'Foto sulla targhetta', style: { display: 'block', width: '100%', height: '100%', objectFit: 'cover' } }) : null,
       tg, bozza: b,
-      tm: (() => { const m = S && a ? S.metallo(a) : { bg: 'assets/targhetta-bronzo.jpg', fondo: '#8E5A3C', ink: '#FFFFFF', ombra: 'none', foto: '77.2%', vuota: '#FFFFFF' }; return Object.assign({}, m, { img: "url('" + m.bg + "')" }); })(),
+      tm: (() => { const m = S && a ? S.metallo(a) : { bg: 'assets/targhetta-bronzo.jpg', fondo: '#8E5A3C', ink: '#FFFFFF', ombra: 'none', foto: '77.2%', vuota: '#FFFFFF' }; return Object.assign({}, m, { img: "url('" + (tg.haFoto ? m.bg : m.bg.replace('.jpg', '-senza-foto.png')) + "')", destra: tg.haFoto ? '23.8%' : '8%' }); })(),
       detti: DETTI.map((d, k) => ({ i: k, sic: d[0], ita: d[1], sel: b.detto === k, bg: b.detto === k ? on : 'transparent' })),
       dettoScelto: b.detto === 'custom' ? '' : ((DETTI[b.detto] || [])[1] || ''),
       selCustom: b.detto === 'custom', bgCustom: b.detto === 'custom' ? on : 'transparent',
