@@ -18,6 +18,19 @@
 <script>
 (function () {
   var KEY = 'sef-consenso-analytics';
+  // ID del pixel Meta (Gestione eventi). Finché è vuoto il pixel non viene caricato.
+  var META_PIXEL_ID = '';
+  function loadMetaPixel() {
+    if (!META_PIXEL_ID || window.fbq) return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', META_PIXEL_ID);
+    fbq('track', 'PageView');
+    fbq('track', 'ViewContent', { content_name: 'Adotta un limone' });
+  }
   function loadAnalytics() {
     if (window.__gaLoaded) return;
     window.__gaLoaded = true;
@@ -29,7 +42,24 @@
     window.gtag = function () { window.dataLayer.push(arguments); };
     gtag('js', new Date());
     gtag('config', 'G-VLG2FVLNDM', { anonymize_ip: true });
+    loadMetaPixel();
   }
+  // Clic sui pulsanti PayPal: contati per tutti in GoatCounter (anonimo, senza cookie)
+  // e, solo con il consenso, inviati a Meta e Google come "Avvia pagamento".
+  var PREZZI = { V79T6FRDMQECW: 20, FDY4F9BRWVDYE: 30, '3RSK6QHQG5FZY': 40, KMJ2BW7LFGWLU: 75, YF7TB3NUE7AUJ: 80, EZ3GW7E929PXA: 130 };
+  document.addEventListener('click', function (ev) {
+    var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="paypal.com"]') : null;
+    if (!a) return;
+    var codice = (a.getAttribute('href').split('/').pop() || '').split('?')[0];
+    var euro = PREZZI[codice] || 0;
+    try {
+      if (window.goatcounter && window.goatcounter.count) {
+        window.goatcounter.count({ path: 'clic-paypal-' + (euro || 'altro'), title: 'Clic PayPal ' + (euro ? euro + ' €' : ''), event: true });
+      }
+    } catch (e) {}
+    try { if (window.fbq) fbq('track', 'InitiateCheckout', { value: euro, currency: 'EUR' }); } catch (e) {}
+    try { if (window.gtag) gtag('event', 'begin_checkout', { value: euro, currency: 'EUR' }); } catch (e) {}
+  }, true);
   function hide(b) { b.style.display = 'none'; }
   function init() {
     var b = document.getElementById('privacy-banner');
@@ -391,7 +421,7 @@ summary::-webkit-details-marker { display: none; }
 
 <aside id="privacy-banner" role="region" aria-label="Informativa privacy" style="display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 999; background: #0D6E08; color: #ffffff; padding: 16px clamp(16px, 5vw, 48px); box-shadow: 0 -6px 24px rgba(0,0,0,0.18)">
   <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
-    <p style="flex: 1 1 320px; font-size: 17px; line-height: 1.6; margin: 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Contiamo le visite in modo anonimo, senza cookie. Se accetti, usiamo anche Google Analytics per capire meglio quali pagine vengono lette. I dati non vengono diffusi né venduti. <a href="privacy.html" style="color: #F5E11A; text-decoration: underline">Informativa completa</a></p>
+    <p style="flex: 1 1 320px; font-size: 17px; line-height: 1.6; margin: 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Contiamo le visite in modo anonimo, senza cookie. Se accetti, usiamo anche Google Analytics e il pixel di Meta per capire quali pagine vengono lette e misurare le nostre inserzioni. I dati non vengono diffusi né venduti. <a href="privacy.html" style="color: #F5E11A; text-decoration: underline">Informativa completa</a></p>
     <div style="display: flex; gap: 10px; flex-wrap: wrap">
       <button type="button" id="privacy-rifiuta" class="btn" style="background: transparent; color: #ffffff; border-color: color-mix(in srgb, #ffffff 60%, transparent); font-weight: 600; font-size: 17px; border-radius: 999px; white-space: nowrap; cursor: pointer">Solo essenziali</button>
       <button type="button" id="privacy-accetta" class="btn" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 17.5px; border-radius: 999px; white-space: nowrap; cursor: pointer">Accetta</button>
