@@ -13,7 +13,6 @@
 <script src="ds/ds-bundle.js"></script>
 <script src="image-slot.js"></script>
 <script src="sef-api.js"></script>
-<script src="albero-modello.js"></script>
 <script data-goatcounter="https://superetnafood.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script>
 (function () {
@@ -97,14 +96,24 @@
   a:hover { color: #0D6E08; }
   img { max-width: 100%; height: auto; }
   :focus-visible { outline: 2px solid #E8A838; outline-offset: 2px; }
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "kicker kicker" "text photo"; grid-template-rows: auto 1fr; align-items: start; column-gap: clamp(24px, 4vw, 48px); }
-  .hero-kicker { grid-area: kicker; }
-  .hero-text { grid-area: text; }
-  .hero-photo { grid-area: photo; }
-  @media (max-width: 860px) {
-    .hero-grid { grid-template-columns: 1fr; grid-template-areas: "kicker" "photo" "text"; row-gap: 24px; }
-    .hero-kicker { margin-bottom: 0 !important; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "k" "t" "p" "u" "c" "r"; row-gap: 12px; }
+  .h-k { grid-area: k; } .h-t { grid-area: t; } .h-p { grid-area: p; } .h-u { grid-area: u; } .h-c { grid-area: c; } .h-r { grid-area: r; }
+  .h-p { height: clamp(150px, 44vw, 300px); }
+  .sez { padding: 56px 0 0; }
+  .kit { aspect-ratio: 10 / 9; }
+  @media (min-width: 861px) {
+    .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "k p" "t p" "u p" "c p" "r p"; column-gap: 56px; row-gap: 18px; align-content: center; }
+    .h-p { height: 100%; min-height: 480px; }
+    .h-t { font-size: clamp(34px, 3.6vw, 52px) !important; }
+    .h-c { max-width: 420px; }
+    .sez { padding: 88px 0 0; }
+    .due { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; column-gap: 56px; align-items: center; }
+    .kit { aspect-ratio: 5 / 4; }
   }
+  .scorri { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(230px, 1fr); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
+  .scorri > * { scroll-snap-align: start; }
+  .apri summary .ind::after { content: '+'; }
+  .apri details[open] summary .ind::after { content: '−'; }
 
   image-slot, image-slot * { touch-action: pan-y !important; }
   @media (pointer: coarse) { image-slot { pointer-events: none !important; } }
@@ -198,14 +207,22 @@ summary::-webkit-details-marker { display: none; }
   .menu-btn .nav-links > a.nav-plate .nav-glyph { margin-left: 0 !important; transform: none !important; }
   .menu-btn .nav-links > a.btn { width: 100%; height: auto !important; min-height: 52px; flex: 0 0 auto !important; justify-content: center; box-sizing: border-box; margin: 4px 0 0 !important; padding: 0 16px !important; }
   .barra-mobile { display: none; }
-  @media (max-width: 860px) { .barra-mobile { display: flex; } body { padding-bottom: 88px; } }
+  @media (max-width: 860px) {
+    .barra-mobile { display: flex; }
+    body { padding-bottom: 84px; }
+    #privacy-banner { bottom: calc(70px + env(safe-area-inset-bottom)) !important; }
+    nav.nav { padding: 6px 16px !important; }
+    a.nav-plate-home img { width: 46px !important; height: 46px !important; }
+    .menu-btn .nav-burger { width: 46px; height: 46px; padding: 12px; }
+    .menu-btn .nav-links { top: 54px; }
+  }
   .faq summary .ind::after { content: '+'; }
   .faq details[open] summary .ind::after { content: '−'; }
 </style>
 </helmet>
 
 <nav class="nav" style="padding: 12px clamp(16px, 5vw, 72px); flex-wrap: wrap; gap: 10px 20px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; border: 0">
-  <a class="nav-plate nav-plate-home" href="index.html" aria-label="Super Etna Food — torna alla home"><img src="assets/logo-round.png" alt="">Home</a>
+  <a class="nav-plate nav-plate-home" href="index.html" aria-label="Super Etna Food — torna alla home"><img src="assets/logo-round.webp" alt="">Home</a>
   <div class="menu-btn">
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
   <label for="nav-toggle" class="nav-burger" aria-label="Apri il menù"><span></span><span></span><span></span></label>
@@ -220,167 +237,166 @@ summary::-webkit-details-marker { display: none; }
   </div>
 </nav>
 
-
-<section style="background: #0D6E08">
-  <div style="max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
-    <div class="hero-grid" style="padding: clamp(20px, 3vw, 36px) 0 clamp(36px, 6vw, 64px)">
-      <div class="hero-kicker" style="margin: 0 0 clamp(20px, 2.5vw, 32px)">
-        <span style="display: block; font-size: 15.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #F5E11A; margin: 0 0 14px">Regalo di Natale · spedito in tutta Italia</span>
-        <h1 style="margin: 0; font-weight: 500; font-size: clamp(34px, 6.4vw, 80px); line-height: 1.05; letter-spacing: -0.025em; color: #ffffff; max-width: 20ch; text-wrap: balance">Regala a chi ti sta a cuore un albero di limoni ad Acireale, in Sicilia.</h1>
-      </div>
-      <div class="hero-text" style="min-width: 0; display: grid; gap: 24px; justify-items: start">
-        <p style="font-size: clamp(20px, 2vw, 23px); line-height: 1.6; margin: 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Appendo una targhetta col nome che scegli a <strong style="font-weight: 700; color: #ffffff">uno dei 100 alberi</strong> del limoneto di Acireale. Ti mando <strong style="font-weight: 700; color: #ffffff">foto e certificato</strong>, e i limoni di quell’albero arrivano a casa, in tutta Italia.</p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap">
-          <a class="btn" href="https://www.paypal.com/ncp/payment/FDY4F9BRWVDYE" target="_blank" rel="noopener" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 18px; border-radius: 999px; min-height: 52px; text-decoration: none" style-hover="background: #E8D30A; border-color: #E8D30A; color: #1A1A1A">Regalalo · 30 € spedito</a>
-          <a class="btn" href="#formule" style="background: transparent; color: #ffffff; border-color: color-mix(in srgb, #ffffff 70%, transparent); font-weight: 600; font-size: 18px; border-radius: 999px; min-height: 52px; text-decoration: none" style-hover="background: rgba(255,255,255,0.12); color: #ffffff">Vedi le 3 formule ↓</a>
-        </div>
-        <p style="margin: 0; max-width: 52ch; font-size: 17.5px; line-height: 1.55; color: #ffffff; background: rgba(255,255,255,0.12); border-radius: 14px; padding: 14px 18px">🎁 <strong style="font-weight: 700">Ordini entro il 5 dicembre</strong>: la prima cassetta arriva in confezione regalo, con il certificato da mettere sotto l’albero.</p>
-        <a href="https://wa.me/393515286188" target="_blank" rel="noopener" style="color: #ffffff; font-weight: 600; font-size: 17px; text-underline-offset: 3px" style-hover="color: #F5E11A">Hai una domanda? Scrivimi su WhatsApp →</a>
-      </div>
-      <figure class="hero-photo" style="margin: 0; position: relative; min-width: 0">
-        <div style="position: relative; width: 100%; height: clamp(240px, 46vw, 520px); overflow: hidden; border-radius: 18px; background: #0A5806"><img src="assets/limoneto-etna.jpg" alt="Il limoneto sotto l'Etna innevato" style="display: block; width: 100%; height: 100%; object-fit: cover">{{ heroImgs }}<sc-if value="{{ heroBadge }}" hint-placeholder-val="{{ false }}"><span style="position: absolute; left: 14px; bottom: 14px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(10,88,6,0.92); color: #ffffff; font-weight: 700; font-size: 16px; line-height: 1.2"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #F5E11A"></span>{{ heroBadge }}</span></sc-if></div>
+<section style="background: #0D6E08; color: #ffffff">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 72px); padding-top: 18px; padding-bottom: 28px">
+    <div class="hero">
+      <span class="h-k" style="font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: #F5E11A">Regalo di Natale · spedito in tutta Italia</span>
+      <h1 class="h-t" style="margin: 0; font-weight: 500; font-size: clamp(25px, 7vw, 40px); line-height: 1.12; letter-spacing: -0.015em; color: #ffffff; text-wrap: balance">Regala un albero di limoni sull’Etna a chi ami <span style="color: #F5E11A">— i limoni arrivano a casa sua</span></h1>
+      <figure class="h-p" style="margin: 0 0 18px; position: relative; min-width: 0">
+        <div style="position: absolute; inset: 0; border-radius: 18px; overflow: hidden; background: #0A5806; box-shadow: 0 10px 28px rgba(0,0,0,0.28)">
+        <image-slot id="adotta-antonio" src="assets/limoneto-etna.webp" placeholder="Trascina qui una tua foto nel limoneto" shape="rect" style="display: block; width: 100%; height: 100%"></image-slot></div>
+        <span aria-hidden="true" style="position: absolute; right: 14px; bottom: -30px; width: 108px; height: 96px; transform: rotate(-14deg); filter: drop-shadow(0 8px 10px rgba(0,0,0,0.38)) drop-shadow(0 2px 2px rgba(0,0,0,0.25)); z-index: 2; pointer-events: none"><svg viewBox="0 0 124 96" width="108" height="96" preserveAspectRatio="none" style="position: absolute; inset: 0; display: block"><path d="M6 50 C10 44 16 41 22 38 C34 14 92 12 104 36 C110 40 116 44 119 48 C116 53 110 56 104 60 C92 84 34 84 22 60 C16 57 10 55 6 50 Z" fill="#F5E11A" stroke="#D9C40A" stroke-width="1.5"></path><path d="M100 34 C104 22 112 16 120 14 C116 22 110 28 100 34 Z" fill="#3E8E2E"></path></svg><span style="position: absolute; inset: 0; display: grid; place-items: center; align-content: center; text-align: center; color: #1A1A1A; padding: 0 12px 0 8px; gap: 1px"><span style="display: flex; align-items: baseline; gap: 3px; white-space: nowrap"><span style="font-size: 10px; font-weight: 700; line-height: 1">da</span><span style="font-family: var(--font-heading); font-size: 21px; line-height: 1">30 €</span></span><span style="font-size: 7.5px; font-weight: 700; line-height: 1.15; text-transform: uppercase; letter-spacing: 0.05em">spedizione<br>inclusa</span></span></span>
       </figure>
+      <div class="h-u" style="display: grid; gap: 6px"><p style="margin: 0; font-size: 17px; line-height: 1.35; font-weight: 700; color: #ffffff">da 30 € spedizione inclusa · arriva entro Natale</p><p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 14px; line-height: 1.35; font-weight: 600; color: #ffffff"><span>Ordina entro il 5 dicembre per la confezione regalo</span><sc-if value="{{ haGiorni }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex; align-items: center; min-height: 24px; padding: 0 9px; border-radius: 999px; background: #B3001B; color: #FFFFFF; font-size: 13px; font-weight: 700; white-space: nowrap">{{ giorniTesto }} 🎁</span></sc-if></p></div>
+      <div class="h-c" style="display: grid; gap: 10px">
+        <a class="btn" href="https://www.paypal.com/ncp/payment/FDY4F9BRWVDYE" target="_blank" rel="noopener" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; border-radius: 999px; text-decoration: none; justify-content: center; text-align: center; box-sizing: border-box; display: inline-flex; align-items: center; gap: 10px; width: 100%; min-height: 58px; font-size: 19px" style-hover="background: #E8D30A; border-color: #E8D30A; color: #1A1A1A">Regalalo a 30 €<span aria-hidden="true">→</span></a>
+      </div>
+      <ul class="h-r" style="list-style: none; padding: 12px 0 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; border-top: 1px solid rgba(255,255,255,0.22); font-size: 13px; line-height: 1.25; color: #ffffff">
+        <li style="display: flex; align-items: center; gap: 6px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg><span style="font-weight: 700">Pagamento sicuro PayPal</span></li>
+        <li style="display: flex; align-items: center; gap: 6px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto"><path d="M3 12V4h8l9 9-8 8z"></path><circle cx="7.5" cy="8.5" r="1.4"></circle></svg><span style="font-weight: 700">Targhetta col suo nome</span></li>
+        <li style="display: flex; align-items: center; gap: 6px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7z"></path><circle cx="6.5" cy="17.5" r="1.8"></circle><circle cx="17.5" cy="17.5" r="1.8"></circle></svg><span style="font-weight: 700">Spedito in tutta Italia</span></li>
+      </ul>
     </div>
   </div>
 </section>
 
-<div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 72px)">
 
-  <section id="formule" style="padding: clamp(40px, 5vw, 64px) 0 0; scroll-margin-top: 16px">
-    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Tre formule, un anno</h2>
-    <p style="font-size: 18px; line-height: 1.6; margin: 12px 0 0; max-width: 62ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Ogni formula include <strong style="font-weight: 700; color: var(--color-text)">targhetta, certificato, area riservata</strong> e il <strong style="font-weight: 700; color: var(--color-text)">videogioco</strong> per i più piccoli.</p>
-    <div style="margin: 28px 0 0; display: grid; gap: 10px; justify-items: start">
-      <span id="zona-label" style="font-weight: 700; font-size: 18px">Dove arrivano i limoni?</span>
-      <div role="radiogroup" aria-labelledby="zona-label" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; border-radius: 18px; background: color-mix(in srgb, #0D6E08 10%, var(--color-bg))">
-        <button type="button" role="radio" aria-checked="{{ zonaIt }}" onClick="{{ setIt }}" style="min-height: 48px; padding: 0 22px; border-radius: 13px; border: 0; font-family: var(--font-body); font-weight: 600; font-size: 17px; cursor: pointer; background: {{ itBg }}; color: {{ itFg }}">📦 Resto d’Italia</button>
-        <button type="button" role="radio" aria-checked="{{ zonaCt }}" onClick="{{ setCt }}" style="min-height: 48px; padding: 0 22px; border-radius: 13px; border: 0; font-family: var(--font-body); font-weight: 600; font-size: 17px; cursor: pointer; background: {{ ctBg }}; color: {{ ctFg }}">🤝 Catania e Acireale</button>
-      </div>
-      <p style="font-size: 16.5px; line-height: 1.5; margin: 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">{{ zonaNota }}</p>
-    </div>
-    <div aria-label="Formule di adozione" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(16px, 2.5vw, 28px); margin: 28px 0 0">
-      <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #0D6E08 6%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px"><span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #0A5806; font-weight: 600">Bronzo · Il regalo</span><span style="font-size: 13.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; background: #F5E11A; color: #2A2400; border-radius: 999px; padding: 5px 12px">🎁 Ideale da regalare</span></div>
-        <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Mezzo limone</h3>
-        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">{{ pB }} €</span><span style="font-size: 17px; font-weight: 600">{{ notaPrezzo }}</span></p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">{{ kgB }}</p></div>
-        <figure style="margin: 16px 0 0; display: grid; gap: 8px; align-self: start"><img src="assets/targhetta-esempio-bronzo-v2.jpg" alt="Targhetta col nome appesa all'albero, color bronzo" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
-        <ul style="list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55; align-content: start">
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">Targhetta col nome</strong> appesa all’albero per un anno</span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">Foto dell’albero e certificato</strong> da regalare</span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">Area riservata</strong> con il suo albero e il videogioco</span></li>
-        </ul>
-        <div style="display: flex; align-self: end; padding-top: 26px"><a href="{{ hrefB }}" target="_blank" rel="noopener" class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 17px; border-radius: 999px; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; text-decoration: none" style-hover="background: #F2BA36; border-color: #F2BA36; color: #111111"><span>Adotta Bronzo · {{ pB }} €</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #003087">Pay</span><span style="color: #009CDE">Pal</span></span></a></div>
-      </article>
-      <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #0088B0 10%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px"><span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #00607D; font-weight: 600">Argento · Famiglia</span></div>
-        <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Un limone</h3>
-        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">{{ pA }} €</span><span style="font-size: 17px; font-weight: 600">{{ notaPrezzo }}</span></p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">{{ kgA }}</p></div>
-        <figure style="margin: 16px 0 0; display: grid; gap: 8px; align-self: start"><img src="assets/targhetta-esempio-argento-v2.jpg" alt="Targhetta col nome appesa all'albero, color argento" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
-        <ul style="list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55; align-content: start">
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span>Tutto del <strong style="font-weight: 700">Mezzo limone</strong></span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">2 consegne</strong> nelle finestre che scegli tu</span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">Un video per ogni raccolta</strong> dal tuo albero</span></li>
-        </ul>
-        <div style="display: flex; align-self: end; padding-top: 26px"><a href="{{ hrefA }}" target="_blank" rel="noopener" class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 17px; border-radius: 999px; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; text-decoration: none" style-hover="background: #F2BA36; border-color: #F2BA36; color: #111111"><span>Adotta Argento · {{ pA }} €</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #003087">Pay</span><span style="color: #009CDE">Pal</span></span></a></div>
-      </article>
-      <article style="display: grid; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0; align-content: start; background: color-mix(in srgb, #E8A838 14%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px"><span style="font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: #7A5410; font-weight: 600">Oro · Grande</span></div>
-        <h3 style="font-weight: 500; font-size: clamp(26px, 3vw, 32px); line-height: 1.15; margin: 10px 0 0">Il tuo albero sull’Etna</h3>
-        <div style="margin: 18px 0 0"><p style="display: flex; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; margin: 0"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 52px; line-height: 1">{{ pO }} €</span><span style="font-size: 17px; font-weight: 600">{{ notaPrezzo }}</span></p><p style="font-size: 17px; line-height: 1.55; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">{{ kgO }}</p></div>
-        <figure style="margin: 16px 0 0; display: grid; gap: 8px; align-self: start"><img src="assets/targhetta-esempio-oro-v2.jpg" alt="Targhetta col nome appesa all'albero, color oro" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)"></figure>
-        <ul style="list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; font-size: 17px; line-height: 1.55; align-content: start">
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span>Tutto del Mezzo limone, più <strong style="font-weight: 700">targhetta e certificato a casa</strong> in confezione regalo</span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">3 consegne</strong>, una per finestra</span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">Aggiornamenti mensili</strong> con foto e video dal campo</span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span>Se vuoi, <strong style="font-weight: 700">vieni a raccogliere</strong> dal tuo albero in un giorno che concordiamo</span></li>
-        </ul>
-        <div style="display: flex; align-self: end; padding-top: 26px"><a href="{{ hrefO }}" target="_blank" rel="noopener" class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 17px; border-radius: 999px; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; text-decoration: none" style-hover="background: #F2BA36; border-color: #F2BA36; color: #111111"><span>Adotta Oro · {{ pO }} €</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #003087">Pay</span><span style="color: #009CDE">Pal</span></span></a></div>
-      </article>
-    </div>
-  </section>
-
-  <section style="padding: clamp(40px, 5vw, 64px) 0 0">
-    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Come funziona</h2>
-    <p style="font-size: 18px; line-height: 1.6; margin: 12px 0 0; max-width: 62ch; color: var(--color-text)">Consegne in tre finestre: <strong style="font-weight: 700">novembre-dicembre, febbraio-marzo, agosto-settembre</strong>. Il mese lo scegli dall’area riservata.</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px clamp(20px, 3vw, 32px); margin-top: 32px">
-      <div style="background: color-mix(in srgb, #E8A838 16%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #7A5410">1</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Paghi con PayPal</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Con il conto o con la carta, <strong style="font-weight: 700; color: var(--color-text)">anche senza account</strong>.</p>
-      </div>
-      <div style="background: color-mix(in srgb, #0088B0 12%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #00607D">2</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Ricevi le credenziali</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Nome utente e password</strong> dell’area riservata, per mail.</p>
-      </div>
-      <div style="background: color-mix(in srgb, #0D6E08 8%, var(--color-bg)); border-radius: 18px; padding: clamp(24px, 3.5vw, 40px)">
-        <span style="display: block; font-family: var(--font-heading); font-size: 40px; line-height: 1; color: #0A5806">3</span>
-        <h3 style="font-weight: 500; font-size: 25px; line-height: 1.2; margin: 12px 0 0">Scegli albero e nome</h3>
-        <p style="font-size: 18px; line-height: 1.7; margin: 12px 0 0; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Appendo la targhetta e ti mando <strong style="font-weight: 700; color: var(--color-text)">foto e certificato</strong>.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="regalo" style="padding: clamp(40px, 5vw, 64px) 0 0">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(28px, 5vw, 64px); align-items: center">
-      <div style="display: grid; gap: 18px; min-width: 0">
-        <span style="font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #5C5550">Se è un regalo</span>
-        <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Come arriva a chi lo riceve</h2>
-        <ol style="list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 18px">
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start"><span style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 20px">1</span><span style="font-size: 18px; line-height: 1.6; padding-top: 6px">Sulla targhetta scrivi <strong style="font-weight: 700">il suo nome, non il tuo</strong>: «Per nonna Carmela», «Famiglia Russo»…</span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start"><span style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 20px">2</span><span style="font-size: 18px; line-height: 1.6; padding-top: 6px">Stampi il <strong style="font-weight: 700">certificato con la foto del suo albero</strong> e lo metti sotto l’albero di Natale, oppure glielo mandi su WhatsApp.</span></li>
-          <li style="display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start"><span style="display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 20px">3</span><span style="font-size: 18px; line-height: 1.6; padding-top: 6px">I limoni arrivano <strong style="font-weight: 700">direttamente a lui o a lei</strong>, nella finestra di consegna scelta. Tu mi dai solo l’indirizzo.</span></li>
+  <section id="regalo" class="sez">
+    <div class="due" style="display: grid; gap: 28px">
+      <div>
+        <span style="display: block; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: #0A5806">Il regalo</span>
+        <h2 style="margin: 8px 0 0; font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: #201e1d; text-wrap: balance">Cosa riceve chi ami</h2>
+        <ol style="list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 18px">
+          <li style="display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start"><span style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 18px">1</span><span style="display: grid; gap: 2px; padding-top: 4px"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 20px; line-height: 1.25">Una targhetta col suo nome</strong><span style="font-size: 16px; line-height: 1.5; color: #4A4440">Appesa al suo albero nel limoneto per un anno. Ti mando la foto.</span></span></li>
+          <li style="display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start"><span style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 18px">2</span><span style="display: grid; gap: 2px; padding-top: 4px"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 20px; line-height: 1.25">Il certificato da mettere sotto l’albero</strong><span style="font-size: 16px; line-height: 1.5; color: #4A4440">Con la foto del suo albero: lo stampi o glielo mandi su WhatsApp.</span></span></li>
+          <li style="display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start"><span style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 18px">3</span><span style="display: grid; gap: 2px; padding-top: 4px"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 20px; line-height: 1.25">I limoni a casa sua</strong><span style="font-size: 16px; line-height: 1.5; color: #4A4440">Spediti il giorno dopo la raccolta, in tutta Italia.</span></span></li>
         </ol>
       </div>
-      <figure style="margin: 0; display: grid; gap: 14px; justify-items: center; min-width: 0">
-        <img src="assets/certificato-esempio.png" alt="Esempio di certificato di adozione: cornice di maioliche siciliane, foto dell’albero, nome «Pericle» e logo Super Etna Food" loading="lazy" style="display: block; width: 100%; max-width: 360px; height: auto; aspect-ratio: 1080 / 1920; border-radius: 6px; box-shadow: var(--shadow-md)">
-        <figcaption style="font-size: 16.5px; line-height: 1.55; max-width: 42ch; text-align: center; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Il certificato, con la foto del suo albero, lo scarichi dall’area riservata subito dopo aver scelto albero e nome.</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section id="gioco" style="padding: clamp(40px, 5vw, 64px) 0 0">
-    <div style="background: color-mix(in srgb, #F5D90A 22%, var(--color-bg)); border-radius: 22px; padding: clamp(28px, 4.5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; gap: clamp(24px, 4vw, 56px)">
-      <div style="flex: 1 1 360px; min-width: 0; display: grid; gap: 18px; justify-items: start">
-        <span style="font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #5C5550">Bonus per i più piccoli · incluso</span>
-        <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Il limoneto diventa un gioco</h2>
-        <p style="font-size: 18px; line-height: 1.7; margin: 0; max-width: 58ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Dall’area riservata si gioca nel nostro limoneto: tra i rami si nascondono i <strong style="font-weight: 700; color: var(--color-text)">limoni delle meraviglie</strong>, ognuno con la sua storia. C’è anche il minigioco <strong style="font-weight: 700; color: var(--color-text)">Etna Cross</strong>.</p>
-        <p style="font-size: 17px; line-height: 1.6; margin: 0; font-weight: 600; color: var(--color-text)">Dai 6 anni con un adulto, dai 7 anche da soli.</p>
-        <button type="button" onClick="{{ toggleTutorial }}" aria-expanded="{{ tutorial }}" class="btn" style="background: #F5D90A; color: #201e1d; border-color: #F5D90A; font-weight: 600; font-size: 17px; border-radius: 999px; min-height: 48px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; margin-top: 4px" style-hover="background: #E8C800; border-color: #E8C800">▶ Tutorial: come si gioca</button>
-        <sc-if value="{{ tutorial }}" hint-placeholder-val="{{ false }}">
-          <video src="assets/tutorial-gioco.mp4" controls="{{ true }}" playsinline="{{ true }}" autoplay="{{ true }}" preload="metadata" aria-label="Tutorial del videogioco nel limoneto" style="display: block; width: 100%; max-width: 320px; height: auto; max-height: 75vh; aspect-ratio: 9 / 16; object-fit: contain; border-radius: 14px; background: #201e1d; box-shadow: var(--shadow-md)"></video>
-        </sc-if>
+      <div class="kit" style="position: relative; width: 100%; max-width: 560px">
+        <img src="assets/cassetta-etna-nuova.webp" alt="Cassetta di limoni appena raccolti, con l’Etna sullo sfondo" loading="lazy" style="position: absolute; left: 0; top: 0; width: 78%; height: 62%; object-fit: cover; border-radius: 16px; box-shadow: var(--shadow-md)">
+        <img src="assets/certificato-esempio.webp" alt="Certificato di adozione con la foto dell’albero" loading="lazy" style="position: absolute; right: 0; top: 6%; width: 34%; height: auto; aspect-ratio: 720 / 1280; border-radius: 6px; transform: rotate(4deg); box-shadow: 0 4px 10px rgba(40,18,8,0.22), 0 14px 30px rgba(40,18,8,0.2)">
+        <div style="position: absolute; left: 4%; bottom: 2%; width: 74%; transform: rotate(-2.5deg)"><div role="img" aria-label="Esempio di targhetta color oro con la scritta «Per nonna Carmela»" style="width: 100%; aspect-ratio: 1676 / 640; container-type: inline-size; position: relative; overflow: hidden; border-radius: 6px; background: #D1A94A url('assets/targhetta-oro-senza-foto.webp') center / 100% 100% no-repeat; color: #FAFBFC; text-shadow: 0 1px 2px rgba(80,50,0,0.45); box-shadow: 0 2px 4px rgba(40,18,8,0.22), 0 10px 24px rgba(40,18,8,0.2)"><div style="position: absolute; left: 31.5%; right: 8%; top: 10%; bottom: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 7cqw; line-height: 1.05; text-wrap: balance">Per nonna Carmela</span><span style="font-size: 2.4cqw; line-height: 1.2; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-top: 2.2cqw; white-space: nowrap">Albero n. 028</span><span style="font-size: 2.2cqw; line-height: 1.2; margin-top: 0.8cqw; white-space: nowrap">Natale 2026</span></div></div></div>
       </div>
-      <figure style="margin: 0; flex: 1 1 320px; min-width: 0; display: grid; gap: 10px">
-        <img src="assets/limoni-reali.jpg" alt="Limoni dalle forme irregolari raccolti nel nostro campo" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; box-shadow: var(--shadow-md)">
-        <figcaption style="font-size: 16px; line-height: 1.5; color: #5C5550">I veri «limoni delle meraviglie» del nostro campo</figcaption>
-      </figure>
     </div>
   </section>
 
-  <section style="padding: clamp(40px, 5vw, 64px) 0 0">
-    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Il tuo albero, dal telefono</h2>
-    <p style="font-size: 18px; line-height: 1.7; margin: 14px 0 0; max-width: 62ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)"><strong style="font-weight: 700; color: var(--color-text)">Giri il tuo albero in 3D</strong>, vedi ogni intervento in campo e sai quando arrivano i limoni.</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(20px, 3vw, 32px); margin: 32px 0 0; align-items: start">
-      <figure style="margin: 0; background: #ffffff; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,32,24,0.06), 0 4px 14px rgba(16,32,24,0.05); overflow: hidden; min-width: 0"><div ref="{{ rif3d }}" aria-label="Modello 3D di un albero del limoneto: trascina per girarlo" style="height: clamp(340px, 40vw, 520px); width: 100%; background: radial-gradient(120% 90% at 50% 25%, #FBFAF6, #ECEADF)"></div><figcaption style="padding: 12px 18px 14px; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: #5C5550">Modello 3D del tuo albero · trascina per girarlo</figcaption></figure>
-      <figure id="alberi" style="margin: 0; background: #ffffff; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,32,24,0.06), 0 4px 14px rgba(16,32,24,0.05); overflow: hidden; min-width: 0"><img src="assets/area-riservata-scelta-albero.png" alt="L'area riservata: lo slider con le foto degli alberi del limoneto, da cui scegli il tuo albero" loading="lazy" style="width: 100%; height: auto; display: block"><figcaption style="padding: 12px 18px 14px; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: #5C5550">Scegli l’albero tra quelli liberi</figcaption></figure>
+</div>
+
+<section id="nonni" style="margin-top: 56px; background: #201e1d; color: #ffffff">
+  <div class="due" style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 72px); padding-top: 44px; padding-bottom: 44px; display: grid; gap: 22px">
+    <div style="display: grid; gap: 12px; min-width: 0">
+      <span style="display: block; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: #F5E11A">Dal nostro reel</span>
+      <h2 style="margin: 0; font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: #ffffff">Curato come facevano i nonni</h2>
+      <p style="font-size: 17.5px; line-height: 1.55; margin: 0; color: rgba(255,255,255,0.9)">La cenere restituisce agli alberi potassio, calcio e microelementi.</p>
+      <p style="font-size: 17.5px; line-height: 1.55; margin: 0; font-weight: 700; color: #ffffff">Insieme alla fertirrigazione, è così che curiamo il tuo albero.</p>
+    </div>
+    <figure style="margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 420px; width: 100%"><img src="assets/nonni-falo.webp" alt="Dal reel: i rami potati bruciano nel limoneto e diventano cenere" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 600 / 1073; object-fit: cover; border-radius: 12px"><img src="assets/nonni-cenere.webp" alt="Dal reel: la cenere torna alla terra con potassio, calcio e microelementi" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 600 / 1073; object-fit: cover; border-radius: 12px; margin-top: 28px"></figure>
+  </div>
+</section>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 5vw, 72px)">
+
+  <section id="formule" class="sez" style="scroll-margin-top: 12px">
+    <span style="display: block; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: #0A5806">L’offerta di Natale</span>
+    <h2 style="margin: 8px 0 0; font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: #201e1d; text-wrap: balance">Cassetta di Natale</h2>
+    <article style="margin-top: 20px; max-width: 720px; background: #ffffff; border-radius: 22px; box-shadow: var(--shadow-lg); overflow: hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 18px; background: #F5E11A; color: #2A2400"><span style="font-weight: 700; font-size: 15px">Formula Mezzo limone · bronzo</span><span style="display: flex; align-items: baseline; gap: 6px"><span style="font-family: var(--font-heading); font-size: 30px; line-height: 1">{{ pB }} €</span><span style="font-size: 13.5px; font-weight: 700">{{ notaPrezzo }}</span></span></div>
+      <div style="display: grid; gap: 16px; padding: 20px 18px 22px">
+        <div role="img" aria-label="Esempio di targhetta color bronzo con la scritta «Per nonna Carmela»" style="width: 100%; aspect-ratio: 1676 / 640; container-type: inline-size; position: relative; overflow: hidden; border-radius: 6px; background: #8E5A3C url('assets/targhetta-bronzo-senza-foto.webp') center / 100% 100% no-repeat; color: #FFFFFF; box-shadow: 0 2px 4px rgba(40,18,8,0.22), 0 10px 24px rgba(40,18,8,0.2)"><div style="position: absolute; left: 31.5%; right: 8%; top: 10%; bottom: 8%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center"><span style="font-family: var(--font-heading); font-weight: 500; font-size: 7cqw; line-height: 1.05; text-wrap: balance">Per nonna Carmela</span><span style="font-size: 2.4cqw; line-height: 1.2; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; margin-top: 2.2cqw; white-space: nowrap">Albero n. 028</span><span style="font-size: 2.2cqw; line-height: 1.2; margin-top: 0.8cqw; white-space: nowrap">Natale 2026</span></div></div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+          <div style="display: grid; gap: 2px; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, #0D6E08 7%, #ffffff)"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 21px; line-height: 1.15; color: #201e1d">5 kg</strong><span style="font-size: 14px; line-height: 1.35; color: #4A4440">di limoni in 1 cassetta</span></div>
+          <div style="display: grid; gap: 2px; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, #0D6E08 7%, #ffffff)"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 21px; line-height: 1.15; color: #201e1d">Dicembre</strong><span style="font-size: 14px; line-height: 1.35; color: #4A4440">consegna in confezione regalo</span></div>
+          <div style="display: grid; gap: 2px; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, #0D6E08 7%, #ffffff)"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 21px; line-height: 1.15; color: #201e1d">1 anno</strong><span style="font-size: 14px; line-height: 1.35; color: #4A4440">targhetta col suo nome sull’albero</span></div>
+          <div style="display: grid; gap: 2px; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, #0D6E08 7%, #ffffff)"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 21px; line-height: 1.15; color: #201e1d">Subito</strong><span style="font-size: 14px; line-height: 1.35; color: #4A4440">certificato con la foto del suo albero</span></div>
+        </div>
+        <p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #4A4440">{{ kgB }}</p>
+        <a href="{{ hrefB }}" target="_blank" rel="noopener" class="btn" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; border-radius: 999px; text-decoration: none; justify-content: center; text-align: center; box-sizing: border-box; display: inline-flex; align-items: center; gap: 10px; width: 100%; min-height: 58px; font-size: 19px" style-hover="background: #E8D30A; border-color: #E8D30A; color: #1A1A1A">Regalalo a {{ pB }} €<span aria-hidden="true">→</span></a>
+        <p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 15px; line-height: 1.4; font-weight: 600; color: #5C5550"><span>Ordina entro il 5 dicembre per la consegna in confezione regalo</span><sc-if value="{{ haGiorni }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 999px; background: #B3001B; color: #FFFFFF; font-size: 13.5px; font-weight: 700; white-space: nowrap">{{ giorniTesto }} 🎁</span></sc-if></p>
+        <p style="margin: 0; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, #0D6E08 7%, #ffffff); font-size: 15px; line-height: 1.5; color: #2F4A2C"><span style="color: #0D6E08; padding-top: 1px"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></span><span><strong style="font-weight: 700">Pagamento sicuro: avviene tutto su PayPal.</strong> I dati della carta li inserisci solo lì, io non li vedo mai. Puoi pagare con carta anche senza account.</span></p>
+        <button type="button" onClick="{{ toggleZona }}" style="justify-self: start; min-height: 44px; padding: 0; border: 0; background: transparent; font-family: var(--font-body); font-size: 15.5px; font-weight: 600; color: #0A5806; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; text-align: left">{{ zonaLink }}</button>
+      </div>
+    </article>
+  </section>
+
+  <sc-if value="{{ showProva }}" hint-placeholder-val="{{ false }}">
+  <section id="targhette" class="sez">
+    <span style="display: block; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: #0A5806">Foto vere dal limoneto</span>
+    <h2 style="margin: 8px 0 0; font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: #201e1d; text-wrap: balance">Targhette già appese</h2>
+    <div class="scorri" style="margin-top: 20px">
+      <figure style="margin: 0; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: color-mix(in srgb, #0D6E08 8%, var(--color-bg))"><image-slot id="adotta-targa-1" placeholder="Foto vera di una targhetta appesa" shape="rect" style="display: block; width: 100%; height: 100%"></image-slot></figure>
+      <figure style="margin: 0; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: color-mix(in srgb, #0D6E08 8%, var(--color-bg))"><image-slot id="adotta-targa-2" placeholder="Foto vera di una targhetta appesa" shape="rect" style="display: block; width: 100%; height: 100%"></image-slot></figure>
+      <figure style="margin: 0; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: color-mix(in srgb, #0D6E08 8%, var(--color-bg))"><image-slot id="adotta-targa-3" placeholder="Foto vera di una targhetta appesa" shape="rect" style="display: block; width: 100%; height: 100%"></image-slot></figure>
+    </div>
+  </section>
+  </sc-if>
+
+  <section class="sez">
+    <span style="display: block; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: #0A5806">In tre passi</span>
+    <h2 style="margin: 8px 0 0; font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: #201e1d; text-wrap: balance">Come funziona</h2>
+    <ol style="list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 18px; max-width: 62ch">
+      <li style="display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start"><span style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 18px">1</span><span style="display: grid; gap: 2px; padding-top: 4px"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 20px; line-height: 1.25">Paghi su PayPal</strong><span style="font-size: 16px; line-height: 1.5; color: #4A4440">Con carta, anche senza account: i dati della carta non passano dal mio sito.</span></span></li>
+      <li style="display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start"><span style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 18px">2</span><span style="display: grid; gap: 2px; padding-top: 4px"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 20px; line-height: 1.25">Scegli albero e nome</strong><span style="font-size: 16px; line-height: 1.5; color: #4A4440">Ricevi per mail nome utente e password, scegli l’albero e scrivi il nome per la targhetta.</span></span></li>
+      <li style="display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; align-items: start"><span style="display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #0D6E08; color: #ffffff; font-family: var(--font-heading); font-size: 18px">3</span><span style="display: grid; gap: 2px; padding-top: 4px"><strong style="font-family: var(--font-heading); font-weight: 500; font-size: 20px; line-height: 1.25">Arrivano i limoni</strong><span style="font-size: 16px; line-height: 1.5; color: #4A4440">Appendo la targhetta, scarichi il certificato e i limoni arrivano a casa sua.</span></span></li>
+    </ol>
+  </section>
+
+  <section id="di-piu" class="sez">
+    <span style="display: block; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: #0A5806">Per famiglie e buongustai</span>
+    <h2 style="margin: 8px 0 0; font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; letter-spacing: -0.015em; color: #201e1d; text-wrap: balance">Vuoi di più?</h2>
+    <p style="font-size: 17px; line-height: 1.55; margin: 10px 0 0; max-width: 60ch; color: #4A4440">Più limoni e più consegne durante l’anno.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; margin: 20px 0 0">
+      <article style="display: grid; gap: 12px; align-content: start; background: color-mix(in srgb, #0088B0 10%, var(--color-bg)); border-radius: 18px; padding: 22px 18px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap"><span style="display: grid; gap: 4px"><span style="font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: #00607D">Argento · Famiglia</span><h3 style="font-weight: 500; font-size: 23px; line-height: 1.2; margin: 0">Un limone</h3></span><span style="display: grid; justify-items: end; gap: 2px"><span style="font-family: var(--font-heading); font-size: 34px; line-height: 1">{{ pA }} €</span><span style="font-size: 13.5px; font-weight: 600; color: #4A4440">{{ notaPrezzo }}</span></span></div>
+        <img src="assets/targhetta-esempio-argento-v2.webp" alt="Targhetta col nome appesa all'albero, color argento" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)">
+        <p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #4A4440">{{ kgA }}</p>
+        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 16px; line-height: 1.45"><li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">2 consegne</strong> nelle finestre che scegli</span></li><li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">Un video per ogni raccolta</strong> dal suo albero</span></li></ul>
+        <a href="{{ hrefA }}" target="_blank" rel="noopener" class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 17px; border-radius: 999px; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; text-decoration: none; margin-top: 4px" style-hover="background: #F2BA36; border-color: #F2BA36; color: #111111"><span>Adotta Argento · {{ pA }} €</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #003087">Pay</span><span style="color: #009CDE">Pal</span></span></a>
+        <p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 15px; line-height: 1.4; font-weight: 600; color: #5C5550"><span>Ordina entro il 5 dicembre per la consegna in confezione regalo</span><sc-if value="{{ haGiorni }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 999px; background: #B3001B; color: #FFFFFF; font-size: 13.5px; font-weight: 700; white-space: nowrap">{{ giorniTesto }} 🎁</span></sc-if></p>
+      </article>
+      <article style="display: grid; gap: 12px; align-content: start; background: color-mix(in srgb, #E8A838 14%, var(--color-bg)); border-radius: 18px; padding: 22px 18px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap"><span style="display: grid; gap: 4px"><span style="font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: #7A5410">Oro · Grande</span><h3 style="font-weight: 500; font-size: 23px; line-height: 1.2; margin: 0">Il tuo albero sull’Etna</h3></span><span style="display: grid; justify-items: end; gap: 2px"><span style="font-family: var(--font-heading); font-size: 34px; line-height: 1">{{ pO }} €</span><span style="font-size: 13.5px; font-weight: 600; color: #4A4440">{{ notaPrezzo }}</span></span></div>
+        <img src="assets/targhetta-esempio-oro-v2.webp" alt="Targhetta col nome appesa all'albero, color oro" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 1676 / 640; border-radius: 6px; box-shadow: 0 2px 4px rgba(40,18,8,0.2), 0 8px 20px rgba(40,18,8,0.16)">
+        <p style="margin: 0; font-size: 15.5px; line-height: 1.5; color: #4A4440">{{ kgO }}</p>
+        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 16px; line-height: 1.45"><li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">Targhetta e certificato a casa</strong>, in confezione regalo</span></li><li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; align-items: baseline"><span aria-hidden="true" style="color: #0D6E08; font-weight: 700">✓</span><span><strong style="font-weight: 700">Aggiornamenti mensili</strong> e, se vuoi, una giornata di raccolta</span></li></ul>
+        <a href="{{ hrefO }}" target="_blank" rel="noopener" class="btn" style="width: 100%; min-height: 52px; justify-content: center; text-align: center; box-sizing: border-box; background: #FFC439; color: #111111; border-color: #FFC439; font-weight: 700; font-size: 17px; border-radius: 999px; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; text-decoration: none; margin-top: 4px" style-hover="background: #F2BA36; border-color: #F2BA36; color: #111111"><span>Adotta Oro · {{ pO }} €</span><span aria-hidden="true" style="font-family: Verdana, sans-serif; font-style: italic; font-weight: 700; letter-spacing: -0.02em"><span style="color: #003087">Pay</span><span style="color: #009CDE">Pal</span></span></a>
+        <p style="margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 15px; line-height: 1.4; font-weight: 600; color: #5C5550"><span>Ordina entro il 5 dicembre per la consegna in confezione regalo</span><sc-if value="{{ haGiorni }}" hint-placeholder-val="{{ false }}"><span style="display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 999px; background: #B3001B; color: #FFFFFF; font-size: 13.5px; font-weight: 700; white-space: nowrap">{{ giorniTesto }} 🎁</span></sc-if></p>
+      </article>
     </div>
   </section>
 
-  <section style="padding: clamp(40px, 5vw, 64px) 0 0">
-    <div style="background: #0D6E08; color: #ffffff; border-radius: 22px; padding: clamp(28px, 4.5vw, 56px); display: grid; gap: 18px; justify-items: start">
-      <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; color: #ffffff">Un regalo che dura un anno</h2>
-      <p style="font-size: 19px; line-height: 1.6; margin: 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">🎁 Entro il 5 dicembre la prima cassetta arriva in <strong style="font-weight: 700; color: #ffffff">confezione regalo</strong>.</p>
-      <a class="btn" href="https://www.paypal.com/ncp/payment/FDY4F9BRWVDYE" target="_blank" rel="noopener" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 18px; border-radius: 999px; min-height: 52px; text-decoration: none" style-hover="background: #E8D30A; border-color: #E8D30A; color: #1A1A1A">Regalalo · 30 € spedito</a>
-    </div>
-  </section>
-
-  <section id="faq" class="faq" style="padding: clamp(40px, 5vw, 64px) 0 0; max-width: 820px">
-    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; margin-bottom: 12px">Domande frequenti</h2>
+  <section id="faq" class="faq sez" style="max-width: 820px">
+    <h2 class="m-h2" style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0; margin-bottom: 12px">Domande frequenti</h2>
     <details open="{{ true }}" style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent)"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; padding: 12px 0; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 22px); line-height: 1.3">Abito fuori dalla Sicilia, come funziona?<span class="ind" aria-hidden="true" style="flex: 0 0 auto; font-family: var(--font-body); font-size: 24px; color: #0A5806; width: 24px; text-align: center"></span></summary><p style="font-size: 17px; line-height: 1.7; margin: 0 0 20px; max-width: 64ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Spedisco in tutta Italia con corriere, in cassetta, il giorno dopo la raccolta. I prezzi del «Resto d’Italia» comprendono già la spedizione.</p></details>
     <details style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent)"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; padding: 12px 0; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 22px); line-height: 1.3">Quando arrivano i limoni?<span class="ind" aria-hidden="true" style="flex: 0 0 auto; font-family: var(--font-body); font-size: 24px; color: #0A5806; width: 24px; text-align: center"></span></summary><p style="font-size: 17px; line-height: 1.7; margin: 0 0 20px; max-width: 64ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">In tre finestre: novembre-dicembre, febbraio-marzo e agosto-settembre. Il Mezzo limone ha una consegna, Un limone due nelle finestre che scegli, Il tuo albero sull’Etna tre, una per finestra. Il mese lo scegli dall’area riservata.</p></details>
     <details style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent)"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; padding: 12px 0; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 22px); line-height: 1.3">Lo voglio regalare: cosa riceve l’altra persona?<span class="ind" aria-hidden="true" style="flex: 0 0 auto; font-family: var(--font-body); font-size: 24px; color: #0A5806; width: 24px; text-align: center"></span></summary><p style="font-size: 17px; line-height: 1.7; margin: 0 0 20px; max-width: 64ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Una targhetta col suo nome appesa al suo albero, il certificato con la foto da stampare o mandare su WhatsApp, e i limoni a casa sua. Se vuoi, le passi anche le credenziali dell’area riservata, così segue l’albero e gioca.</p></details>
     <details style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent)"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; padding: 12px 0; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 22px); line-height: 1.3">E se il mio albero produce poco?<span class="ind" aria-hidden="true" style="flex: 0 0 auto; font-family: var(--font-body); font-size: 24px; color: #0A5806; width: 24px; text-align: center"></span></summary><p style="font-size: 17px; line-height: 1.7; margin: 0 0 20px; max-width: 64ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">I chili sono garantiti: completo con i limoni del limoneto dove vive il tuo albero. Se durante l’anno la pianta muore per una malattia, ti assegno un altro albero con la tua targhetta.</p></details>
     <details style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent)"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; padding: 12px 0; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 22px); line-height: 1.3">Posso venire a vedere il mio albero?<span class="ind" aria-hidden="true" style="flex: 0 0 auto; font-family: var(--font-body); font-size: 24px; color: #0A5806; width: 24px; text-align: center"></span></summary><p style="font-size: 17px; line-height: 1.7; margin: 0 0 20px; max-width: 64ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Sì: scrivimi su WhatsApp e concordiamo un giorno. Con Il tuo albero sull’Etna puoi anche raccogliere i limoni direttamente dal tuo albero.</p></details>
+  </section>
+
+  <section class="apri sez" style="max-width: 820px">
+    <h2 class="m-h2" style="font-weight: 500; font-size: clamp(27px, 4vw, 44px); line-height: 1.1; letter-spacing: -0.02em; margin: 0; margin-bottom: 12px">Per chi vuole sapere tutto</h2>
+    <details style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent)"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 60px; padding: 12px 0; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 23px); line-height: 1.3">Il videogioco per i più piccoli · incluso<span class="ind" aria-hidden="true" style="flex: 0 0 auto; font-family: var(--font-body); font-size: 26px; color: #0A5806; width: 26px; text-align: center"></span></summary>
+      <div style="display: grid; gap: 14px; justify-items: start; padding: 0 0 22px">
+        <p style="font-size: 17px; line-height: 1.7; margin: 0; max-width: 62ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Dall’area riservata si gioca nel nostro limoneto: tra i rami si nascondono i <strong style="font-weight: 700; color: var(--color-text)">limoni delle meraviglie</strong>, ognuno con la sua storia. C’è anche il minigioco <strong style="font-weight: 700; color: var(--color-text)">Etna Cross</strong>. Dai 6 anni con un adulto, dai 7 anche da soli.</p>
+        <button type="button" onClick="{{ toggleTutorial }}" aria-expanded="{{ tutorial }}" class="btn" style="background: #F5D90A; color: #201e1d; border-color: #F5D90A; font-weight: 600; font-size: 17px; border-radius: 999px; min-height: 48px; cursor: pointer" style-hover="background: #E8C800; border-color: #E8C800">▶ Guarda il tutorial</button>
+        <sc-if value="{{ tutorial }}" hint-placeholder-val="{{ false }}">
+          <video src="assets/tutorial-gioco.mp4" controls="{{ true }}" playsinline="{{ true }}" preload="none" aria-label="Tutorial del videogioco nel limoneto" style="display: block; width: 100%; max-width: 320px; height: auto; max-height: 75vh; aspect-ratio: 9 / 16; object-fit: contain; border-radius: 14px; background: #201e1d"></video>
+        </sc-if>
+      </div>
+    </details>
+    <details onToggle="{{ apri3d }}" style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent)"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 60px; padding: 12px 0; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 23px); line-height: 1.3">Il suo albero in 3D<span class="ind" aria-hidden="true" style="flex: 0 0 auto; font-family: var(--font-body); font-size: 26px; color: #0A5806; width: 26px; text-align: center"></span></summary>
+      <figure style="margin: 0 0 22px; background: #ffffff; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm)"><div ref="{{ rif3d }}" aria-label="Modello 3D di un albero del limoneto: trascina per girarlo" style="height: clamp(320px, 70vw, 480px); width: 100%; background: radial-gradient(120% 90% at 50% 25%, #FBFAF6, #ECEADF)"></div><figcaption style="padding: 12px 16px; font-size: 15px; font-weight: 600; color: #5C5550">Trascina per girarlo</figcaption></figure>
+    </details>
+    <details onToggle="{{ apriArea }}" style="border-bottom: 1px solid color-mix(in srgb, var(--color-text) 14%, transparent)"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 60px; padding: 12px 0; font-family: var(--font-heading); font-size: clamp(19px, 2vw, 23px); line-height: 1.3">L’area riservata e gli alberi liberi<span class="ind" aria-hidden="true" style="flex: 0 0 auto; font-family: var(--font-body); font-size: 26px; color: #0A5806; width: 26px; text-align: center"></span></summary>
+      <div style="display: grid; gap: 16px; padding: 0 0 22px">
+        <p style="font-size: 17px; line-height: 1.7; margin: 0; max-width: 62ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Dall’area riservata scegli l’albero tra quelli liberi, scrivi il nome per la targhetta, scarichi il certificato e vedi ogni lavoro fatto in campo.</p>
+        <sc-if value="{{ haLiberi }}" hint-placeholder-val="{{ false }}">
+          <div style="position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; background: #0A5806">{{ liberiImgs }}<span style="position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(10,88,6,0.92); color: #ffffff; font-weight: 700; font-size: 15px">{{ liberiBadge }}</span></div>
+        </sc-if>
+        <img src="assets/area-riservata-scelta-albero.webp" alt="L’area riservata: le foto degli alberi liberi, da cui scegli il suo albero" loading="lazy" style="display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: var(--shadow-sm)">
+      </div>
+    </details>
   </section>
 
   <section id="condizioni" style="padding: clamp(40px, 5vw, 64px) 0 0; max-width: 72ch">
@@ -406,69 +422,87 @@ summary::-webkit-details-marker { display: none; }
     <p style="font-size: 17px; line-height: 1.6; margin: 28px 0 0">Hai un dubbio prima di adottare? <a href="https://wa.me/393515286188" target="_blank" rel="noopener" style="color: #0A5806; font-weight: 700">Scrivimi su WhatsApp</a></p>
   </section>
 
-  <footer style="padding: clamp(24px, 3vw, 36px) 0 clamp(24px, 4vw, 40px); font-size: 15.5px; line-height: 1.8; color: color-mix(in srgb, var(--color-text) 90%, transparent)">
+  <footer style="padding: 32px 0 40px; font-size: 15px; line-height: 1.7; color: #4A4440">
     <p style="margin: 0">Super Etna Food — azienda agricola Antonio Grasso · Via Stazione 83, 95024 Acireale (CT) · P.IVA 06189010876 · superetnafood@gmail.com · <a href="privacy.html">Privacy</a></p>
   </footer>
 </div>
 
-<div class="barra-mobile" style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 900; background: #0D6E08; color: #ffffff; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); align-items: center; gap: 12px; box-shadow: 0 -6px 24px rgba(0,0,0,0.2)">
-  <div style="flex: 1 1 auto; min-width: 0; display: grid; gap: 2px">
-    <strong style="font-family: var(--font-heading); font-size: 18px; font-weight: 500; line-height: 1.2">Adotta un limone</strong>
-    <span style="font-size: 15px; line-height: 1.35; color: color-mix(in srgb, #ffffff 92%, transparent)">da 30 € spedito · da 20 € a Catania</span>
-  </div>
-  <a href="#formule" class="btn" style="flex: 0 0 auto; min-height: 48px; background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 17px; border-radius: 999px; text-decoration: none" style-hover="background: #E8D30A; color: #1A1A1A">Regalalo</a>
+<div class="barra-mobile" style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000; background: #0D6E08; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); align-items: center; gap: 10px; box-shadow: 0 -6px 24px rgba(0,0,0,0.2)">
+  <a href="https://www.paypal.com/ncp/payment/FDY4F9BRWVDYE" target="_blank" rel="noopener" class="btn" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; border-radius: 999px; text-decoration: none; justify-content: center; text-align: center; box-sizing: border-box; flex: 1 1 auto; min-width: 0; min-height: 50px; font-size: 16.5px; line-height: 1.15; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0 6px; padding: 4px 14px" style-hover="background: #E8D30A; border-color: #E8D30A; color: #1A1A1A"><span>Regalalo · 30 €</span><span>spedito</span></a>
+  <a href="https://wa.me/393515286188?text=Ciao%20Antonio%2C%20vorrei%20regalare%20un%20albero%20di%20limoni" target="_blank" rel="noopener" aria-label="Ordina in chat su WhatsApp" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 50px; padding: 0 14px; border-radius: 999px; background: #25D366; color: #0B2E10; font-weight: 700; font-size: 14.5px; text-decoration: none; box-sizing: border-box" style-hover="background: #1FBF5B; color: #0B2E10"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="flex: 0 0 auto"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"></path></svg><span>Ordina in chat</span></a>
 </div>
 
-<aside id="privacy-banner" role="region" aria-label="Informativa privacy" style="display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 999; background: #0D6E08; color: #ffffff; padding: 16px clamp(16px, 5vw, 48px); box-shadow: 0 -6px 24px rgba(0,0,0,0.18)">
-  <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
-    <p style="flex: 1 1 320px; font-size: 17px; line-height: 1.6; margin: 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Contiamo le visite in modo anonimo, senza cookie. Se accetti, usiamo anche Google Analytics e il pixel di Meta per capire quali pagine vengono lette e misurare le nostre inserzioni. I dati non vengono diffusi né venduti. <a href="privacy.html" style="color: #F5E11A; text-decoration: underline">Informativa completa</a></p>
-    <div style="display: flex; gap: 10px; flex-wrap: wrap">
-      <button type="button" id="privacy-rifiuta" class="btn" style="background: transparent; color: #ffffff; border-color: color-mix(in srgb, #ffffff 60%, transparent); font-weight: 600; font-size: 17px; border-radius: 999px; white-space: nowrap; cursor: pointer">Solo essenziali</button>
-      <button type="button" id="privacy-accetta" class="btn" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 17.5px; border-radius: 999px; white-space: nowrap; cursor: pointer">Accetta</button>
+<aside id="privacy-banner" role="region" aria-label="Cookie" style="display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 990; background: #201e1d; color: #ffffff; padding: 8px 12px; box-shadow: 0 -4px 16px rgba(0,0,0,0.25)">
+  <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px">
+    <p style="flex: 1 1 260px; margin: 0; font-size: 14px; line-height: 1.35; color: #ffffff">Cookie di Google e Meta solo se accetti. <a href="privacy.html" style="color: #F5E11A; text-decoration: underline">Info</a></p>
+    <div style="flex: 1 1 240px; max-width: 360px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+      <button type="button" id="privacy-rifiuta" style="min-height: 40px; border-radius: 999px; border: 1.5px solid #ffffff; background: #ffffff; color: #201e1d; font-family: var(--font-body); font-weight: 700; font-size: 15px; cursor: pointer">Solo essenziali</button>
+      <button type="button" id="privacy-accetta" style="min-height: 40px; border-radius: 999px; border: 1.5px solid #ffffff; background: #ffffff; color: #201e1d; font-family: var(--font-body); font-weight: 700; font-size: 15px; cursor: pointer">Accetta</button>
     </div>
   </div>
 </aside>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { zona: 'italia', tutorial: false, heroFoto: [], heroI: 0, heroFallback: true };
+  state = { zona: 'italia', tutorial: false, liberi: [], liberiI: 0, slots: {}, editing: false };
   PP_LINK = { 20: 'https://www.paypal.com/ncp/payment/V79T6FRDMQECW', 30: 'https://www.paypal.com/ncp/payment/FDY4F9BRWVDYE', 40: 'https://www.paypal.com/ncp/payment/3RSK6QHQG5FZY', 75: 'https://www.paypal.com/ncp/payment/KMJ2BW7LFGWLU', 80: 'https://www.paypal.com/ncp/payment/YF7TB3NUE7AUJ', 130: 'https://www.paypal.com/ncp/payment/EZ3GW7E929PXA' };
-  rif3d = el => { if (!el) return; const go = () => window.SEFModello ? window.SEFModello.monta(el) : setTimeout(go, 300); go(); };
-  caricaHero() {
+  condRef = React.createRef();
+  rif3d = el => { this.el3d = el; };
+  apri3d = e => {
+    if (!e.currentTarget.open || this.on3d || !this.el3d) return;
+    this.on3d = true;
+    const el = this.el3d, go = () => window.SEFModello && window.SEFModello.monta(el);
+    if (window.SEFModello) return go();
+    const s = document.createElement('script'); s.src = 'albero-modello.js'; s.onload = go; document.head.appendChild(s);
+  };
+  apriArea = e => { if (!e.currentTarget.open || this.onLib) return; this.onLib = true; this.caricaLiberi(); };
+  caricaLiberi() {
     const S = window.SEF; if (!S) return;
     S.chiama('liberiFoto').then(r => {
       const lib = new Set((r && r.liberi) || []);
       const L = ((r && r.galleria) || []).filter(g => g && g.src && lib.has(g.numero));
       for (let i = L.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [L[i], L[j]] = [L[j], L[i]]; }
-      const foto = L.slice(0, 10).map(g => ({ src: g.src, numero: g.numero, alt: 'Albero n. ' + g.numero + ' del limoneto, ancora libero' }));
-      if (foto.length) this.setState({ heroFoto: foto, heroI: 0, heroFallback: false });
+      const foto = L.slice(0, 10).map(g => ({ src: g.src, numero: g.numero }));
+      if (!foto.length) return;
+      this.setState({ liberi: foto, liberiI: 0 });
+      this.libT = setInterval(() => this.setState(s => ({ liberiI: (s.liberiI + 1) % s.liberi.length })), 4000);
     }, () => {});
   }
-  condRef = React.createRef();
   setZona(zona) { this.setState({ zona }); try { localStorage.setItem('sef-zona', zona); } catch (e) {} }
   componentDidMount() {
-    this.heroT = setInterval(() => this.setState(s => { const n = s.heroFoto.length; if (!n) return null; return { heroI: (s.heroI + 1) % n }; }), 5000);
-    const t = setInterval(() => { if (window.SEF) { clearInterval(t); this.caricaHero(); } }, 150); setTimeout(() => clearInterval(t), 8000);
-    try { const z = localStorage.getItem('sef-zona'); if (z === 'catania' || z === 'italia') this.setState({ zona: z }); } catch (e) {} }
-  componentWillUnmount() { clearInterval(this.heroT); }
+    const daInserzione = /[?&](fbclid|utm_[a-z]+|gclid)=/i.test(location.search);
+    if (!daInserzione) { try { if (localStorage.getItem('sef-zona') === 'catania') this.setState({ zona: 'catania' }); } catch (e) {} }
+    const editing = !!window.omelette;
+    fetch('.image-slots.state.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).catch(() => ({})).then(j => {
+      const has = id => !!(j && j[id] && j[id].u);
+      this.setState({ editing, slots: { prova: has('adotta-targa-1') || has('adotta-targa-2') || has('adotta-targa-3'), nonni: has('adotta-nonni') } });
+    });
+    if (editing) this.setState({ editing });
+  }
+  componentWillUnmount() { clearInterval(this.libT); }
   renderVals() {
     const it = this.state.zona === 'italia';
     const P = it ? [30, 75, 130] : [20, 40, 80];
-    const on = ['#0D6E08', '#ffffff'], off = ['transparent', 'var(--color-text)'];
+    const F = 'novembre-dicembre, febbraio-marzo';
+    const cur = this.state.liberi[this.state.liberiI];
+    const giorni = Math.ceil((new Date(2026, 11, 5, 23, 59, 59) - Date.now()) / 864e5);
     return {
-      heroImgs: this.state.heroFoto.map((f, k) => React.createElement('img', { key: f.src + k, src: f.src, alt: f.alt, style: { position: 'absolute', inset: 0, display: 'block', width: '100%', height: '100%', objectFit: f.numero ? 'contain' : 'cover', background: f.numero ? '#0A5806' : 'transparent', opacity: k === this.state.heroI ? 1 : 0, transition: 'opacity 1.2s ease' } })),
-      heroBadge: (() => { const f = this.state.heroFoto[this.state.heroI]; return f && f.numero ? 'Albero n. ' + f.numero + ' · ancora libero' : ''; })(),
-      rif3d: this.rif3d, condRef: this.condRef,
-      zonaIt: it, zonaCt: !it,
-      setIt: () => this.setZona('italia'), setCt: () => this.setZona('catania'),
-      itBg: (it ? on : off)[0], itFg: (it ? on : off)[1], ctBg: (it ? off : on)[0], ctFg: (it ? off : on)[1],
-      zonaNota: it ? 'Spedisco con corriere in tutta Italia, il giorno dopo la raccolta. La spedizione è già nel prezzo.' : 'Consegna a mano gratuita a Catania e Acireale: ci accordiamo su WhatsApp.',
+      haGiorni: giorni >= 1,
+      giorniTesto: giorni > 1 ? 'mancano ' + giorni + ' giorni' : 'ultimo giorno',
+      condRef: this.condRef, rif3d: this.rif3d, apri3d: this.apri3d, apriArea: this.apriArea,
+      showProva: false,
+      showNonni: this.state.editing || !!this.state.slots.nonni,
+      zonaLink: it ? 'Abiti a Catania o Acireale? Consegna a mano a 20 €' : 'Abiti fuori Catania? Torna ai prezzi con spedizione',
+      toggleZona: () => this.setZona(it ? 'catania' : 'italia'),
       notaPrezzo: it ? 'spedizione inclusa' : 'consegna a mano gratuita',
       pB: P[0], pA: P[1], pO: P[2],
       hrefB: this.PP_LINK[P[0]], hrefA: this.PP_LINK[P[1]], hrefO: this.PP_LINK[P[2]],
-      kgB: '5 kg di limoni in 1 cassetta · a scelta tra novembre-dicembre, febbraio-marzo o agosto-settembre',
-      kgA: '20 kg di limoni in 2 cassette da 10 kg · due finestre a scelta tra novembre-dicembre, febbraio-marzo e agosto-settembre',
-      kgO: (it ? '60 kg di limoni in 3 spedizioni da 20 kg' : '60 kg di limoni in 3 consegne da 20 kg') + ' · novembre-dicembre, febbraio-marzo e agosto-settembre',
+      kgB: 'Consegna a dicembre, in confezione regalo (ordini entro il 5 dicembre). Se preferisci, puoi spostarla a febbraio-marzo o agosto-settembre.',
+      kgA: '20 kg di limoni in 2 cassette da 10 kg · due finestre a scelta tra ' + F + ' e agosto-settembre',
+      kgO: (it ? '60 kg di limoni in 3 spedizioni da 20 kg' : '60 kg di limoni in 3 consegne da 20 kg') + ' · ' + F + ' e agosto-settembre',
+      haLiberi: this.state.liberi.length > 0,
+      liberiImgs: this.state.liberi.map((f, k) => React.createElement('img', { key: f.src + k, src: f.src, alt: 'Albero n. ' + f.numero + ' del limoneto, ancora libero', loading: 'lazy', style: { position: 'absolute', inset: 0, display: 'block', width: '100%', height: '100%', objectFit: 'contain', opacity: k === this.state.liberiI ? 1 : 0, transition: 'opacity 1.2s ease' } })),
+      liberiBadge: cur ? 'Albero n. ' + cur.numero + ' · ancora libero' : '',
       tutorial: this.state.tutorial,
       toggleTutorial: () => this.setState(s => ({ tutorial: !s.tutorial }))
     };
