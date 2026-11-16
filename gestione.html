@@ -145,6 +145,9 @@
         <sc-if value="{{ puoStampare }}" hint-placeholder-val="{{ false }}">
           <button type="button" onClick="{{ stampa }}" style="min-height: 46px; padding: 0 20px; border-radius: 999px; border: 0; background: #E8A838; color: #33230A; font-weight: 600; cursor: pointer">Stampa targhetta</button>
         </sc-if>
+        <sc-if value="{{ puoCertificato }}" hint-placeholder-val="{{ false }}">
+          <button type="button" onClick="{{ stampaCert }}" style="min-height: 46px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #7A3E22; background: transparent; color: #5C2E18; font-weight: 600; cursor: pointer">{{ testoCert }}</button>
+        </sc-if>
       </div>
     </section>
 
@@ -412,6 +415,23 @@ class Component extends DCLogic {
       respingi: () => { const m = prompt("Cosa deve cambiare? Lo leggerà l'adottante.", ''); if (m === null) return; this.esegui('mRespingi', { motivo: m }, "Richiesta inviata all'adottante"); },
       riapri: () => { if (confirm("L'adottante potrà scegliere di nuovo nome, detto e foto. Continuare?")) this.esegui('mRiapri', {}, 'Scelta riaperta'); },
       stampa: () => { const w = window.open('', '_blank'); if (!w) { this.avvisa('Consenti le finestre popup per stampare'); return; } w.document.write(this.stampaHtml(Object.assign({ data: (a.inizio || a.approvatoIl || a.inviatoIl) ? 'Adottato il ' + S.data(a.inizio || a.approvatoIl || a.inviatoIl) : '' }, tg), n, tm)); w.document.close(); },
+      puoCertificato: !!(a.adottante || a.utente || b.adottante),
+      testoCert: this.state.cert ? 'Preparo il certificato…' : 'Stampa certificato',
+      stampaCert: () => {
+        if (this.state.cert) return;
+        const w = window.open('', '_blank'); if (!w) { this.avvisa('Consenti le finestre popup per stampare'); return; }
+        w.document.write('<!doctype html><meta charset="utf-8"><title>Certificato albero ' + n + '</title><p style="font:16px sans-serif;padding:24px">Preparo il certificato…</p>');
+        this.setState({ cert: true });
+        const dati = Object.assign({}, a, b, { numero: a.numero });
+        if (a.utente && a.password) dati._cred = { numero: a.utente, password: a.password };
+        S._certCanvas(dati).then(c => {
+          const src = c.toDataURL('image/jpeg', 0.95), sc = 'scr' + 'ipt';
+          w.document.open();
+          w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Certificato albero ${n}</title><style>@page{size:A4 portrait;margin:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-sizing:border-box}html,body{margin:0;background:#6b6460}img{display:block;height:296mm;width:auto;margin:0 auto}@media print{html,body{background:none;overflow:hidden}}</style></head><body><img src="${src}" alt="Certificato di adozione, albero n. ${n}"><${sc}>var i=document.images[0];function p(){setTimeout(function(){print()},300)}if(i.complete)p();else i.onload=p;</${sc}></body></html>`);
+          w.document.close();
+          this.setState({ cert: false });
+        }, () => { try { w.close(); } catch (e) {} this.setState({ cert: false }); this.avvisa('Non sono riuscito a preparare il certificato'); });
+      },
       oggi: S.oggi(),
       testoCaricaFoto: occ === 'mFoto' ? 'Caricamento…' : 'Carica la foto',
       caricaFoto: e => {

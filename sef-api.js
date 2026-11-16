@@ -300,20 +300,17 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
       var logo = r[1], foto = r[2], d = dati(a), W = 1754, H = 2480, c = document.createElement('canvas'), x = c.getContext('2d');
       c.width = W; c.height = H;
       var P = cornice(x, W, H, 92), maxW = P.w - 200, cx = W / 2;
-      var info = [d.varieta, d.posizione, d.impianto ? 'piantato nel ' + d.impianto : ''].filter(Boolean).join(' · ');
+      var il = a.inizio || a.approvatoIl || a.inviatoIl || '', gm = String(il).match(/^(\d{4})-(\d{2})-(\d{2})/);
+      var quando = gm ? gm[3] + '/' + gm[2] + '/' + gm[1] : (il ? S.data(il) : '');
       var sopra = [];
       if (logo) sopra.push({ img: logo, h: 240 });
       sopra.push({ t: 'AZIENDA AGRICOLA ETNEA · ADOTTA UN LIMONE', f: SAN(600), s: 30, c: '#7A3E22', gap: 28, uno: true });
-      sopra.push({ t: 'Certificato di adozione', f: SER(500), s: 100, c: '#5C2E18', gap: 18, uno: true, lh: 1.1 });
-      sopra.push({ t: 'Si certifica che', f: SER(400, true), s: 44, c: '#3a2a20', gap: 26 });
-      sopra.push({ t: d.adottante || '—', f: SER(500), s: 84, c: '#201e1d', gap: 8, uno: true, lh: 1.1 });
-      sopra.push({ t: "ha adottato l'albero di limone n. " + d.n + (d.nome ? ' «' + d.nome + '»' : '') + " nel limoneto di Acireale, alle pendici dell\u2019Etna.", f: SER(400, true), s: 44, c: '#3a2a20', gap: 16, lh: 1.3 });
+      sopra.push({ t: "Questo è il mio albero di limoni ai piedi dell’Etna", f: SER(400, true), s: 76, c: '#5C2E18', gap: 24, lh: 1.15 });
       var sotto = [];
-      if (info) sotto.push({ t: info, f: SAN(400), s: 32, c: '#5a4636', gap: 36, lh: 1.35 });
-      if (d.periodo) sotto.push({ t: 'Adozione ' + d.periodo, f: SAN(600), s: 34, c: '#0A5806', gap: 14, lh: 1.35 });
-      if (d.detto) sotto.push({ t: d.detto, f: SER(400, true), s: 42, c: '#7A3E22', gap: 26, lh: 1.3 });
+      if (d.nome) sotto.push({ t: d.nome, f: SER(500), s: 88, c: '#201e1d', gap: 40, lh: 1.1 });
+      sotto.push({ t: 'Albero n° ' + d.n + (quando ? '  ·  adottato il ' + quando : ''), f: SAN(600), s: 40, c: '#0A5806', gap: d.nome ? 18 : 40, uno: true, lh: 1.3 });
       var top = P.y + 60, bottom = P.y + P.h - 230, items = sopra.slice();
-      if (foto) { var fw = Math.min(maxW, 1000), fh = Math.max(380, Math.min(900, bottom - top - altezza(x, sopra, maxW) - altezza(x, sotto, maxW) - 60)); fh = Math.min(fh, fw * foto.height / foto.width); items.push(fotoItem(x, foto, fh, fw, 50)); }
+      if (foto) { var fw = maxW, fh = Math.max(380, Math.min(1150, bottom - top - altezza(x, sopra, maxW) - altezza(x, sotto, maxW) - 60)); fh = Math.min(fh, fw * foto.height / foto.width); items.push(fotoItem(x, foto, fh, fw, 50)); }
       items = items.concat(sotto);
       blocco(x, items, cx, top, bottom, maxW);
       var sy = P.y + P.h - 120;
