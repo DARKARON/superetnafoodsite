@@ -313,7 +313,9 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
       sopra.push({ t: "Questo è il mio albero di limoni ai piedi dell’Etna", f: SER(400, true), s: 76, c: '#5C2E18', gap: 24, lh: 1.15 });
       var sotto = [];
       if (d.nome) sotto.push({ t: d.nome, f: SER(500), s: 88, c: '#201e1d', gap: 40, lh: 1.1 });
-      sotto.push({ t: 'Albero n° ' + d.n + (quando ? '  ·  adottato il ' + quando : ''), f: SAN(600), s: 40, c: '#0A5806', gap: d.nome ? 18 : 40, uno: true, lh: 1.3 });
+      if (d.detto) sotto.push({ t: '\u00AB' + d.detto + '\u00BB', f: SER(400, true), s: 46, c: '#7A3E22', gap: d.nome ? 16 : 40, lh: 1.25 });
+      if (d.detto && d.trad && d.trad !== d.detto) sotto.push({ t: d.trad, f: SAN(400), s: 30, c: '#5a4636', gap: 8, lh: 1.3 });
+      sotto.push({ t: 'Albero n\u00B0 ' + d.n + (quando ? '  \u00B7  adottato il ' + quando : ''), f: SAN(600), s: 40, c: '#0A5806', gap: (d.nome || d.detto) ? 22 : 40, uno: true, lh: 1.3 });
       var top = P.y + 60, bottom = P.y + P.h - 230, items = sopra.slice();
       if (foto) { var fw = maxW, fh = Math.max(380, Math.min(1150, bottom - top - altezza(x, sopra, maxW) - altezza(x, sotto, maxW) - 60)); fh = Math.min(fh, fw * foto.height / foto.width); items.push(fotoItem(x, foto, fh, fw, 50)); }
       items = items.concat(sotto);
