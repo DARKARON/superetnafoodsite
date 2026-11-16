@@ -192,8 +192,12 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
     var f = (a.foto || [])[0];
     var src = (f && f.src) || '';
     function ok(im) { if (!im) return null; try { var c = document.createElement('canvas'); c.width = c.height = 2; c.getContext('2d').drawImage(im, 0, 0, 2, 2); c.toDataURL(); return im; } catch (e) { return null; } }
-    var dalServer = a._cred && S.chiama ? S.chiama('fotoCert', a._cred).then(function (u) { return u ? img(u) : null; }, function () { return null; }).then(ok) : Promise.resolve(null);
-    return dalServer.then(function (im) { return im || img(src, /^https?:/.test(src)).then(ok); }).then(function (im) { return im || img('assets/verdello-pianta.jpg').then(ok); });
+    function chiedi(azione, dati) { return S.chiama ? S.chiama(azione, dati).then(function (u) { return u || null; }, function () { return null; }) : Promise.resolve(null); }
+    var dalServer = (a._master ? chiedi('mFotoCert', { master: a._master, numero: a.numero }) : Promise.resolve(null))
+      .then(function (u) { return u || (a._cred ? chiedi('fotoCert', a._cred) : null); })
+      .then(function (u) { return u ? img(u) : null; }).then(ok);
+    return dalServer.then(function (im) { return im || img(src, /^https?:/.test(src)).then(ok); })
+      .then(function (im) { return im || img('assets/verdello-pianta.jpg').then(ok).then(function (g) { if (g) g._generica = true; return g; }); });
   }
   function dati(a) {
     var nome = a.nomePianta || a.nomeProposto || '';
@@ -318,6 +322,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
       x.strokeStyle = '#5C2E18'; x.lineWidth = 2; x.beginPath(); x.moveTo(P.x + 80, sy); x.lineTo(P.x + 560, sy); x.stroke();
       x.font = SAN(400)(26); x.fillStyle = '#5a4636'; x.fillText('Super Etna Food · Acireale (CT)', P.x + 80, sy + 40);
       x.textAlign = 'right'; x.fillText('www.superetnafood.it', P.x + P.w - 80, sy + 40);
+      c.fotoGenerica = !foto || !!foto._generica;
       return c;
     });
   }

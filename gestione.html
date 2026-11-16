@@ -422,7 +422,7 @@ class Component extends DCLogic {
         const w = window.open('', '_blank'); if (!w) { this.avvisa('Consenti le finestre popup per stampare'); return; }
         w.document.write('<!doctype html><meta charset="utf-8"><title>Certificato albero ' + n + '</title><p style="font:16px sans-serif;padding:24px">Preparo il certificato…</p>');
         this.setState({ cert: true });
-        const dati = Object.assign({}, a, b, { numero: a.numero });
+        const dati = Object.assign({}, a, b, { numero: a.numero, _master: this.state.master });
         if (a.utente && a.password) dati._cred = { numero: a.utente, password: a.password };
         S._certCanvas(dati).then(c => {
           const src = c.toDataURL('image/jpeg', 0.95), sc = 'scr' + 'ipt';
@@ -430,6 +430,7 @@ class Component extends DCLogic {
           w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Certificato albero ${n}</title><style>@page{size:A4 portrait;margin:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-sizing:border-box}html,body{margin:0;background:#6b6460}img{display:block;height:296mm;width:auto;margin:0 auto}@media print{html,body{background:none;overflow:hidden}}</style></head><body><img src="${src}" alt="Certificato di adozione, albero n. ${n}"><${sc}>var i=document.images[0];function p(){setTimeout(function(){print()},300)}if(i.complete)p();else i.onload=p;</${sc}></body></html>`);
           w.document.close();
           this.setState({ cert: false });
+          if (c.fotoGenerica) this.avvisa("Foto dell'albero n. " + n + " non trovata su Drive: nel certificato c'è quella generica");
         }, () => { try { w.close(); } catch (e) {} this.setState({ cert: false }); this.avvisa('Non sono riuscito a preparare il certificato'); });
       },
       oggi: S.oggi(),
