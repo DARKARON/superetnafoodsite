@@ -79,10 +79,16 @@ function fotoAlbero(n) {
   try { const g = galleria().find(x => x.numero === n); if (g) fid = id(g.src); } catch (e) {}
   if (!fid) { const f = leggi('Foto').filter(x => pad(x.numero) === n).sort(desc)[0]; if (f) fid = f.fileId || id(f.src); }
   if (!fid) return null;
-  let b;
-  try { b = UrlFetchApp.fetch('https://drive.google.com/thumbnail?id=' + fid + '&sz=w1400', { headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() }, muteHttpExceptions: true }); b = b.getResponseCode() === 200 ? b.getBlob() : null; } catch (e) { b = null; }
-  if (!b) { const f = DriveApp.getFileById(fid); if (f.getSize() > 6000000) return null; b = f.getBlob(); }
-  return 'data:' + (b.getContentType() || 'image/jpeg') + ';base64,' + Utilities.base64Encode(b.getBytes());
+  const immagine = b => b && String(b.getContentType() || '').indexOf('image/') === 0 && b.getBytes().length > 1000;
+  let b = null;
+  // 1) anteprima ridotta di Drive (leggera); vale solo se torna davvero un'immagine
+  try { const r = UrlFetchApp.fetch('https://drive.google.com/thumbnail?id=' + fid + '&sz=w1400', { headers: { Authorization: 'Bearer ' + ScriptApp.getOAuthToken() }, muteHttpExceptions: true, followRedirects: true }); if (r.getResponseCode() === 200) b = r.getBlob(); } catch (e) { b = null; }
+  // 2) altrimenti il file originale, se non è enorme
+  if (!immagine(b)) { b = null; try { const f = DriveApp.getFileById(fid); if (f.getSize() <= 6000000) b = f.getBlob(); } catch (e) { b = null; } }
+  // 3) ultima strada: la miniatura che Drive genera da sé
+  if (!immagine(b)) { try { b = DriveApp.getFileById(fid).getThumbnail(); } catch (e) { b = null; } }
+  if (!immagine(b)) throw new Error('Foto trovata su Drive ma non leggibile (file ' + fid + ').');
+  return 'data:' + b.getContentType() + ';base64,' + Utilities.base64Encode(b.getBytes());
 }
 function vista(a, conPw, foto, diario) {
   const n = pad(a.numero), c = Object.assign({}, a);

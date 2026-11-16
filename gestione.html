@@ -426,11 +426,13 @@ class Component extends DCLogic {
         if (a.utente && a.password) dati._cred = { numero: a.utente, password: a.password };
         S._certCanvas(dati).then(c => {
           const src = c.toDataURL('image/jpeg', 0.95), sc = 'scr' + 'ipt';
+          const mt = String(c.motivoFoto || ''), perche = !c.fotoGenerica ? '' : (/sconosciuta/i.test(mt) ? "il servizio Google non ha ancora la nuova versione: su Apps Script fai Esegui il deployment → Gestisci deployment → matita → Versione: Nuova." : mt === 'vuota' ? "nella cartella foto-piante non c'è un file chiamato pianta-" + (+n) + "-… e nella gestione non ci sono foto dal campo per questo albero." : mt === 'illeggibile' ? "la foto è arrivata ma il browser non riesce a leggerla." : (mt || 'motivo sconosciuto') + '.');
+          const banner = perche ? '<p class="nb">Foto dell\'albero n. ' + n + ' non presa: ' + perche.replace(/[&<>]/g, x => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[x])) + ' Nel certificato c\'è la foto generica.</p>' : '';
           w.document.open();
-          w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Certificato albero ${n}</title><style>@page{size:A4 portrait;margin:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-sizing:border-box}html,body{margin:0;background:#6b6460}img{display:block;height:296mm;width:auto;margin:0 auto}@media print{html,body{background:none;overflow:hidden}}</style></head><body><img src="${src}" alt="Certificato di adozione, albero n. ${n}"><${sc}>var i=document.images[0];function p(){setTimeout(function(){print()},300)}if(i.complete)p();else i.onload=p;</${sc}></body></html>`);
+          w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Certificato albero ${n}</title><style>@page{size:A4 portrait;margin:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;box-sizing:border-box}html,body{margin:0;background:#6b6460}img{display:block;height:296mm;width:auto;margin:0 auto}@media print{html,body{background:none;overflow:hidden}.nb{display:none}}.nb{margin:0;padding:14px 20px;background:#FFF3C4;color:#3A2A00;font:16px/1.5 sans-serif;text-align:center}</style></head><body>${banner}<img src="${src}" alt="Certificato di adozione, albero n. ${n}"><${sc}>var i=document.images[0];function p(){setTimeout(function(){print()},${perche ? 1500 : 300})}if(i.complete)p();else i.onload=p;</${sc}></body></html>`);
           w.document.close();
           this.setState({ cert: false });
-          if (c.fotoGenerica) this.avvisa("Foto dell'albero n. " + n + " non trovata su Drive: nel certificato c'è quella generica");
+          if (perche) this.avvisa("Foto dell'albero n. " + n + ' non presa: ' + perche);
         }, () => { try { w.close(); } catch (e) {} this.setState({ cert: false }); this.avvisa('Non sono riuscito a preparare il certificato'); });
       },
       oggi: S.oggi(),
