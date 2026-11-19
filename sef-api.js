@@ -394,3 +394,21 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
     });
   };
 })();
+
+/* ---------- pagamento online: pulsanti PayPal (caricati solo al passo 3) ---------- */
+(function () {
+  var S = window.SEF; if (!S) return;
+  var attesa = null;
+  S.caricaPayPal = function (clientId) {
+    if (window.paypal && window.paypal.Buttons) return Promise.resolve(window.paypal);
+    if (attesa) return attesa;
+    attesa = new Promise(function (ok, ko) {
+      var s = document.createElement('script');
+      s.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(clientId) + '&currency=EUR&intent=capture&locale=it_IT&components=buttons&enable-funding=card';
+      s.onload = function () { if (window.paypal && window.paypal.Buttons) ok(window.paypal); else { attesa = null; ko(new Error('PayPal non si è caricato: ricarica la pagina.')); } };
+      s.onerror = function () { attesa = null; s.remove(); ko(new Error('Non riesco a caricare PayPal: controlla la connessione o il blocco pubblicità, poi ricarica la pagina.')); };
+      document.head.appendChild(s);
+    });
+    return attesa;
+  };
+})();

@@ -84,6 +84,7 @@
             <span style="font-weight: 700; font-size: 16px; overflow-wrap: anywhere">{{ ad.titolo }}</span>
             <span style="font-size: 14px; line-height: 1.5; color: color-mix(in srgb, var(--color-text) 75%, transparent)">{{ ad.info }}</span>
             <span style="font-size: 14px; font-weight: 600; color: {{ ad.coloreStato }}">{{ ad.stato }}</span>
+            <sc-if value="{{ ad.pagTesto }}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; font-weight: 600; color: {{ ad.pagColore }}">{{ ad.pagTesto }}</span></sc-if>
           </div>
           <sc-if value="{{ ad.haAlbero }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ ad.vai }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #0D6E08 45%, transparent); background: transparent; color: #0A5806; font-weight: 600; font-size: 14px; cursor: pointer">Apri l'albero n. {{ ad.albero }}</button></sc-if>
           <sc-if value="{{ ad.senzaAlbero }}" hint-placeholder-val="{{ true }}">
@@ -95,6 +96,7 @@
             </form>
             <sc-if value="{{ ad.haMail }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ ad.reinvia }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #0D6E08 45%, transparent); background: transparent; color: #0A5806; font-weight: 600; font-size: 14px; cursor: pointer">Rimanda la mail</button></sc-if>
           </sc-if>
+          <sc-if value="{{ ad.puoSegnare }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ ad.segnaPagata }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 0; background: #0D6E08; color: #ffffff; font-weight: 600; font-size: 14px; cursor: pointer">Segna come pagata</button></sc-if>
           <button type="button" onClick="{{ ad.cambiaPw }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #0D6E08 45%, transparent); background: transparent; color: #0A5806; font-weight: 600; font-size: 14px; cursor: pointer">Cambia password</button>
           <button type="button" onClick="{{ ad.elimina }}" style="min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, #B3261E 50%, transparent); background: transparent; color: #8C1D18; font-weight: 600; font-size: 14px; cursor: pointer" style-hover="background: color-mix(in srgb, #B3261E 8%, transparent)">Cancella adozione</button>
         </div>
@@ -388,6 +390,16 @@ class Component extends DCLogic {
           titolo: (x.utente || x.email || '—') + (x.adottante ? ' · ' + x.adottante : ''),
           info: [x.password ? 'password ' + x.password : 'password vecchia cifrata: generane una nuova', x.email || 'nessuna mail', x.formula, x.creataIl ? 'creata il ' + S.data(x.creataIl) : '', x.mailInviata ? 'mail inviata il ' + S.data(String(x.mailInviata).slice(0, 10)) : '', x.telefono ? 'tel. ' + x.telefono : '', x.consegna || ''].filter(Boolean).join(' · '),
           stato: st[0], coloreStato: st[1], albero: x.albero, haAlbero: !!x.albero, senzaAlbero: !x.albero,
+          ...(() => {
+            const eu = x.importo ? (+x.importo).toFixed(2).replace('.', ',') + ' €' : '';
+            const ora = x.scadenza ? new Date(x.scadenza) : null, oraT = ora && !isNaN(ora) ? ora.toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+            const testo = x.pagamento === 'pagato' ? 'Pagata' + (eu ? ' ' + eu : '') + (x.pagatoIl ? ' il ' + S.data(x.pagatoIl) : '') + (x.ppCattura === 'manuale' ? ' · segnata a mano' : (x.ppCattura ? ' · PayPal ' + x.ppCattura : ''))
+              : x.pagamento === 'attesa' ? 'Da pagare' + (eu ? ' · ' + eu : '') + (x.scaduta ? ' · prenotazione scaduta: albero di nuovo libero' : (oraT ? ' · albero tenuto fino al ' + oraT : ''))
+              : x.pagamento === 'verifica' ? 'Pagamento da controllare su PayPal' + (eu ? ' · ' + eu : '') : '';
+            return { pagTesto: testo, pagColore: x.pagamento === 'pagato' ? '#0A4A06' : (x.pagamento === 'verifica' ? '#7A2A1E' : '#9A3B00'),
+              puoSegnare: x.pagamento === 'attesa' || x.pagamento === 'verifica',
+              segnaPagata: () => { if (confirm("Segnare come pagata l'adozione di " + x.utente + '?' + (x.email ? '\n\nParte la mail con nome utente e password a ' + x.email + '.' : "\n\nNon c'è una mail: manda tu le credenziali.")) ) this.adoz('mSegnaPagata', { utente: x.utente }, 'Segnata come pagata' + (x.email ? ': mail inviata' : '')).then(ok => { if (ok) this.entra(this.state.master, true); }); } };
+          })(),
           vai: () => this.vai(+x.albero),
           haMail: !!x.email,
           reinvia: () => this.adoz('mInviaCredenziali', { utente: x.utente }, 'Mail inviata a ' + x.email),

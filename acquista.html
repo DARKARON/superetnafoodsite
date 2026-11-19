@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<title>I tuoi dati — Adotta un limone · Super Etna Food</title>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="ds/styles.css">
+<script src="ds/ds-bundle.js"></script>
+<script src="sef-api.js"></script>
+<script data-goatcounter="https://superetnafood.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>
+(function () {
+  var KEY = 'sef-consenso-analytics';
+  function loadAnalytics() {
+    if (window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VLG2FVLNDM';
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-VLG2FVLNDM', { anonymize_ip: true });
+  }
+  function hide(b) { b.style.display = 'none'; }
+  function init() {
+    var b = document.getElementById('privacy-banner');
+    if (!b) return;
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved === 'si') { hide(b); loadAnalytics(); return; }
+    if (saved === 'no') { hide(b); return; }
+    b.style.display = 'block';
+    var ok = document.getElementById('privacy-accetta');
+    var no = document.getElementById('privacy-rifiuta');
+    if (ok) ok.addEventListener('click', function () {
+      try { localStorage.setItem(KEY, 'si'); } catch (e) {}
+      hide(b); loadAnalytics();
+    });
+    if (no) no.addEventListener('click', function () {
+      try { localStorage.setItem(KEY, 'no'); } catch (e) {}
+      hide(b);
+    });
+  }
+  var t = setInterval(function () { if (document.getElementById('privacy-banner')) { clearInterval(t); init(); } }, 200);
+  setTimeout(function () { clearInterval(t); }, 8000);
+})();
+</script>
+
+<link rel="stylesheet" href="fonts/caratteri.css">
+<style>
+  :root { --font-heading: 'Young Serif', Georgia, serif; --font-body: 'Instrument Sans', system-ui, sans-serif; font-synthesis-weight: none; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font-family: var(--font-body); font-size: 17px; text-wrap: pretty; overflow-x: hidden; }
+  h1, h2, h3, blockquote, th, .nav-brand { font-family: var(--font-heading); }
+  .nav, .btn, .table td, .tag { font-family: var(--font-body); }
+  a { color: #0A5806; }
+  a:hover { color: #0D6E08; }
+  img { max-width: 100%; height: auto; }
+  :focus-visible { outline: 2px solid #E8A838; outline-offset: 2px; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "kicker photo" "text photo"; align-items: center; column-gap: clamp(24px, 4vw, 48px); }
+  .hero-kicker { grid-area: kicker; align-self: end; }
+  .hero-text { grid-area: text; }
+  .hero-photo { grid-area: photo; }
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; grid-template-areas: "kicker" "photo" "text"; row-gap: 20px; }
+    .hero-kicker { align-self: auto; }
+  }
+
+  image-slot, image-slot * { touch-action: pan-y !important; }
+  @media (pointer: coarse) { image-slot { pointer-events: none !important; } }
+  .nav-toggle { display: none; }
+  .nav-burger { display: none; }
+  .nav-links { display: flex; align-items: center; flex-wrap: nowrap; gap: clamp(5px, 0.8vw, 10px); flex: 1 1 auto; min-width: 0; }
+  .nav-links > a.nav-plate:first-child { margin-left: auto; }
+  .nav-links > a.nav-plate[href^="zafferano"] { padding-left: clamp(6px, 1.05vw, 17px); padding-right: clamp(6px, 1.05vw, 17px); }
+  .nav-links > a.nav-plate[href^="limoni"] { padding-left: clamp(14px, 2.3vw, 40px); padding-right: clamp(14px, 2.3vw, 40px); }
+  .nav-links > a.nav-plate[href^="chi-siamo"] { padding-left: clamp(14px, 2.3vw, 40px); padding-right: clamp(14px, 2.3vw, 40px); }
+  .nav-links > a.btn { margin-left: auto; flex: 0 1 auto; height: 76px; padding-left: clamp(14px, 1.8vw, 28px); padding-right: clamp(14px, 1.8vw, 28px); white-space: nowrap; box-sizing: border-box; align-items: center; }
+  .nav { padding-left: max(clamp(16px, 5vw, 72px), calc((100% - 1280px) / 2 + clamp(16px, 5vw, 72px))) !important; padding-right: max(clamp(16px, 5vw, 72px), calc((100% - 1280px) / 2 + clamp(16px, 5vw, 72px))) !important; }
+  @media (max-width: 1180px) {
+    .nav { padding: 10px clamp(16px, 5vw, 72px) !important; align-items: center; }
+    .nav-brand img { height: 46px !important; }
+    .nav-burger { margin-left: auto; display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 46px; height: 46px; padding: 10px; box-sizing: border-box; cursor: pointer; border-radius: 10px; background: color-mix(in srgb, #3A1B08 16%, transparent); }
+    .nav-burger span { display: block; height: 2px; background: #3A1B08; border-radius: 2px; }
+    .nav-links { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 2px; padding: 6px 0 8px; flex: 0 0 auto; }
+    .nav-toggle:checked ~ .nav-links { display: flex; }
+    .nav-links > a { padding: 12px 0; min-height: 44px; display: flex; align-items: center; font-size: 21px !important; }
+    .nav-links > a.btn { margin: 10px 0 0 0 !important; width: 100%; min-height: 50px; justify-content: center; box-sizing: border-box; }
+  }
+  a.nav-plate { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; height: 76px; min-width: 0; flex: 0 1 auto; padding: 0 clamp(10px, 1.6vw, 26px); box-sizing: border-box; border-radius: 5px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: cover; background-position: center; border: none; box-shadow: none; -webkit-mask-image: radial-gradient(115% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%); mask-image: radial-gradient(115% 130% at 50% 50%, #000 52%, rgba(0,0,0,0.55) 78%, transparent 100%); color: #F7E9CF; text-shadow: 0 1px 2px rgba(36,16,4,0.7); font-weight: 700; font-size: clamp(18.5px, 1.5vw, 22px); white-space: nowrap; text-decoration: none; }
+  .nav-links > a.nav-plate { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 clamp(10px, 1.6vw, 26px); }
+  @media (min-width: 1181px) { .nav { flex-wrap: nowrap !important; } .nav-links { flex-wrap: nowrap; } }
+  @media (min-width: 1181px) and (max-width: 1480px) {
+    .nav { padding-left: 24px !important; padding-right: 24px !important; gap: 12px !important; }
+    a.nav-plate-home { margin-right: 4px; gap: 10px; }
+    a.nav-plate-home img { height: 72px !important; width: 72px !important; }
+    .nav-links > a.nav-plate, .nav-links > a.nav-plate[href^="limoni"], .nav-links > a.nav-plate[href^="chi-siamo"], .nav-links > a.nav-plate[href^="zafferano"] { padding-left: 12px !important; padding-right: 12px !important; font-size: 18px !important; }
+    .nav-links > a.btn { font-size: 17.5px !important; padding-left: 14px !important; padding-right: 14px !important; }
+  }
+  @media (min-width: 1181px) { .nav-links > a.nav-plate, .nav-links > a.nav-plate[href] { flex: 1 1 0 !important; min-width: 0 !important; padding-left: 8px !important; padding-right: 8px !important; margin-left: 0 !important; } .nav-links { margin-left: clamp(8px, 1.5vw, 24px); } }
+  a.nav-plate:hover { background-color: #C99A7B; color: #FFF3DC; }
+  a.nav-plate[aria-current="page"] { color: #FFF3DC; background-color: #8E5F3E; }
+  .nav-glyph { display: block; position: relative; flex: 0 0 auto; }
+  .nav-glyph i { position: absolute; display: block; }
+  .nav-glyph-lemon { width: 28px; height: 19px; background: linear-gradient(160deg, #FFE58A 0%, #FFD84D 45%, #F2B90E 100%); clip-path: path('M 0,9.5 C 1,3.5 6,0 14,0 C 22,0 27,3.5 28,9.5 C 27,15.5 22,19 14,19 C 6,19 1,15.5 0,9.5 Z'); }
+  .nav-glyph-sprout { width: 34px; height: 22px; }
+  .nav-glyph-sprout .st1 { left: 6px; bottom: 6px; width: 2px; height: 8px; background: #E86A93; }
+  .nav-glyph-sprout .st2 { left: 12px; bottom: 6px; width: 2px; height: 8px; background: #F2A0BC; }
+  .nav-glyph-sprout .st3 { left: 18px; bottom: 6px; width: 2px; height: 8px; background: #E86A93; }
+  .nav-glyph-sprout .st4 { left: 24px; bottom: 6px; width: 2px; height: 8px; background: #F2A0BC; }
+  .nav-glyph-sprout .mass { left: 1px; top: 0; width: 32px; height: 11px; border-radius: 50% 50% 40% 40% / 70% 70% 30% 30%; background: linear-gradient(#8FCC63, #4E8B3A); }
+  .nav-glyph-sprout .tuft-l { left: 5px; top: -2px; width: 9px; height: 7px; border-radius: 50%; background: #9AD46E; }
+  .nav-glyph-sprout .tuft-r { left: 19px; top: -1px; width: 8px; height: 6px; border-radius: 50%; background: #7FBF5A; }
+  .nav-glyph-sprout .tray { left: 2px; bottom: 0; width: 30px; height: 6px; border-radius: 1px 1px 3px 3px; background: linear-gradient(#8E5F3E, #5C3A22); }
+  .nav-glyph-crocus { width: 26px; height: 17px; }
+  .nav-glyph-crocus .pt { bottom: 0; width: 9px; height: 14px; border-radius: 50% 50% 42% 42%; background: #B983D8; }
+  .nav-glyph-crocus .pt-l { left: 0; transform: rotate(-24deg); }
+  .nav-glyph-crocus .pt-c { left: 8.5px; }
+  .nav-glyph-crocus .pt-r { right: 0; transform: rotate(24deg); }
+  .nav-glyph-crocus .st { top: 0; width: 2px; height: 7px; border-radius: 1px; background: #E2622A; }
+  .nav-glyph-crocus .st-l { left: 9px; transform: rotate(-26deg); }
+  .nav-glyph-crocus .st-c { left: 12.5px; }
+  .nav-glyph-crocus .st-r { left: 16px; transform: rotate(26deg); }
+  .nav-glyph-leaf { width: 28px; height: 14px; }
+  .nav-glyph-leaf .lf { top: 0; width: 15px; height: 10px; border-radius: 100% 0 100% 0; background: #7FBF5A; }
+  .nav-glyph-leaf .lf-l { left: 0; transform: rotate(-8deg); }
+  .nav-glyph-leaf .lf-r { right: 0; transform: rotate(172deg); background: #5F9E3E; }
+  .nav-glyph-lock { width: 16px; height: 18px; }
+  .nav-glyph-lock .sh { left: 3px; top: 0; width: 10px; height: 10px; box-sizing: border-box; border: 2.5px solid #FFD84D; border-bottom: 0; border-radius: 6px 6px 0 0; }
+  .nav-glyph-lock .bd { left: 0; bottom: 0; width: 16px; height: 10px; border-radius: 2px; background: linear-gradient(#FFE58A, #F2B90E); }
+  a.nav-plate-home { flex-direction: row; justify-content: flex-start; gap: 13px; min-width: 0; margin-right: 16px; padding: 0 16px 0 0; height: auto; background: none; -webkit-mask-image: none; mask-image: none; }
+  a.nav-plate-home img { height: clamp(68px, 7.2vw, 108px); width: clamp(68px, 7.2vw, 108px); border-radius: 50%; display: block; flex: 0 0 auto; }
+  .nav-plate-bar { display: block; width: 26px; height: 3px; border-radius: 2px; }
+  @media (max-width: 1180px) {
+    .nav-links { gap: 8px !important; }
+    .nav-links > a.nav-plate:first-child { margin-left: 0; }
+    .nav-links > a.nav-plate { flex-direction: row; justify-content: flex-start; gap: 12px; width: 100%; min-height: 52px; height: auto; flex: 0 0 auto; padding: 12px 16px !important; font-size: 21px !important; }
+    .nav-links > a.nav-plate .nav-plate-bar { width: 5px; height: 22px; margin-left: auto; }
+    .nav-links > a.nav-plate .nav-glyph { margin-left: auto; transform: scale(1.25); transform-origin: right center; }
+    .nav-glyph-lock { width: 16px; height: 18px; }
+  .nav-glyph-lock .sh { left: 3px; top: 0; width: 10px; height: 10px; box-sizing: border-box; border: 2.5px solid #FFD84D; border-bottom: 0; border-radius: 6px 6px 0 0; }
+  .nav-glyph-lock .bd { left: 0; bottom: 0; width: 16px; height: 10px; border-radius: 2px; background: linear-gradient(#FFE58A, #F2B90E); }
+  a.nav-plate-home { margin-right: 0; }
+  }
+
+
+  nav.nav { flex-wrap: nowrap !important; align-items: center; position: relative; z-index: 40; }
+  .menu-btn { position: relative; margin-left: auto; flex: 0 0 auto; }
+  .menu-btn .nav-burger { display: flex !important; margin: 0 !important; flex-direction: column; justify-content: center; gap: 6px; width: 52px; height: 52px; padding: 13px; box-sizing: border-box; cursor: pointer; border-radius: 12px; background: #B98868 url('assets/targa-fascia.jpg') center / cover; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+  .menu-btn .nav-burger span { display: block; height: 2.5px; background: #3A1B08; border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
+  .menu-btn .nav-toggle:checked + .nav-burger span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+  .menu-btn .nav-toggle:checked + .nav-burger span:nth-child(2) { opacity: 0; }
+  .menu-btn .nav-toggle:checked + .nav-burger span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+  .menu-btn .nav-links { display: none !important; position: absolute; right: 0; top: 62px; width: min(300px, calc(100vw - 32px)); flex-direction: column; align-items: stretch; gap: 6px !important; padding: 10px !important; margin: 0 !important; box-sizing: border-box; border-radius: 14px; background: #7A5432; box-shadow: 0 16px 40px rgba(0,0,0,0.35); z-index: 60; }
+  .menu-btn .nav-toggle:checked ~ .nav-links { display: flex !important; }
+  .menu-btn .nav-links > a.nav-plate, .menu-btn .nav-links > a.nav-plate[href] { width: 100%; height: 64px !important; min-height: 64px; flex: 0 0 auto !important; flex-direction: row !important; justify-content: center !important; gap: 12px; font-size: 21px !important; padding: 0 16px !important; margin: 0 !important; }
+  .menu-btn .nav-links > a.nav-plate .nav-glyph { margin-left: 0 !important; transform: none !important; }
+  .menu-btn .nav-links > a.btn { width: 100%; height: auto !important; min-height: 52px; flex: 0 0 auto !important; justify-content: center; box-sizing: border-box; margin: 4px 0 0 !important; padding: 0 16px !important; }
+</style>
+</helmet>
+
+<nav class="nav" style="padding: 12px clamp(16px, 5vw, 72px); flex-wrap: wrap; gap: 10px 20px; background-color: #B98868; background-image: url('assets/targa-fascia.jpg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; border: 0">
+  <a class="nav-plate nav-plate-home" href="index.html" aria-label="Super Etna Food — torna alla home"><img src="assets/logo-round.png" alt="">Home</a>
+  <div class="menu-btn">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
+  <label for="nav-toggle" class="nav-burger" aria-label="Apri il menù"><span></span><span></span><span></span></label>
+  <div class="nav-links">
+  <a class="nav-plate" href="limoni.html"><span>Limoni</span><span class="nav-glyph nav-glyph-lemon"></span></a>
+  <a class="nav-plate" href="microgreen.html"><span>Microgreen</span><span class="nav-glyph nav-glyph-sprout"><i class="st1"></i><i class="st2"></i><i class="st3"></i><i class="st4"></i><i class="mass"></i><i class="tuft-l"></i><i class="tuft-r"></i><i class="tray"></i></span></a>
+  <a class="nav-plate" href="zafferano.html"><span>Zafferano</span><span class="nav-glyph nav-glyph-crocus"><i class="pt pt-l"></i><i class="pt pt-c"></i><i class="pt pt-r"></i><i class="st st-l"></i><i class="st st-c"></i><i class="st st-r"></i></span></a>
+  <a class="nav-plate" href="chi-siamo.html"><span>Il Fondo</span><span class="nav-glyph nav-glyph-leaf"><i class="lf lf-l"></i><i class="lf lf-r"></i></span></a>
+  <a class="nav-plate" href="area-riservata.html"><span>Area riservata</span><span class="nav-glyph nav-glyph-lock"><i class="sh"></i><i class="bd"></i></span></a>
+  <a class="btn" style="background: #25D366; color: #0B2E10; border-color: #25D366; font-weight: 600; font-size: 18px; border-radius: 999px; white-space: nowrap" href="https://wa.me/393515286188" target="_blank" rel="noopener">Scrivimi su WhatsApp</a>
+  </div>
+  </div>
+</nav>
+
+<section style="background: #0D6E08">
+  <div style="max-width: 1200px; margin: 0 auto; padding: clamp(36px, 6vw, 72px) clamp(16px, 5vw, 72px) clamp(32px, 5vw, 56px)">
+    <span style="display: block; font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 95%, transparent); margin-bottom: 16px">Adotta un limone · passo 1 di 3</span>
+    <h1 style="font-weight: 500; font-size: clamp(34px, 5.4vw, 58px); line-height: 1.06; letter-spacing: -0.02em; margin: 0; color: #ffffff">I tuoi dati</h1>
+    <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 54ch; color: color-mix(in srgb, #ffffff 95%, transparent)">Scegli la formula e dimmi dove mandare i limoni. Poi scegli il tuo albero e paghi con PayPal: subito dopo ti arrivano per mail nome utente e password dell'area riservata.</p>
+    <ol style="list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px">
+      <li style="display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; border-radius: 999px; background: #F5E11A; color: #1A1A1A; font-weight: 700; font-size: 16px"><span style="display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #1A1A1A; color: #F5E11A">1</span>I tuoi dati</li>
+      <li style="display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; border-radius: 999px; background: color-mix(in srgb, #ffffff 14%, transparent); color: #ffffff; font-size: 16px"><span style="display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid color-mix(in srgb, #ffffff 70%, transparent)">2</span>Albero e targhetta</li>
+      <li style="display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; border-radius: 999px; background: color-mix(in srgb, #ffffff 14%, transparent); color: #ffffff; font-size: 16px"><span style="display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid color-mix(in srgb, #ffffff 70%, transparent)">3</span>Pagamento PayPal</li>
+    </ol>
+  </div>
+</section>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: clamp(32px, 5vw, 56px) clamp(16px, 5vw, 72px) 0">
+  <sc-if value="{{ inCorso }}" hint-placeholder-val="{{ false }}">
+    <p style="margin: 0 0 28px; font-size: 17.5px; line-height: 1.6; background: color-mix(in srgb, #E8A838 18%, var(--color-bg)); border-radius: 14px; padding: 16px 20px; color: #4A3206">Hai già un'adozione iniziata e non ancora pagata. <a href="area-riservata.html" style="font-weight: 700; color: #4A3206">Riprendila da dove eri rimasto →</a></p>
+  </sc-if>
+  <form onSubmit="{{ invia }}" style="display: grid; gap: clamp(32px, 5vw, 48px); max-width: 920px">
+    <div style="min-width: 0">
+      <h2 style="font-weight: 500; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; margin: 0">La formula</h2>
+      <div role="group" aria-label="Dove ricevi i limoni" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px">
+        <button type="button" onClick="{{ zonaItalia }}" aria-pressed="{{ isItalia }}" style="min-height: 48px; padding: 0 20px; border-radius: 999px; border: 2px solid #0D6E08; background: {{ bgItalia }}; color: {{ fgItalia }}; font-family: var(--font-body); font-size: 16.5px; font-weight: 600; cursor: pointer">Spedizione in tutta Italia</button>
+        <button type="button" onClick="{{ zonaCatania }}" aria-pressed="{{ isCatania }}" style="min-height: 48px; padding: 0 20px; border-radius: 999px; border: 2px solid #0D6E08; background: {{ bgCatania }}; color: {{ fgCatania }}; font-family: var(--font-body); font-size: 16.5px; font-weight: 600; cursor: pointer">Consegna a mano a Catania o Acireale</button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; margin-top: 16px">
+        <sc-for list="{{ formule }}" as="f" hint-placeholder-count="3">
+          <button type="button" onClick="{{ f.scegli }}" aria-pressed="{{ f.sel }}" style="text-align: left; padding: 18px 20px; border-radius: 16px; border: 3px solid {{ f.bordo }}; background: {{ f.bg }}; cursor: pointer; display: grid; gap: 6px; align-content: start; font-family: var(--font-body); color: var(--color-text)">
+            <span style="font-size: 14.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: {{ f.colore }}">{{ f.metallo }}</span>
+            <span style="font-family: var(--font-heading); font-size: 24px; line-height: 1.15">{{ f.titolo }}</span>
+            <span style="font-size: 26px; font-weight: 700; letter-spacing: -0.01em">{{ f.prezzo }} €</span>
+            <span style="font-size: 16px; line-height: 1.45; color: color-mix(in srgb, var(--color-text) 90%, transparent)">{{ f.cosa }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="min-width: 0">
+      <h2 style="font-weight: 500; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; margin: 0">Chi adotta</h2>
+      <p style="margin: 10px 0 0; font-size: 17px; line-height: 1.6; max-width: 62ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">È un regalo? Qui metti i tuoi dati: il nome di chi lo riceve lo scrivi dopo, sulla targhetta.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 18px 24px; margin-top: 18px">
+        <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Nome e cognome<input name="adottante" autocomplete="name" required="required" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+        <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Mail<input name="email" type="email" autocomplete="email" required="required" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"><span style="font-size: 15.5px; font-weight: 400; line-height: 1.45; color: #5C5550">Qui ti arrivano nome utente e password dopo il pagamento.</span></label>
+        <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Telefono<input name="telefono" type="tel" autocomplete="tel" required="required" placeholder="es. 351 000 0000" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+      </div>
+    </div>
+
+    <div style="min-width: 0">
+      <h2 style="font-weight: 500; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; margin: 0">Consegna dei limoni</h2>
+      <sc-if value="{{ isItalia }}" hint-placeholder-val="{{ true }}">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 18px 24px; margin-top: 18px">
+          <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0; grid-column: 1 / -1">Via e numero civico<input name="via" autocomplete="street-address" required="required" placeholder="es. Via Stazione 83" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+          <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">CAP<input name="cap" inputMode="numeric" autocomplete="postal-code" required="required" pattern="[0-9]{5}" maxLength="5" title="5 cifre" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+          <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Città<input name="citta" autocomplete="address-level2" required="required" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+          <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Provincia<input name="provincia" autocomplete="address-level1" maxLength="2" placeholder="CT" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; text-transform: uppercase; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+          <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0; grid-column: 1 / -1">Presso, citofono o note (facoltativo)<input name="presso" placeholder="es. citofono Bonsignore, scala B" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isCatania }}" hint-placeholder-val="{{ false }}">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 18px 24px; margin-top: 18px">
+          <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Dove te li porto<select name="luogo" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"><option value="Catania">A Catania</option><option value="Acireale">Ad Acireale</option></select></label>
+          <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Zona, indirizzo o orari (facoltativo)<input name="note" placeholder="es. Cibali, dopo le 18" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+        </div>
+        <p style="margin: 12px 0 0; font-size: 16.5px; line-height: 1.55; color: #5C5550">Ci mettiamo d'accordo su WhatsApp per il giorno della consegna.</p>
+      </sc-if>
+    </div>
+
+    <div aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden"><label>Sito web<input name="sito" tabIndex="-1" autocomplete="off"></label></div>
+
+    <div style="min-width: 0; background: #E9EDE6; border-radius: 18px; padding: clamp(18px, 3vw, 26px); display: grid; gap: 16px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px">
+        <span style="font-size: 17.5px; line-height: 1.5"><strong>{{ scelta.metallo }} · {{ scelta.titolo }}</strong> · {{ notaZona }}</span>
+        <span style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em">{{ scelta.prezzo }} €</span>
+      </div>
+      <label style="display: flex; gap: 12px; align-items: flex-start; font-size: 17px; line-height: 1.5; cursor: pointer"><input type="checkbox" name="privacy" required="required" style="margin-top: 4px; width: 20px; height: 20px; accent-color: #0D6E08; flex: none"><span>Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento all'uso dei miei dati per l'adozione e la consegna.</span></label>
+      <sc-if value="{{ errore }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 17.5px; line-height: 1.5; color: #B3261E">{{ errore }}</p></sc-if>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px">
+        <button type="submit" disabled="{{ invio }}" class="btn" style="background: #0D6E08; color: #ffffff; border-color: #0D6E08; font-weight: 600; font-size: 18px; border-radius: 999px; min-height: 54px; padding: 0 28px; cursor: pointer">{{ testoInvia }}</button>
+        <span style="font-size: 16px; line-height: 1.5; color: #4A4440">Non paghi ancora: il pagamento con PayPal è il passo 3.</span>
+      </div>
+    </div>
+    <p style="margin: 0; font-size: 17px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Hai già nome utente e password? <a href="area-riservata.html" style="font-weight: 600">Entra nell'area riservata</a> · Dubbi? <a href="https://wa.me/393515286188" target="_blank" rel="noopener">Scrivimi su WhatsApp</a></p>
+  </form>
+</div>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
+  <footer style="padding: clamp(36px, 6vw, 64px) 0 clamp(32px, 5vw, 56px); font-size: 15.5px; line-height: 1.8; color: color-mix(in srgb, var(--color-text) 90%, transparent)">
+    <p style="margin: 0">Super Etna Food — azienda agricola Antonio Grasso · Via Stazione 83, 95024 Acireale (CT) · superetnafood@gmail.com · P.IVA 06189010876 · <a href="privacy.html">Privacy</a></p>
+  </footer>
+</div>
+
+<aside id="privacy-banner" role="region" aria-label="Informativa privacy" style="display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 999; background: #0D6E08; color: #ffffff; padding: 16px clamp(16px, 5vw, 48px); box-shadow: 0 -6px 24px rgba(0,0,0,0.18)">
+  <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+    <p style="flex: 1 1 320px; font-size: 17px; line-height: 1.6; margin: 0; color: color-mix(in srgb, #ffffff 95%, transparent)">Contiamo le visite in modo anonimo, senza cookie. Se accetti, usiamo anche Google Analytics per capire meglio quali pagine vengono lette. I dati non vengono diffusi né venduti. <a href="privacy.html" style="color: #F5E11A; text-decoration: underline">Informativa completa</a></p>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap">
+      <button type="button" id="privacy-rifiuta" class="btn" style="background: transparent; color: #ffffff; border-color: color-mix(in srgb, #ffffff 60%, transparent); font-weight: 600; font-size: 17px; border-radius: 999px; white-space: nowrap; cursor: pointer">Solo essenziali</button>
+      <button type="button" id="privacy-accetta" class="btn" style="background: #F5E11A; color: #1A1A1A; border-color: #F5E11A; font-weight: 700; font-size: 17.5px; border-radius: 999px; white-space: nowrap; cursor: pointer">Accetta</button>
+    </div>
+  </div>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  // Prezzi solo da mostrare: quelli che si pagano davvero li decide Codice.gs (PREZZI).
+  FORMULE = {
+    bronzo: { metallo: 'Bronzo', titolo: 'Cassetta di Natale', colore: '#7A3E22', italia: 30, catania: 20, cosa: '5 kg di limoni in confezione regalo, targhetta col nome per un anno, certificato con la foto' },
+    argento: { metallo: 'Argento', titolo: 'Un limone', colore: '#4F5358', italia: 75, catania: 40, cosa: '20 kg di limoni in 2 consegne, un video per ogni raccolta, targhetta e certificato' },
+    oro: { metallo: 'Oro', titolo: "Il tuo albero sull'Etna", colore: '#7A5208', italia: 130, catania: 80, cosa: '60 kg di limoni in 3 consegne, aggiornamenti mensili, targhetta e certificato a casa' }
+  };
+  state = { pk: 'bronzo', zona: 'italia', invio: false, errore: '', inCorso: false };
+  pronto(fn) { if (window.SEF) return fn(); const t = setInterval(() => { if (window.SEF) { clearInterval(t); fn(); } }, 100); setTimeout(() => clearInterval(t), 8000); }
+  componentDidMount() {
+    let q = null; try { q = new URLSearchParams(location.search); } catch (e) {}
+    const f = q && q.get('f'), z = q && q.get('z');
+    const s = {};
+    if (f && this.FORMULE[f]) s.pk = f;
+    if (z === 'catania' || z === 'italia') s.zona = z;
+    else { try { if (localStorage.getItem('sef-zona') === 'catania') s.zona = 'catania'; } catch (e) {} }
+    try { s.inCorso = !!localStorage.getItem('sef-ordine'); } catch (e) {}
+    this.setState(s);
+  }
+  renderVals() {
+    const it = this.state.zona === 'italia', pk = this.state.pk;
+    const formule = Object.keys(this.FORMULE).map(k => {
+      const f = this.FORMULE[k], sel = k === pk;
+      return { metallo: f.metallo, titolo: f.titolo, colore: f.colore, cosa: f.cosa, prezzo: it ? f.italia : f.catania, sel,
+        bordo: sel ? '#E8A838' : 'color-mix(in srgb, #0D6E08 22%, transparent)', bg: sel ? 'color-mix(in srgb, #E8A838 18%, var(--color-bg))' : '#ffffff',
+        scegli: () => this.setState({ pk: k, errore: '' }) };
+    });
+    const sc = formule.find(f => f.sel) || formule[0];
+    const zona = z => () => { this.setState({ zona: z, errore: '' }); try { localStorage.setItem('sef-zona', z); } catch (e) {} };
+    return {
+      formule, scelta: sc, inCorso: this.state.inCorso,
+      isItalia: it, isCatania: !it,
+      bgItalia: it ? '#0D6E08' : '#ffffff', fgItalia: it ? '#ffffff' : '#0A5806',
+      bgCatania: it ? '#ffffff' : '#0D6E08', fgCatania: it ? '#0A5806' : '#ffffff',
+      zonaItalia: zona('italia'), zonaCatania: zona('catania'),
+      notaZona: it ? 'spedizione inclusa' : 'consegna a mano gratuita',
+      errore: this.state.errore, invio: this.state.invio,
+      testoInvia: this.state.invio ? 'Salvo i dati…' : 'Continua: scegli il tuo albero →',
+      invia: e => {
+        e.preventDefault();
+        if (this.state.invio) return;
+        const fd = new FormData(e.target), g = k => String(fd.get(k) || '').trim();
+        const dati = { pacchetto: pk, zona: this.state.zona, adottante: g('adottante'), email: g('email'), telefono: g('telefono'),
+          via: g('via'), cap: g('cap'), citta: g('citta'), provincia: g('provincia'), presso: g('presso'), luogo: g('luogo'), note: g('note'), sito: g('sito') };
+        this.setState({ invio: true, errore: '' });
+        this.pronto(() => window.SEF.chiama('ordine', dati).then(r => {
+          const cred = JSON.stringify({ numero: r.utente, password: r.password });
+          try { sessionStorage.setItem('sef-area-albero', cred); } catch (x) {}
+          try { localStorage.setItem('sef-ordine', cred); } catch (x) {}
+          try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'acquisto-dati-' + pk, title: 'Acquisto: dati inviati', event: true }); } catch (x) {}
+          window.location.href = 'area-riservata.html';
+        }, err => this.setState({ invio: false, errore: (err && err.message) || 'Qualcosa non ha funzionato: riprova.' })));
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

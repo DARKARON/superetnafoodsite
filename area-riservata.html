@@ -211,9 +211,9 @@
 <sc-if value="{{ scegliendo }}" hint-placeholder-val="{{ false }}">
 <section style="background: #0D6E08">
   <div style="max-width: 1200px; margin: 0 auto; padding: clamp(36px, 6vw, 72px) clamp(16px, 5vw, 72px) clamp(32px, 5vw, 56px)">
-    <span style="display: block; font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 95%, transparent); margin-bottom: 16px">Area riservata · {{ sc.formula }}</span>
+    <span style="display: block; font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, #ffffff 95%, transparent); margin-bottom: 16px">{{ sc.kicker }}</span>
     <h1 style="font-weight: 500; font-size: clamp(34px, 5.4vw, 58px); line-height: 1.06; letter-spacing: -0.02em; margin: 0; color: #ffffff">Scegli il tuo albero</h1>
-    <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">{{ sc.saluto }} per aver adottato un limone sull'Etna. Questi sono gli alberi ancora liberi: scegline uno, sarà il tuo per un anno.</p>
+    <p style="font-size: clamp(18px, 1.6vw, 19px); line-height: 1.65; margin: 20px 0 0; max-width: 52ch; color: color-mix(in srgb, #ffffff 95%, transparent)">{{ sc.intro }}</p>
   </div>
 </section>
 <div style="max-width: 1200px; margin: 0 auto; padding: clamp(32px, 5vw, 56px) clamp(16px, 5vw, 72px) 0">
@@ -281,19 +281,22 @@
         </div>
         <div style="min-width: 0; background: #ffffff; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,32,24,0.06), 0 4px 14px rgba(16,32,24,0.05); padding: 16px 18px 20px">
       <span style="display: block; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: #5C5550">I tuoi dati</span>
+      <sc-if value="{{ sc.chiediDati }}" hint-placeholder-val="{{ true }}">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 18px 24px; margin-top: 14px">
         <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Nome e cognome<input name="adottante" defaultValue="{{ sc.adottante }}" autocomplete="name" required="required" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
-        <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Telefono<input name="telefono" type="tel" autocomplete="tel" required="required" placeholder="es. 351 000 0000" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
+        <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Telefono<input name="telefono" defaultValue="{{ sc.telefono }}" type="tel" autocomplete="tel" required="required" placeholder="es. 351 000 0000" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
         <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Consegna dei limoni<select name="tipo" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"><option>Spedizione a casa, in tutta Italia</option><option>Consegna a mano a Catania</option><option>Consegna a mano ad Acireale</option></select></label>
         <label style="display: grid; gap: 8px; font-size: 17.5px; font-weight: 600; min-width: 0">Indirizzo o note per la consegna<input name="note" autocomplete="street-address" placeholder="Via, numero, CAP, città" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; font-family: var(--font-body); font-size: 18px; border-radius: 12px; border: 1.5px solid color-mix(in srgb, #0D6E08 35%, transparent); background: #ffffff; color: var(--color-text)"></label>
       </div>
+      </sc-if>
+      <sc-if value="{{ sc.daOrdine }}" hint-placeholder-val="{{ false }}"><p style="margin: 12px 0 0; font-size: 17px; line-height: 1.6">{{ sc.adottante }} · tel. {{ sc.telefono }}<br>{{ sc.consegna }}</p><p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: #5C5550">Sono i dati che hai inserito al passo 1. Se c'è da correggere qualcosa, <a href="https://wa.me/393515286188" target="_blank" rel="noopener">scrivimi su WhatsApp</a>.</p></sc-if>
         </div>
       </div>
     </div>
     <div style="display: grid; gap: 14px; justify-items: start">
       <sc-if value="{{ erroreScelta }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 17.5px; line-height: 1.5; color: #B3261E">{{ erroreScelta }}</p></sc-if>
       <button type="submit" class="btn" style="background: #0D6E08; color: #ffffff; border-color: #0D6E08; font-weight: 600; font-size: 18px; border-radius: 999px; min-height: 52px; padding: 0 28px; cursor: pointer">{{ testoConferma }}</button>
-      <p style="margin: 0; font-size: 17.5px; line-height: 1.6; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">Il nome da mettere sulla targhetta lo scegli subito dopo, nella pagina del tuo albero. Se è un regalo, scrivi lì il nome di chi lo riceve.</p>
+      <p style="margin: 0; font-size: 17.5px; line-height: 1.6; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 90%, transparent)">{{ sc.dopo }}</p>
       <button type="button" onClick="{{ esci }}" style="border: 0; background: transparent; padding: 0; font: inherit; font-size: 17.5px; color: #0A5806; text-decoration: underline; cursor: pointer">Esci</button>
     </div>
   </form>
@@ -316,6 +319,22 @@
 </section>
 
 <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 72px)">
+  <sc-if value="{{ pagatoOra }}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="margin-top: clamp(28px, 5vw, 44px); background: color-mix(in srgb, #0D6E08 12%, var(--color-bg)); border-radius: 16px; padding: 20px 22px; color: #0A4A06; display: grid; gap: 8px">
+    <strong style="font-family: var(--font-heading); font-size: 26px; font-weight: 500; line-height: 1.15">Pagamento ricevuto, grazie!</strong>
+    <span style="font-size: 17.5px; line-height: 1.6">L'adozione è confermata. Ti ho mandato per mail nome utente e password: conservali, servono per rientrare qui.</span>
+    <span style="font-size: 17.5px; line-height: 1.6">Nome utente <strong>{{ credU }}</strong> · Password <strong>{{ credP }}</strong></span>
+  </div>
+  </sc-if>
+  <sc-if value="{{ daPagare }}" hint-placeholder-val="{{ false }}">
+  <div style="margin-top: clamp(28px, 5vw, 44px); background: color-mix(in srgb, #E8A838 20%, var(--color-bg)); border-radius: 16px; padding: 18px 22px; color: #3F2A04; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px">
+    <span style="min-width: 0; flex: 1 1 320px; font-size: 17.5px; line-height: 1.6"><strong>Passo 3 di 3 · manca solo il pagamento.</strong> {{ pg.scadenza }} Il nome della targhetta puoi sceglierlo qui sotto adesso o dopo.</span>
+    <a href="#pagamento" class="btn" style="background: #0D6E08; color: #ffffff; border-color: #0D6E08; font-weight: 600; font-size: 17px; border-radius: 999px; text-decoration: none; white-space: nowrap">Vai al pagamento ↓</a>
+  </div>
+  </sc-if>
+  <sc-if value="{{ inVerifica }}" hint-placeholder-val="{{ false }}">
+  <p role="status" style="margin: clamp(28px, 5vw, 44px) 0 0; font-size: 17.5px; line-height: 1.6; background: color-mix(in srgb, #0088B0 10%, var(--color-bg)); border-radius: 16px; padding: 18px 22px; color: #00405A">PayPal sta ancora verificando il pagamento. Appena è confermato ti mando per mail nome utente e password.</p>
+  </sc-if>
   <sc-if value="{{ puoCambiare }}" hint-placeholder-val="{{ false }}">
   <section style="padding: clamp(36px, 6vw, 64px) 0 0; min-width: 0">
     <div style="display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap">
@@ -404,6 +423,25 @@
     </div>
   </section>
 
+  <sc-if value="{{ daPagare }}" hint-placeholder-val="{{ false }}">
+  <section id="pagamento" style="padding: clamp(44px, 7vw, 80px) 0 0; scroll-margin-top: 16px">
+    <span style="display: block; font-size: 15.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #5C5550; margin-bottom: 10px">Passo 3 di 3</span>
+    <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Paga e conferma l'adozione</h2>
+    <div style="margin-top: 22px; max-width: 720px; background: #ffffff; border-radius: 18px; box-shadow: 0 1px 2px rgba(16,32,24,0.06), 0 4px 14px rgba(16,32,24,0.05); padding: clamp(20px, 3vw, 30px); display: grid; gap: 18px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 20px">
+        <span style="font-size: 17.5px; line-height: 1.5"><strong>{{ pg.formula }}</strong> · albero n. {{ v.numero }}</span>
+        <span style="font-size: 30px; font-weight: 700; letter-spacing: -0.01em">{{ pg.importo }}</span>
+      </div>
+      <sc-if value="{{ pg.scadenza }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4A4440">{{ pg.scadenza }}</p></sc-if>
+      <sc-if value="{{ ppCarico }}" hint-placeholder-val="{{ true }}"><p role="status" style="margin: 0; font-size: 17px; color: #5C5550">Carico i pulsanti di PayPal…</p></sc-if>
+      <div ref="{{ ppMonta }}" style="min-width: 0; max-width: 480px"></div>
+      <sc-if value="{{ ppAttesa }}" hint-placeholder-val="{{ false }}"><p role="status" style="margin: 0; font-size: 17.5px; font-weight: 600; color: #0A4A06">Sto confermando il pagamento con PayPal, un attimo…</p></sc-if>
+      <sc-if value="{{ ppErrore }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; font-size: 17.5px; line-height: 1.5; color: #B3261E">{{ ppErrore }}</p></sc-if>
+      <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4A4440"><strong>Pagamento sicuro su PayPal</strong>, anche con carta senza account: i dati della carta non passano dal mio sito. Appena il pagamento è confermato ti arrivano per mail nome utente e password.</p>
+    </div>
+  </section>
+  </sc-if>
+
   <section style="padding: clamp(44px, 7vw, 80px) 0 0">
     <h2 style="font-weight: 500; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0">Il cruscotto del tuo albero</h2>
     <div style="margin-top: 22px; background: #E9EDE6; border-radius: 22px; padding: clamp(12px, 2vw, 20px); display: grid; gap: 12px">
@@ -464,6 +502,7 @@
         </div>
       </div>
       <sc-if value="{{ v.note }}" hint-placeholder-val="{{ false }}"><div style="min-width: 0; background: #ffffff; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,32,24,0.06), 0 4px 14px rgba(16,32,24,0.05); padding: 16px 18px"><span style="display: block; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: #5C5550">Note dal campo</span><p style="font-family: var(--font-heading); font-style: italic; font-size: 18px; line-height: 1.5; margin: 6px 0 0">{{ v.note }}</p></div></sc-if>
+      <sc-if value="{{ puoCert }}" hint-placeholder-val="{{ true }}">
       <div style="min-width: 0; background: #ffffff; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,32,24,0.06), 0 4px 14px rgba(16,32,24,0.05); padding: 16px 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px">
         <span style="min-width: 0"><span style="display: block; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: #5C5550">Porta con te il tuo albero</span><span style="display: block; font-size: 16px; line-height: 1.45; margin-top: 4px; color: #5C5550">Il certificato in PDF da stampare, o l'immagine pronta per le storie.</span></span>
         <div style="display: flex; gap: 10px; flex-wrap: wrap">
@@ -472,6 +511,7 @@
         </div>
         <sc-if value="{{ msgSocial }}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 16px; line-height: 1.55; max-width: 60ch; color: #4A4440">{{ msgSocial }}</p></sc-if>
       </div>
+      </sc-if>
     </div>
   </section>
 </div>
@@ -505,20 +545,59 @@ class Component extends DCLogic {
   componentDidMount() {
     let c = null;
     try { c = JSON.parse(sessionStorage.getItem(this.KEY) || 'null'); } catch (e) {}
+    if (!c) { try { c = JSON.parse(localStorage.getItem('sef-ordine') || 'null'); } catch (e) {} }
     if (c && c.password) this.pronto(() => this.entra(c, true));
   }
   entra(c, silenzioso) {
     this.setState({ attesa: true, errore: '' });
     window.SEF.chiama('accedi', c).then(a => {
       try { sessionStorage.setItem(this.KEY, JSON.stringify(c)); } catch (e) {}
+      this.pulisciOrdine(c, a);
       if (a && a.daScegliere) this.setState({ scelta: a, albero: null, cred: c, attesa: false });
       else { this.setState({ albero: a, scelta: null, cred: c, attesa: false, selCambio: '' }); this.caricaLiberi(); }
       window.scrollTo(0, 0);
     }, e => {
       try { sessionStorage.removeItem(this.KEY); } catch (x) {}
+      if (e && /non corretti/.test(e.message)) this.pulisciOrdine(c, null, true);
       this.setState({ attesa: false, errore: silenzioso ? '' : e.message });
     });
   }
+  // Adozione comprata online e non ancora pagata: le credenziali restano su questo dispositivo finché il pagamento non è confermato.
+  pulisciOrdine(c, a, sempre) {
+    const pg = a && a.pagamento;
+    if (!sempre && (pg === 'attesa' || pg === 'verifica')) return;
+    try { const o = JSON.parse(localStorage.getItem('sef-ordine') || 'null'); if (o && c && o.numero === c.numero) localStorage.removeItem('sef-ordine'); } catch (e) {}
+  }
+  ppMonta = el => {
+    if (!el || this._ppEl === el) return;
+    this._ppEl = el;
+    const S = window.SEF; if (!S) return;
+    const niente = m => this.setState({ ppErrore: m, ppPronto: true });
+    S.chiama('ppConfig').then(cfg => {
+      if (!cfg || !cfg.clientId) return niente('Il pagamento online non è ancora attivo: scrivimi su WhatsApp al 351 528 6188 e lo completiamo insieme.');
+      return S.caricaPayPal(cfg.clientId).then(paypal => {
+        if (this._ppEl !== el) return;
+        el.innerHTML = '';
+        return paypal.Buttons({
+          style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'pay', height: 48 },
+          createOrder: () => { this._ppMsg = ''; this.setState({ ppErrore: '' }); return S.chiama('ppCrea', this.state.cred).then(r => r.id, err => { this._ppMsg = err.message; throw err; }); },
+          onApprove: d => {
+            this.setState({ ppAttesa: true, ppErrore: '' });
+            return S.chiama('ppCattura', Object.assign({}, this.state.cred, { ordine: d.orderID })).then(x => {
+              this.pulisciOrdine(this.state.cred, x);
+              if (x && x.daScegliere) this.setState({ scelta: x, albero: null, ppAttesa: false, pagatoOra: true });
+              else this.setState({ albero: x, ppAttesa: false, pagatoOra: true });
+              this._ppEl = null;
+              try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'acquisto-pagato', title: 'Acquisto: pagamento confermato', event: true }); } catch (e) {}
+              window.scrollTo(0, 0);
+            }, err => this.setState({ ppAttesa: false, ppErrore: err.message }));
+          },
+          onCancel: () => this.setState({ ppErrore: 'Pagamento annullato: quando vuoi puoi riprovare da qui.' }),
+          onError: () => this.setState({ ppAttesa: false, ppErrore: this._ppMsg || 'PayPal non ha completato il pagamento: riprova, oppure scrivimi su WhatsApp.' })
+        }).render(el).then(() => this.setState({ ppPronto: true }));
+      });
+    }).catch(err => niente((err && err.message) || 'Non riesco a caricare PayPal: ricarica la pagina.'));
+  };
   admin(pw) {
     this.setState({ attesa: true, errore: '' });
     window.SEF.chiama('mElenco', { master: pw }).then(() => {
@@ -543,7 +622,17 @@ class Component extends DCLogic {
     const foto = a && a.foto ? a.foto : [], diario = a && a.diario ? a.diario : [], consegne = a && a.consegne ? a.consegne : [];
     return {
       loggato: !!a, nonLoggato: !a && !this.state.scelta, scegliendo: !a && !!this.state.scelta,
-      sc: (() => { const x = this.state.scelta; return x ? { formula: x.formula || 'Adotta un limone', saluto: x.adottante ? 'Ciao ' + x.adottante + ', grazie' : 'Grazie', adottante: x.adottante || '', nLiberi: (x.liberi || []).length } : {}; })(),
+      sc: (() => {
+        const x = this.state.scelta; if (!x) return {};
+        const ord = !!x.daOrdine && x.pagamento === 'attesa';
+        return { formula: x.formula || 'Adotta un limone', saluto: x.adottante ? 'Ciao ' + x.adottante + ', grazie' : 'Grazie', adottante: x.adottante || '', nLiberi: (x.liberi || []).length,
+          telefono: x.telefono || '', consegna: x.consegna || '', daOrdine: !!x.daOrdine, chiediDati: !x.daOrdine,
+          kicker: ord ? 'Adotta un limone · passo 2 di 3' : 'Area riservata · ' + (x.formula || 'Adotta un limone'),
+          intro: ord ? (x.adottante ? 'Ciao ' + x.adottante + '! ' : '') + "Questi sono gli alberi ancora liberi: scegline uno e te lo tengo da parte mentre completi l'adozione."
+            : (x.adottante ? 'Ciao ' + x.adottante + ', grazie' : 'Grazie') + " per aver adottato un limone sull'Etna. Questi sono gli alberi ancora liberi: scegline uno, sarà il tuo per un anno.",
+          dopo: ord ? 'Poi scegli il nome per la targhetta e paghi con PayPal. Se è un regalo, sulla targhetta scrivi il nome di chi lo riceve.'
+            : 'Il nome da mettere sulla targhetta lo scegli subito dopo, nella pagina del tuo albero. Se è un regalo, scrivi lì il nome di chi lo riceve.' };
+      })(),
       liberi: ((this.state.scelta && this.state.scelta.liberi) || []).map(n => {
         const F = window.SEF_FONDO, p = F && F.piante ? F.piante[+n] : null, sel = this.state.sel === n;
         return { numero: n, varieta: p ? p.varieta : 'Limone', info: p ? 'Filare ' + p.filare + (p.anno ? ' · piantato nel ' + p.anno : '') : '', sel, bg: sel ? 'color-mix(in srgb, #E8A838 24%, var(--color-bg))' : '#ffffff', bordo: sel ? '#E8A838' : 'color-mix(in srgb, #0D6E08 22%, transparent)', scegli: () => this.setState({ sel: n, erroreScelta: '' }) };
@@ -564,7 +653,7 @@ class Component extends DCLogic {
           rif3dScelta: el => { if (!el || !sn) return; const go = () => window.SEFModello && window.SEF3D ? window.SEFModello.monta(el, +sn) : setTimeout(go, 300); go(); } };
       })(),
       erroreScelta: this.state.erroreScelta,
-      testoConferma: this.state.invioScelta ? 'Salvo la scelta…' : (this.state.sel ? "Conferma l'albero n. " + this.state.sel : 'Scegli un albero'),
+      testoConferma: this.state.invioScelta ? 'Salvo la scelta…' : (this.state.sel ? ((this.state.scelta && this.state.scelta.daOrdine && this.state.scelta.pagamento === 'attesa') ? "Prenota l'albero n. " + this.state.sel + ' e continua' : "Conferma l'albero n. " + this.state.sel) : 'Scegli un albero'),
       conferma: e => {
         e.preventDefault();
         if (this.state.invioScelta) return;
@@ -596,7 +685,20 @@ class Component extends DCLogic {
         if (this.state.genera) return; this.setState({ genera: 'social', msgSocial: '' });
         S.condividi(Object.assign({}, a, { _cred: this.state.cred })).then(r => { this.setState({ genera: '', msgSocial: r === 'scaricato' ? 'Da computer non si può condividere direttamente: ho scaricato l’immagine. Pubblicala dal telefono su Instagram, Facebook, TikTok o nello stato di WhatsApp.' : '' }); }, () => this.setState({ genera: '' }));
       },
-      esci: () => { try { sessionStorage.removeItem(this.KEY); } catch (e) {} this.setState({ albero: null, scelta: null, sel: '', cred: null }); },
+      esci: () => { try { sessionStorage.removeItem(this.KEY); } catch (e) {} this._ppEl = null; this.setState({ albero: null, scelta: null, sel: '', cred: null, pagatoOra: false, ppErrore: '', ppPronto: false }); },
+      ...(() => {
+        const pg = a ? (a.pagamento || '') : '', daPagare = pg === 'attesa', inVerifica = pg === 'verifica';
+        let scad = '';
+        if (daPagare && a.scadenza) {
+          const d = new Date(a.scadenza), oggi = new Date();
+          if (!isNaN(d)) scad = "L'albero n. " + S.pad(a.numero) + ' è prenotato per te fino alle ' + d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }) + (d.toDateString() === oggi.toDateString() ? ' di oggi.' : ' del ' + d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' }) + '.');
+        }
+        const cr = this.state.cred || {};
+        return { daPagare, inVerifica, pagatoOra: !!this.state.pagatoOra && pg === 'pagato', puoCert: !!a && !daPagare && !inVerifica,
+          pg: { formula: a ? (a.formula || 'Adozione') : '', importo: a && a.importo ? (+a.importo).toFixed(2).replace('.', ',') + ' €' : '', scadenza: scad },
+          credU: cr.numero || '', credP: cr.password || '',
+          ppErrore: this.state.ppErrore || '', ppAttesa: !!this.state.ppAttesa, ppCarico: daPagare && !this.state.ppPronto && !this.state.ppErrore, ppMonta: this.ppMonta };
+      })(),
       v: a ? {
         numero: S.pad(a.numero), formula: a.formula || 'Adozione', adottante: a.adottante || 'chi lo ha adottato',
         periodo: a.inizio ? 'Adozione dal ' + S.data(a.inizio) + ' al ' + S.fine(a.inizio) : '',
