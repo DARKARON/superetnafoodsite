@@ -39,3 +39,26 @@ Le password nuove si salvano di nuovo in chiaro. Quelle già cifrate (h1$…) fu
 ## Aggiornamento 16 novembre 2026 · foto nel certificato dalla gestione
 Nuova azione mFotoCert: la pagina di gestione prende la foto dell'albero con la password master, senza bisogno della password dell'adottante.
 Dopo aver incollato il nuovo Codice.gs: Esegui il deployment → Gestisci deployment → matita → Versione: Nuova → Esegui il deployment.
+
+## Aggiornamento 18 novembre 2026 · acquisto online con PayPal
+Il percorso ora è: pulsante su adotta.html → acquista.html (dati e indirizzo) → area riservata (scelta dell'albero e targhetta) → pagamento con i pulsanti PayPal → mail automatica con nome utente e password.
+
+1. Chiavi PayPal (una volta sola): vai su developer.paypal.com ed entra con il conto PayPal Business di Super Etna Food.
+   Apps & Credentials → scheda "Live" → Create App (nome: Sito Super Etna Food, tipo Merchant) → copia Client ID e Secret.
+2. Apps Script → Impostazioni progetto → Proprietà script → aggiungi:
+   - PAYPAL_CLIENT_ID = il Client ID
+   - PAYPAL_SECRET = il Secret (non scriverlo in nessun altro file)
+   Per una prova senza soldi veri: usa le chiavi della scheda "Sandbox" e aggiungi PAYPAL_PROVA = si; paghi con un account di prova "Personal" che trovi in Sandbox → Accounts. Quando funziona: rimetti le chiavi Live e cancella PAYPAL_PROVA.
+3. Incolla il nuovo Codice.gs → Esegui il deployment → Gestisci deployment → matita → Versione: Nuova → Esegui il deployment. Se Google chiede di nuovo l'autorizzazione, accetta.
+4. Carica su GitHub: acquista.html (nuovo), adotta.html, area-riservata.html, gestione.html, sef-api.js.
+
+Da sapere:
+- I prezzi veri sono in Codice.gs, nella tabella PREZZI: la pagina li mostra soltanto. Se cambi un prezzo, cambialo anche in acquista.html (FORMULE) e in adotta.html.
+- Un albero scelto e non pagato resta prenotato per 6 ore (ORE_PRENOTAZIONE), poi torna libero.
+- Nella gestione ogni adozione mostra lo stato del pagamento. «Segna come pagata» serve per i pagamenti arrivati in altro modo o rimasti «da controllare»: manda subito la mail con le credenziali.
+- Le adozioni create a mano dalla gestione funzionano come prima. I vecchi link di pagamento PayPal non sono più usati dal sito.
+
+## Aggiornamento 21 novembre 2026 · etichetta della cassetta e conferimenti
+Nella gestione, sezione Consegne di ogni albero adottato: «Registra conferimento e stampa etichetta» salva la cassetta nella nuova scheda Conferimenti del foglio (si crea da sola), la segna come consegnata nell'area dell'adottante e stampa l'etichetta 4×8 cm con il QR del sito.
+Il gestionale di campo legge questi conferimenti con la password master: Conferimenti → «Collega le adozioni del sito».
+Dopo aver incollato il nuovo Codice.gs: Esegui il deployment → Gestisci deployment → matita → Versione: Nuova → Esegui il deployment.

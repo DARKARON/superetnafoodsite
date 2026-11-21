@@ -212,6 +212,25 @@
 
     <section>
       <h2 style="font-weight: 500; font-size: 28px; line-height: 1.15; margin: 0">Consegne</h2>
+      <sc-if value="{{ puoCassa }}" hint-placeholder-val="{{ false }}">
+      <form key="{{ numeroPad }}" onSubmit="{{ registraCassetta }}" style="margin-top: 14px; background: color-mix(in srgb, #E8A838 14%, var(--color-bg)); border-radius: 14px; padding: 16px 18px; display: grid; gap: 12px">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 14px">
+          <strong style="font-size: 17px">Cassetta in partenza · consegna {{ cassa.prossima }} di {{ cassa.tot }}</strong>
+          <span style="font-size: 14px; color: #4A4440">{{ cassa.piano }}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px">
+          <label style="display: grid; gap: 6px; font-size: 15px; font-weight: 600; min-width: 0">Data di raccolta<input name="data" type="date" defaultValue="{{ oggi }}" required="required" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-size: 16px; width: 100%; box-sizing: border-box"></label>
+          <label style="display: grid; gap: 6px; font-size: 15px; font-weight: 600; min-width: 0">Kg nella cassetta<input name="kg" type="number" step="0.5" min="0.5" max="200" defaultValue="{{ cassa.kg }}" required="required" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-size: 16px; width: 100%; box-sizing: border-box"></label>
+          <label style="display: grid; gap: 6px; font-size: 15px; font-weight: 600; min-width: 0">Fioritura<select name="fioritura" defaultValue="{{ cassa.fiorDefault }}" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-size: 16px; width: 100%; box-sizing: border-box"><option value="Primofiore">Primofiore</option><option value="Bianchetto">Bianchetto</option><option value="Verdello">Verdello</option></select></label>
+          <label style="display: grid; gap: 6px; font-size: 15px; font-weight: 600; min-width: 0">Nota<input name="nota" placeholder="facoltativa" style="min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid color-mix(in srgb, #0D6E08 30%, transparent); background: #ffffff; font-size: 16px; width: 100%; box-sizing: border-box"></label>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+          <button type="submit" style="min-height: 46px; padding: 0 20px; border-radius: 999px; border: 0; background: #0D6E08; color: #ffffff; font-weight: 600; font-size: 15px; cursor: pointer">{{ testoCassa }}</button>
+          <button type="button" onClick="{{ soloEtichetta }}" style="min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1.5px solid #0D6E08; background: transparent; color: #0A5806; font-weight: 600; font-size: 15px; cursor: pointer">Solo etichetta</button>
+          <span style="font-size: 14px; line-height: 1.45; color: #4A4440; flex: 1 1 240px">Etichetta 4×8 cm con il QR del sito. Il conferimento compare anche nel Registro conferimenti del gestionale di campo.</span>
+        </div>
+      </form>
+      </sc-if>
       <ol style="list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 2px">
         <sc-for list="{{ consegne }}" as="c" hint-placeholder-count="1">
           <li style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr) 44px; gap: 10px; align-items: center; padding: 6px 0; font-size: 16px"><span style="font-family: var(--font-heading); font-size: 18px">{{ c.quando }}</span><span>{{ c.cosa }}</span><span>{{ c.stato }}</span><button type="button" onClick="{{ c.elimina }}" aria-label="Elimina consegna" style="min-width: 44px; min-height: 44px; border: 0; background: transparent; font-size: 22px; cursor: pointer; color: color-mix(in srgb, var(--color-text) 55%, transparent)">×</button></li>
@@ -330,6 +349,15 @@ class Component extends DCLogic {
     if (a.stato === 'approvato') return { nome: a.nomePianta, detto: a.detto, trad: a.traduzione, foto: a.fotoTarghetta };
     if (a.nomeProposto) return { nome: a.nomeProposto, detto: a.dettoProposto, trad: a.traduzioneProposta, foto: a.fotoTarghetta };
     return { nome: "In attesa della scelta dell'adottante", detto: '', trad: '', foto: '' };
+  }
+  // Etichetta da 8×4 cm per la cassetta: QR al sito, albero, adottante, contenuto, data di raccolta.
+  etichettaHtml(d) {
+    const e = x => String(x == null ? '' : x).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const sc = 'scr' + 'ipt', u = p => new URL(p, location.href).href;
+    const m = String(d.data || '').match(/^(\d{4})-(\d{2})-(\d{2})/), giorno = m ? m[3] + '/' + m[2] + '/' + m[1] : String(d.data || '');
+    const kg = d.kg ? String(d.kg).replace('.', ',') + ' kg' : '';
+    const riga = [d.fioritura, kg, d.consegnaN ? 'consegna ' + d.consegnaN + ' di ' + (d.tot || d.consegnaN) : ''].filter(Boolean).join(' · ');
+    return `<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Etichetta albero ${e(d.numero)}</title><link rel="stylesheet" href="${u('fonts/caratteri.css')}"><style>@page{size:80mm 40mm;margin:0}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}html,body{margin:0}body{background:#8a8580;min-height:100vh;display:flex;align-items:center;justify-content:center}.e{width:80mm;height:40mm;background:#fff;color:#1A1A1A;display:flex;gap:2.5mm;padding:2.5mm;overflow:hidden;font-family:'Instrument Sans',Arial,sans-serif}.q{flex:0 0 30mm;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8mm}.q img{width:29mm;height:29mm;display:block}.q span{font-size:6.3pt;font-weight:600;letter-spacing:.02em}.t{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:.7mm;border-left:.3mm solid #0D6E08;padding-left:2.5mm}.k{font-size:5.8pt;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#0A5806;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.n{font-family:'Young Serif',Georgia,serif;font-size:15pt;line-height:1}.p{font-family:'Young Serif',Georgia,serif;font-style:italic;font-size:8pt;line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.a{font-size:7.5pt;font-weight:600;line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.c{font-size:7pt;line-height:1.25}.d{font-size:6.3pt;color:#333}@media print{body{background:none;min-height:0;display:block}}</style></head><body><div class="e"><div class="q"><img src="${u('assets/qr-sito.svg')}" alt="QR code per www.superetnafood.it"><span>superetnafood.it</span></div><div class="t"><span class="k">SuperEtnaFood · il tuo limone</span><span class="n">Albero n. ${e(d.numero)}</span>${d.nome ? '<span class="p">«' + e(d.nome) + '»</span>' : ''}${d.adottante ? '<span class="a">per ' + e(d.adottante) + '</span>' : ''}${riga ? '<span class="c">' + e(riga) + '</span>' : ''}<span class="d">Raccolti il ${e(giorno)} · Acireale (CT)</span></div></div><${sc}>Promise.all([document.fonts.ready].concat([].map.call(document.images,function(i){return i.complete?0:new Promise(function(r){i.onload=i.onerror=r})}))).then(function(){setTimeout(function(){print()},300)})</${sc}></body></html>`;
   }
   stampaHtml(t, n, m) {
     const e = x => String(x || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -476,7 +504,44 @@ class Component extends DCLogic {
         if (!String(b.password).trim()) { this.avvisa("Imposta una password per l'adottante"); return; }
         this.esegui('mSalva', { albero: Object.assign({ numero: n }, b) }, 'Dati salvati', () => this.setState({ bozza: null, sporco: false }));
       },
-      consegne: (a.consegne || []).map((c, i) => ({ quando: c.quando, cosa: c.cosa, stato: c.stato, elimina: () => this.esegui('mSalva', { albero: { numero: n, consegne: (a.consegne || []).filter((_, j) => j !== i) } }, 'Consegna eliminata') })),
+      consegne: (a.consegne || []).map((c, i) => ({ quando: c.quando, cosa: c.cosa, stato: c.stato, elimina: c.conf
+        ? () => { if (confirm('Eliminare questa consegna? Viene tolta anche dal registro conferimenti (sito e gestionale di campo).')) this.esegui('mEliminaConferimento', { id: c.conf }, 'Conferimento eliminato'); }
+        : () => this.esegui('mSalva', { albero: { numero: n, consegne: (a.consegne || []).filter((_, j) => j !== i) } }, 'Consegna eliminata') })),
+      ...(() => {
+        const PIANO = { bronzo: [1, 5], argento: [2, 10], oro: [3, 20] };
+        const FP = { "Il tuo albero sull'Etna": 'bronzo', 'Spedito in Italia': 'argento', 'Il raccolto a casa tua': 'argento', 'Una stagione di limoni': 'argento', 'Dal fondo alle tue mani': 'oro' };
+        const pk = FP[a.formula] || (PIANO[a.targa] ? a.targa : 'bronzo'), pl = PIANO[pk];
+        const fatti = (a.consegne || []).filter(c => c.conf).length, tot = Math.max(pl[0], fatti + 1);
+        const mese = new Date().getMonth() + 1, fior = mese >= 7 && mese <= 9 ? 'Verdello' : (mese >= 4 && mese <= 6 ? 'Bianchetto' : 'Primofiore');
+        const nome = a.nomePianta || a.nomeProposto || '';
+        const leggi = f => { const fd = new FormData(f); return { data: String(fd.get('data') || S.oggi()), kg: String(fd.get('kg') || '').replace(',', '.'), fioritura: String(fd.get('fioritura') || ''), nota: String(fd.get('nota') || '').trim() }; };
+        const apri = () => { const w = window.open('', '_blank'); if (!w) this.avvisa('Consenti le finestre popup per stampare'); return w; };
+        const scrivi = (w, d) => { w.document.open(); w.document.write(this.etichettaHtml(Object.assign({ numero: n, nome: nome, adottante: a.adottante || '' }, d))); w.document.close(); };
+        return {
+          puoCassa: !!(a.adottante || a.utente),
+          cassa: { prossima: fatti + 1, tot, kg: pl[1], fiorDefault: fior, piano: 'Formula: ' + pl[0] + (pl[0] === 1 ? ' consegna' : ' consegne') + ' da ' + pl[1] + ' kg' + (fatti ? ' · già registrate: ' + fatti : '') },
+          testoCassa: occ === 'mConferimento' ? 'Registro il conferimento…' : 'Registra conferimento e stampa etichetta',
+          registraCassetta: e => {
+            e.preventDefault();
+            if (this.state.occupato) return;
+            const d = leggi(e.target);
+            if (!(+d.kg > 0)) { this.avvisa('Scrivi quanti kg ci sono nella cassetta'); return; }
+            const w = apri(); if (!w) return;
+            w.document.write('<!doctype html><meta charset="utf-8"><title>Etichetta</title><p style="font:14px sans-serif;padding:16px">Registro il conferimento…</p>');
+            this.setState({ occupato: 'mConferimento' });
+            S.chiama('mConferimento', Object.assign({ master: this.state.master, numero: n }, d)).then(x => {
+              this.aggiorna(x); this.setState({ occupato: '' }); this.avvisa('Conferimento registrato');
+              const r = x.ultimoConferimento || {};
+              scrivi(w, { fioritura: r.fioritura || d.fioritura, kg: r.kg || d.kg, consegnaN: r.consegnaN || fatti + 1, tot: Math.max(+r.consegneTot || 0, tot), data: r.data || d.data });
+            }, err => { this.setState({ occupato: '' }); try { w.close(); } catch (x) {} this.avvisa(/Azione sconosciuta/.test(err.message) ? 'Il servizio Google non è aggiornato: pubblica la nuova versione di Codice.gs.' : err.message); });
+          },
+          soloEtichetta: e => {
+            const d = leggi(e.target.form);
+            const w = apri(); if (!w) return;
+            scrivi(w, { fioritura: d.fioritura, kg: d.kg, consegnaN: fatti || 1, tot: Math.max(pl[0], fatti || 1), data: d.data });
+          }
+        };
+      })(),
       aggiungiConsegna: e => {
         e.preventDefault();
         const f = e.target, fd = new FormData(f);

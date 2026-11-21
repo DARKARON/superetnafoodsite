@@ -4,6 +4,10 @@
    Finché è vuoto le pagine girano in modalità DEMO: i dati restano solo in questo browser
    (accesso amministratore: PERICLE22 + la tua password). */
 var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93PC_8FdyTkgZF0wbwUMXXROedK-aaEEm4Z6Saofio2_GdT5d/exec';
+/* Fuori dal sito vero (per esempio nell'anteprima di Claude, che non può collegarsi a Google) le pagine usano i dati di prova:
+   qualsiasi password master apre la gestione di prova. Sul sito www.superetnafood.it si usa sempre il servizio Google. */
+var SEF_SITO_VERO = /(^|\.)superetnafood\.it$|\.github\.io$/.test(location.hostname);
+if (!SEF_SITO_VERO) SEF_API_URL = '';
 
 (function () {
   var MASTER_HASH = '', K = 'sef-demo-db-3';
@@ -64,7 +68,7 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
   function utente(d, p) { var ad = credAd(d, p); if (!ad.albero) throw new Error('Prima scegli il tuo albero.'); return d.alberi[ad.albero]; }
   var CAMPI = ['password','adottante','email','utente','formula','inizio','telefono','consegnaPref','targa','consegne','certificato','stato','motivo','nomeProposto','dettoProposto','traduzioneProposta','fotoTarghetta','inviatoIl','nomePianta','detto','traduzione','approvatoIl'];
   function svuota(al) { CAMPI.forEach(function (k) { al[k] = k === 'consegne' ? [] : ''; }); }
-  function master(p) { if (!MASTER_HASH || p._h !== MASTER_HASH) throw new Error('Password master non corretta.'); }
+  function master(p) { if (MASTER_HASH ? p._h !== MASTER_HASH : !p._h) throw new Error('Password master non corretta.'); }
   var DATI = ['password','adottante','email','formula','inizio','varieta','posizione','impianto','ultimaRaccolta','note','certificato','consegne','targa','telefono','consegnaPref'];
   function locale(p) {
     var d = carica(), a, n, i;
@@ -126,13 +130,29 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
         Object.assign(a, { nomePianta: a.nomeProposto, detto: a.dettoProposto, traduzione: a.traduzioneProposta, stato: 'approvato', approvatoIl: oggi() }); break;
       case 'mRespingi': if (!a) throw new Error('Albero non trovato.'); Object.assign(a, { stato: 'respinto', motivo: p.motivo || '' }); break;
       case 'mRiapri': if (!a) throw new Error('Albero non trovato.'); Object.assign(a, { stato: '', motivo: '' }); break;
+      case 'mConferimento':
+        if (!a || !(a.adottante || a.utente)) throw new Error("Quest'albero non risulta adottato.");
+        var kgc = Math.round((parseFloat(String(p.kg || '').replace(',', '.')) || 0) * 10) / 10;
+        if (!(kgc > 0)) throw new Error('Scrivi quanti kg ci sono nella cassetta.');
+        d.conferimenti = d.conferimenti || [];
+        var fattiC = d.conferimenti.filter(function (x) { return x.numero === n; }).length;
+        var rc = { id: id(), data: p.data || oggi(), numero: n, adottante: a.adottante || '', formula: a.formula || '', fioritura: p.fioritura || '', consegnaN: String(fattiC + 1), consegneTot: String(fattiC + 1), kg: String(kgc), cassette: '1', importo: '0', nota: p.nota || '' };
+        d.conferimenti.push(rc);
+        a.consegne = (a.consegne || []).concat({ quando: rc.data.split('-').reverse().join('/'), cosa: (rc.fioritura ? rc.fioritura + ', ' : '') + String(kgc).replace('.', ',') + ' kg', stato: 'Consegnata', conf: rc.id });
+        salva(d); var vc = pub(d, a, true); vc.ultimoConferimento = rc; return vc;
+      case 'mConferimenti': return (d.conferimenti || []).slice().sort(desc);
+      case 'mEliminaConferimento':
+        var ec = (d.conferimenti || []).filter(function (x) { return x.id === p.id; })[0]; if (!ec) throw new Error('Conferimento non trovato.');
+        d.conferimenti = d.conferimenti.filter(function (x) { return x.id !== p.id; });
+        n = ec.numero; if (d.alberi[n]) d.alberi[n].consegne = (d.alberi[n].consegne || []).filter(function (c) { return c.conf !== p.id; });
+        break;
       default: throw new Error('Azione sconosciuta.');
     }
     salva(d); return pub(d, d.alberi[n] || { numero: n }, true);
   }
 
   window.SEF = {
-    demo: !SEF_API_URL, DETTI: DETTI,
+    demo: !SEF_API_URL, anteprima: !SEF_SITO_VERO, DETTI: DETTI,
     pad: pad, data: data, dataBreve: dataBreve, fine: fine, oggi: oggi,
     chiama: function (azione, dati) {
       var p = Object.assign({ azione: azione }, dati || {});
@@ -411,4 +431,18 @@ var SEF_API_URL = 'https://script.google.com/macros/s/AKfycbw3Vcfpfp7dEOBsCJg93P
     });
     return attesa;
   };
+})();
+
+/* ---------- avviso «dati di prova» quando la pagina non è sul sito vero ---------- */
+(function () {
+  var S = window.SEF; if (!S || !S.demo) return;
+  function metti() {
+    if (!document.body || document.getElementById('sef-avviso-prova')) return;
+    var d = document.createElement('div');
+    d.id = 'sef-avviso-prova'; d.setAttribute('role', 'note');
+    d.textContent = 'Anteprima con dati di prova · i dati veri sono solo su superetnafood.it';
+    d.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:2147483000;max-width:calc(100vw - 24px);box-sizing:border-box;padding:8px 14px;border-radius:999px;background:#3F2A04;color:#FFF4D6;font:600 13px/1.35 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,0.25);pointer-events:none';
+    document.body.appendChild(d);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', metti); else metti();
 })();
